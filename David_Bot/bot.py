@@ -24,7 +24,7 @@ async def on_ready():
     currenttime= str(datetime.now())
     SystemChannel= bot.get_channel(SystemChannelID)
     
-    #await SystemChannel.send("Bot is ACTIVE at "+currenttime)
+    await SystemChannel.send("Bot is ACTIVE at "+currenttime)
     with open ("./ImportantTxtfiles/Logs.txt", "a") as log:
         currenttime= str(datetime.now())
         log.write("\n"+currenttime+ "   Bot Started\n")
