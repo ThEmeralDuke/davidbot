@@ -17,7 +17,7 @@ person= ""
 TOKEN = "MTI0MDcyMTgwNTY5ODY2MjU2MQ.GHqu2I.M15rcqb8jebTDBzo8zdamsYDitHcuqN3UhOaZ8"
 SystemChannelID= 1240997501750743221
 bot = commands.Bot(command_prefix='!', intents=discord.Intents.all())
-
+filepath= (r"C:\Users\matty\Documents\Visual Studio 2022\Repos\ThEmeralDuke\David_Bot\David_Bot")
 @bot.event
 async def on_ready():
     print("Bot is ready\n\n")
@@ -25,7 +25,7 @@ async def on_ready():
     SystemChannel= bot.get_channel(SystemChannelID)
     
     await SystemChannel.send("Bot is ACTIVE at "+currenttime)
-    with open ("./ImportantTxtfiles/Logs.txt", "a") as log:
+    with open (filepath+"/ImportantTxtfiles/Logs.txt", "a") as log:
         currenttime= str(datetime.now())
         log.write("\n"+currenttime+ "   Bot Started\n")
     log.close()
@@ -47,7 +47,7 @@ async def restart(ctx):
     person= str(person)
     print("Bot restarted by "+ person)
     await ctx.send("Restarting...")
-    with open ("./ImportantTxtfiles/Logs.txt", "a") as log:
+    with open (filepath+"/ImportantTxtfiles/Logs.txt", "a") as log:
         currenttime= str(datetime.now())
         log.write(currenttime+"   Bot Restarted by "+ person+"\n")
     log.close()
@@ -64,7 +64,7 @@ async def restartError(ctx ,error):
         personID= person.id
         person= str(person)
         personID= str(personID)
-        with open ("./ImportantTxtfiles/Logs.txt", "a") as log:
+        with open (filepath+"/ImportantTxtfiles/Logs.txt", "a") as log:
             currenttime= str(datetime.now())
             log.write(currenttime+ "   (FAIL) Bot Restart attempted by "+ person+"\n")
         log.close()
@@ -79,7 +79,7 @@ async def shutdown(ctx):
     person= str(person)
     print("Bot Shutdown by "+ person)
     await ctx.send("Shutting down...")
-    with open ("./ImportantTxtfiles/Logs.txt", "a") as log:
+    with open (filepath+"/ImportantTxtfiles/Logs.txt", "a") as log:
         currenttime= str(datetime.now())
         log.write(currenttime+ "   Bot Shutdown by "+ person+"\n")
     log.close()
@@ -96,7 +96,7 @@ async def shutdownError(ctx ,error):
         personID= person.id
         person= str(person)
         personID= str(personID)
-        with open ("./ImportantTxtfiles/Logs.txt", "a") as log:
+        with open (filepath+"/ImportantTxtfiles/Logs.txt", "a") as log:
             currenttime= str(datetime.now())
             log.write(currenttime+ "   (FAIL) Bot Shutdown attempted by "+ person+"\n")
         log.close()
@@ -108,22 +108,30 @@ playerRR= 0
 HighScoreRR= 0
 PlayerlistRR= []
 GameRR= []
-
+TEST=""
 @bot.command()
 async def RussianRoulette(ctx):
     global HighScoreRR
+    global TEST
     global Bullets
     global playerRR
     global ContinueResponseRR
-    async def RRgame():
+    async def RRgame(ctx):
+        global TEST
         BulletsRR= [1]
         global GameRR
         global scoreRR
-        global Dude
+        print(TEST)
         scoreRR= 0
         scoreRR= str(scoreRR)
         print("hi")
-        
+        for y in range(len(GameRR)):
+            print(GameRR)
+            print(Dude)
+            if GameRR[y][0]== Dude:
+                print("Found")
+                GameRR[y].append(scoreRR)
+                print(GameRR)
         print("part 1 complete")
         async def BulletCreation():
             print("1")
@@ -161,16 +169,16 @@ async def RussianRoulette(ctx):
                 found= True
                 print(Dude, "found")
     if found== False:
-        with open ("./ImportantTxtfiles/Logs.txt", "a") as log:
+        with open (filepath+"/ImportantTxtfiles/Logs.txt", "a") as log:
             currenttime= str(datetime.now())
-            log.write(currenttime+ "   (Game) "+ Dude+"Has started playing Russian Roulette")
+            log.write(currenttime+ "   (Game) "+ Dude+"Has started playing Russian Roulette\n")
         log.close()
         playerRR= Dude
         PlayerlistRR.append(Dude)
         print(Dude,"Added to Russian Roulette")
-        file_exists = os.path.exists('./RussianRouletteFiles/'+playerRR+'.csv')
+        file_exists = os.path.exists(filepath+'/RussianRouletteFiles/'+playerRR+'.csv')
         if file_exists== True:
-                with open('./RussianRouletteFiles/'+playerRR+'.csv',"r") as Game: 
+                with open(filepath+'/RussianRouletteFiles/'+playerRR+'.csv',"r") as Game: 
                     reader= csv.reader(Game)
                     for row in reader:
                         ActiveGame= row[0]
@@ -180,7 +188,7 @@ async def RussianRoulette(ctx):
                             Bullets= row[2]
                 Game.close
         else:
-            with open('./RussianRouletteFiles/'+playerRR+'.csv',"w") as Game:
+            with open(filepath+'/RussianRouletteFiles/'+playerRR+'.csv',"w") as Game:
                 writer=csv.writer(Game, lineterminator= "\n")
                 writer.writerow(["False","1"])
             Game.close
@@ -204,7 +212,9 @@ async def RussianRoulette(ctx):
                                     await ctx.send("Loading game...")
                                     del GameRR[i][3]
                                     index= i
-                                    await RRgame()
+                                    TEST= ctx.author
+                                    print("about to go in")
+                                    await RRgame(ctx)
                                     break
                                 else:
                                     await ctx.send("starting new game...")
@@ -234,9 +244,9 @@ async def QuitRR(ctx):
             for u in range(len(PlayerlistRR)):
                 if str(ctx.author) == PlayerlistRR[u]:
                     del PlayerlistRR[u]
-                    with open ("./ImportantTxtfiles/Logs.txt", "a") as log:
+                    with open (filepath+"/ImportantTxtfiles/Logs.txt", "a") as log:
                         currenttime= str(datetime.now())
-                        log.write(currenttime+ "   (Game) "+ str(ctx.author)+"Has stopped playing Russian Roulette")
+                        log.write(currenttime+ "   (Game) "+ str(ctx.author)+"Has stopped playing Russian Roulette\n")
                     log.close()
                     print("Quit successful ("+str(ctx.author)+")")
                     await ctx.send("Quit Successful")

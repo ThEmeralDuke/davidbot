@@ -68,3 +68,29 @@ YYYY-MM-DD HH:MM:SS.MS       What Happened
 2024-05-29 19:00:48.493539   (Game) the_emerald_dukeHas started playing Russian Roulette
 2024-05-29 19:02:55.171256   Bot Started
 2024-05-29 19:03:02.644391   (Game) the_emerald_dukeHas started playing Russian Roulette2024-05-29 19:03:08.041058   (Game) the_emerald_dukeHas stopped playing Russian Roulette2024-05-29 19:03:16.476634   (Game) the_emerald_dukeHas started playing Russian Roulette
+2024-05-30 19:37:46.926026   Bot Started
+2024-05-30 19:38:04.603094   (Game) the_emerald_dukeHas started playing Russian Roulette
+
+2024-05-30 19:39:09.812502   Bot Started
+2024-05-30 19:39:20.395637   (Game) the_emerald_dukeHas started playing Russian Roulette
+
+2024-05-30 19:40:14.698406   Bot Started
+2024-05-30 19:40:25.858494   (Game) the_emerald_dukeHas started playing Russian Roulette
+
+2024-05-30 19:42:44.433451   Bot Started
+2024-05-30 19:42:53.911107   (Game) the_emerald_dukeHas started playing Russian Roulette
+
+2024-05-30 19:43:52.325663   Bot Started
+2024-05-30 19:43:56.258057   (Game) the_emerald_dukeHas started playing Russian Roulette
+
+2024-05-30 19:45:53.438809   Bot Started
+2024-05-30 19:46:00.388955   (Game) the_emerald_dukeHas started playing Russian Roulette
+
+2024-05-30 19:47:24.059635   Bot Started
+
+2024-05-30 19:47:44.125470   Bot Started
+2024-05-30 19:48:00.374595   (Game) the_emerald_dukeHas started playing Russian Roulette
+
+2024-05-30 19:49:15.213919   Bot Started
+2024-05-30 19:49:20.684859   (Game) the_emerald_dukeHas started playing Russian Roulette
+2024-05-30 19:50:03.716336   (Game) the_kozuHas started playing Russian Roulette
