@@ -1,6 +1,7 @@
 # bot.py
 import os
 import os.path
+from re import A
 import discord
 from discord import *
 from discord.ext import commands
@@ -11,11 +12,18 @@ from datetime import *
 from subprocess import Popen
 import csv
 import random
+filepath= (r"C:\Users\matty\Documents\Visual Studio 2022\Repos\ThEmeralDuke\David_Bot\David_Bot") # make this your file path
 person= ""
-TOKEN = "MTI0MDcyMTgwNTY5ODY2MjU2MQ.GHqu2I.M15rcqb8jebTDBzo8zdamsYDitHcuqN3UhOaZ8"
+with open (filepath+"/ImportantTxtfiles/important.csv", "r") as info:
+    reader= csv.reader(info)
+    for row in reader:
+        TOKEN= row[0]
+        Adminrole=row[1]
+info.close()
+
 SystemChannelID= 1240997501750743221
 bot = commands.Bot(command_prefix='!', intents=discord.Intents.all())
-filepath= (r"C:\Users\matty\Documents\Visual Studio 2022\Repos\ThEmeralDuke\David_Bot\David_Bot") # make this your file path
+
 @bot.event
 async def on_ready():
     print("Bot is ready\n\n")
@@ -30,6 +38,7 @@ async def on_ready():
 
 @bot.command()
 async def hi(ctx):
+    await bot.change_presence(status=discord.Status.online)
     personID= ctx.author.id
     personID= str(personID)
     #await ctx.send("Hey")
@@ -38,7 +47,7 @@ async def hi(ctx):
 
 
 @bot.command(pass_context=True)
-@commands.has_role("BotKing")
+@commands.has_role(Adminrole)
 async def restart(ctx):
     global person
     person= ctx.author
@@ -66,7 +75,7 @@ async def restartError(ctx ,error):
             currenttime= str(datetime.now())
             log.write(currenttime+ "   (FAIL) Bot Restart attempted by "+ person+"\n")
         log.close()
-        await ctx.send("You dont have permissions (BotKing) to do this <@"+personID+">")
+        await ctx.send("You dont have permissions ("+Adminrole+") to do this <@"+personID+">")
         
 
 @bot.command(pass_context=True)
@@ -99,7 +108,7 @@ async def shutdownError(ctx ,error):
             currenttime= str(datetime.now())
             log.write(currenttime+ "   (FAIL) Bot Shutdown attempted by "+ person+"\n")
         log.close()
-        await ctx.send("You dont have permissions (BotKing) to do this <@"+personID+">")
+        await ctx.send("You dont have permissions ("+Adminrole+") to do this <@"+personID+">")
 
 
 
