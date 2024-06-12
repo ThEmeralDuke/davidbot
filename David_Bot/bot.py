@@ -1,8 +1,8 @@
 # bot.py
+# bot.py
 import os
 import os.path
-from tokenize import Token
-from tracemalloc import start
+from re import A
 import discord
 from discord import *
 from discord.ext import commands
@@ -13,8 +13,15 @@ from datetime import *
 from subprocess import Popen
 import csv
 import random
+filepath= (r"C:\Users\matty\Documents\Visual Studio 2022\Repos\ThEmeralDuke\David_Bot\David_Bot") # make this your file path
 person= ""
-TOKEN = "MTI0MDcyMTgwNTY5ODY2MjU2MQ.GHqu2I.M15rcqb8jebTDBzo8zdamsYDitHcuqN3UhOaZ8"
+with open (filepath+"/ImportantTxtfiles/important.csv", "r") as info:
+    reader= csv.reader(info)
+    for row in reader:
+        TOKEN= row[0]
+        Adminrole=row[1]
+info.close()
+
 SystemChannelID= 1240997501750743221
 bot = commands.Bot(command_prefix='!', intents=discord.Intents.all())
 
@@ -24,14 +31,15 @@ async def on_ready():
     currenttime= str(datetime.now())
     SystemChannel= bot.get_channel(SystemChannelID)
     
-    #await SystemChannel.send("Bot is ACTIVE at "+currenttime)
-    with open ("./ImportantTxtfiles/Logs.txt", "a") as log:
+    await SystemChannel.send("Bot is ACTIVE at "+currenttime)
+    with open (filepath+"/ImportantTxtfiles/Logs.log", "a") as log:
         currenttime= str(datetime.now())
         log.write("\n"+currenttime+ "   Bot Started\n")
     log.close()
 
 @bot.command()
 async def hi(ctx):
+    await bot.change_presence(status=discord.Status.online)
     personID= ctx.author.id
     personID= str(personID)
     #await ctx.send("Hey")
@@ -40,14 +48,14 @@ async def hi(ctx):
 
 
 @bot.command(pass_context=True)
-@commands.has_role("BotKing")
+@commands.has_role(Adminrole)
 async def restart(ctx):
     global person
     person= ctx.author
     person= str(person)
     print("Bot restarted by "+ person)
     await ctx.send("Restarting...")
-    with open ("./ImportantTxtfiles/Logs.txt", "a") as log:
+    with open (filepath+"/ImportantTxtfiles/Logs.log", "a") as log:
         currenttime= str(datetime.now())
         log.write(currenttime+"   Bot Restarted by "+ person+"\n")
     log.close()
@@ -64,11 +72,11 @@ async def restartError(ctx ,error):
         personID= person.id
         person= str(person)
         personID= str(personID)
-        with open ("./ImportantTxtfiles/Logs.txt", "a") as log:
+        with open (filepath+"/ImportantTxtfiles/Logs.log", "a") as log:
             currenttime= str(datetime.now())
             log.write(currenttime+ "   (FAIL) Bot Restart attempted by "+ person+"\n")
         log.close()
-        await ctx.send("You dont have permissions (BotKing) to do this <@"+personID+">")
+        await ctx.send("You dont have permissions ("+Adminrole+") to do this <@"+personID+">")
         
 
 @bot.command(pass_context=True)
@@ -79,14 +87,15 @@ async def shutdown(ctx):
     person= str(person)
     print("Bot Shutdown by "+ person)
     await ctx.send("Shutting down...")
-    with open ("./ImportantTxtfiles/Logs.txt", "a") as log:
+    with open (filepath+"/ImportantTxtfiles/Logs.log", "a") as log:
         currenttime= str(datetime.now())
         log.write(currenttime+ "   Bot Shutdown by "+ person+"\n")
     log.close()
     while True:
         await bot.change_presence(status=discord.Status.invisible)
         time.sleep(1)
-        await exit()
+        w = 0/0
+        print(w)
     
 @shutdown.error
 async def shutdownError(ctx ,error):
@@ -96,59 +105,32 @@ async def shutdownError(ctx ,error):
         personID= person.id
         person= str(person)
         personID= str(personID)
-        with open ("./ImportantTxtfiles/Logs.txt", "a") as log:
+        with open (filepath+"/ImportantTxtfiles/Logs.log", "a") as log:
             currenttime= str(datetime.now())
             log.write(currenttime+ "   (FAIL) Bot Shutdown attempted by "+ person+"\n")
         log.close()
-        await ctx.send("You dont have permissions (BotKing) to do this <@"+personID+">")
-        
+        await ctx.send("You dont have permissions ("+Adminrole+") to do this <@"+personID+">")
 
-Bullets= 0
+
+
+
+
+
+
+#######      RUSSIAN ROULETTE      ######
+
+scoreRR= 0
 playerRR= 0
 HighScoreRR= 0
 PlayerlistRR= []
 GameRR= []
-
 @bot.command()
-async def RussianRoulette(ctx):
+async def startRR(ctx):
     global HighScoreRR
     global Bullets
+    global mcontext
     global playerRR
     global ContinueResponseRR
-    async def RRgame():
-        BulletsRR= [1]
-        global GameRR
-        global scoreRR
-        global Dude
-        scoreRR= 0
-        scoreRR= str(scoreRR)
-        print("hi")
-        
-        print("part 1 complete")
-        async def BulletCreation():
-            print("1")
-            global BulletsRR
-            BulletsRR= [1]
-            print("2")
-            for i in range(random.randint(1,5)):
-                print("3")
-                BulletsRR.append(0)
-                print("4")
-            random.shuffle(BulletsRR)
-            print("5")
-            await ctx.send("The ammount of Bullets in the revolver is", len(BulletsRR))
-            BulletsRR= "|".join(BulletsRR)
-            print("part 2 complete")
-            for i in range(len(GameRR)):
-                if Dude== GameRR[i][0]:
-                    BulletsRR= GameRR[i][2]
-                    success= True
-            if success== False:
-                print("error")
-            else:
-                print("part 3 complete")
-                PlayerChoosing()
-        await BulletCreation()
     found= False
     ActiveGame="False"
     Dude= ctx.author
@@ -161,67 +143,211 @@ async def RussianRoulette(ctx):
                 found= True
                 print(Dude, "found")
     if found== False:
-        with open ("./ImportantTxtfiles/Logs.txt", "a") as log:
+        with open (filepath+"/ImportantTxtfiles/Logs.log", "a") as log:
             currenttime= str(datetime.now())
-            log.write(currenttime+ "   (Game) "+ Dude+"Has started playing Russian Roulette")
+            log.write(currenttime+ "   (Game) "+ Dude+"Has started playing Russian Roulette\n")
         log.close()
         playerRR= Dude
         PlayerlistRR.append(Dude)
         print(Dude,"Added to Russian Roulette")
-        file_exists = os.path.exists('./RussianRouletteFiles/'+playerRR+'.csv')
+        file_exists = os.path.exists(filepath+'/RussianRouletteFiles/'+playerRR+'.csv')
         if file_exists== True:
-                with open('./RussianRouletteFiles/'+playerRR+'.csv',"r") as Game: 
+                with open(filepath+'/RussianRouletteFiles/'+playerRR+'.csv',"r") as Game: 
                     reader= csv.reader(Game)
                     for row in reader:
-                        ActiveGame= row[0]
-                        HighScoreRR= row[1]
+                        HighScoreRR= row[0]
                         HighScoreRR= int(HighScoreRR)
-                        if ActiveGame== "True":
-                            Bullets= row[2]
                 Game.close
         else:
-            with open('./RussianRouletteFiles/'+playerRR+'.csv',"w") as Game:
+            with open(filepath+'/RussianRouletteFiles/'+playerRR+'.csv',"w") as Game:
                 writer=csv.writer(Game, lineterminator= "\n")
-                writer.writerow(["False","1"])
+                writer.writerow(["0"])
             Game.close
-        if ActiveGame== "True":
-                    await ctx.send("You have an active game <@"+DudeID+">\nWould you like to continue it? #yes #no")
-                    GameRR.append([playerRR,Bullets,HighScoreRR,"response"])
-                    options = ["yes", "no"]
-                    def check(m):
-                        return (
-                            m.content.startswith("#")
-                            and m.content.lower()[1:] in options
-                            and m.channel.id == ctx.channel.id
-                            and m.author.id== ctx.author.id
-                        )
-                    i=0    
-                    while True:
-                        msg = await bot.wait_for("message", check=check)
-                        try:
-                            if Dude== GameRR[i][0] and GameRR[i][3]== "response":
-                                if str(msg.content).lower()== "#yes":
-                                    await ctx.send("Loading game...")
-                                    del GameRR[i][3]
-                                    index= i
-                                    await RRgame()
-                                    break
-                                else:
-                                    await ctx.send("starting new game...")
-                                    del GameRR[i][3],  GameRR[i][2],
-                                    await RRgame()
-                                    break
-                            else:
-                                i= i+1
-                        except:   
-                            i=0
-        else:
-            GameRR.append([playerRR])        
-            await ctx.send("starting new game...")
-            await RRgame()
+        GameRR.append([playerRR,HighScoreRR,0])        
+        print(Dude,"Loaded")
+        
+        await ctx.send("Loaded. Please use !RRgame to start")
 
     else:
         await ctx.send("you are already playing")
+scoreRR= 0        
+@bot.command()
+async def RRgame(ctx):
+    
+    global scoreRR
+    global GameRR
+    global BulletsRR
+    Dude= ctx.author
+    DudeID= Dude.id
+    DudeID= str(DudeID)
+    Dude= str(Dude)
+    for o in range(len(GameRR)):
+        if GameRR[o][0]== Dude:
+            await ctx.send("That command can be used to restart the game")
+            print(GameRR)
+            BulletsRR= [1]
+            global scoreRR
+            Dude= ctx.author
+            DudeID= Dude.id
+            DudeID= str(DudeID)
+            Dude= str(Dude)
+            BulletsRR= [1]
+            for i in range(random.randint(1,5)):
+                BulletsRR.append(0)
+            random.shuffle(BulletsRR)
+            print("shuffled")
+            msg= "The ammount of Bullets in the revolver is ", str(len(BulletsRR))
+            msg= ("".join(msg))
+            await ctx.send(msg)
+            print("part 2 complete")
+            try:
+                del GameRR[o][3]
+                try:
+                    del GameRR[o][3]
+                except:
+                    print()
+            except:
+                print()
+            GameRR[o].append(BulletsRR)
+            GameRR[o].append("response")
+            print(GameRR)
+            await ctx.send("Are you going to shoot yourself or shoot the dealer? (send !S or !D) ")
+
+@bot.command()
+async def S(ctx):
+    global scoreRR
+    global GameRR
+    Dude= ctx.author
+    DudeID= Dude.id
+    DudeID= str(DudeID)
+    Dude= str(Dude)
+    global BulletsRR
+    for y in range(len(GameRR)):
+        try:
+            if GameRR[y][0]== Dude and GameRR[y][4]== "response":
+                print(Dude,"chose to shoot themselves")
+                del GameRR[y][4]
+                if GameRR[y][3][0]== 1:
+                    await ctx.send("You died...")
+                    #end
+                    if int(GameRR[y][2])== 0:
+                        await ctx.send("L bozo")
+                    
+                    elif int(GameRR[y][2]) > GameRR[y][1]:
+                        with open(filepath+'/RussianRouletteFiles/'+playerRR+'.csv',"w") as Game:
+                            writer=csv.writer(Game, lineterminator= "\n")
+                            writer.writerow([GameRR[y][2]])
+                            Game.close()
+                    GameRR[y][2]= 0    
+                else:
+                    await ctx.send("Blank")
+
+                    del GameRR[y][3][0]
+                    if GameRR[y][3]== []:
+                        await ctx.send("No one died")
+                        time.sleep(1)
+                        await ctx.send("Please use !RRgame to go to next game")
+                        del GameRR[y][3], 
+                    
+                    else:
+                        await ctx.send("Are you going to shoot yourself or shoot the dealer? (send !S or !D) ")
+                        GameRR[y].append("response")
+        except:
+            await ctx.send("Please use !RRgame to start the game")
+@bot.command()
+async def D(ctx):
+    global scoreRR
+    global GameRR
+    Dude= ctx.author
+    DudeID= Dude.id
+    DudeID= str(DudeID)
+    Dude= str(Dude)
+    global BulletsRR
+    for y in range(len(GameRR)):
+        try:
+            if GameRR[y][0]== Dude and GameRR[y][4]== "response":
+                print(Dude,"chose to shoot the Dealer")
+                del GameRR[y][4]
+                if GameRR[y][3][0]== 1:
+                    await ctx.send("The Dealer is dead")
+                    int(GameRR[y][2])
+                    GameRR[y][2]= GameRR[y][2]+1
+                    if GameRR[y][2] > GameRR[y][1]:
+                        with open(filepath+'/RussianRouletteFiles/'+playerRR+'.csv',"w") as Game:
+                            writer=csv.writer(Game, lineterminator= "\n")
+                            writer.writerow([GameRR[y][2]])
+                            Game.close()
+                    await ctx.send("Please use !RRgame to go to next game")
+                else:
+                    print("Blank")
+                    del GameRR[y][3][0]
+                    if GameRR[y][3][0]== []:
+                        time.sleep(1)
+                        await ctx.send("Please use !RRgame to go to next game")
+                    else:
+                    
+
+                        #####dealer#####
+
+                        while True:
+                            print("Dealer is choosing for",Dude)
+                            if GameRR[y][3][0]== [1]:
+                                DealersChoice= 1
+                            else:
+                                DealersChoice= random.randint(1,4)
+                            if DealersChoice== 4:
+                                await ctx.send("Dealer is choosing to shoot themself")
+                                time.sleep(1.5)
+                                if GameRR[y][3][0]== 1:
+                                    print("The Dealer is dead")
+                                    int(GameRR[y][2])
+                                    GameRR[y][2]= GameRR[y][2]+1
+                                    if GameRR[y][2] > GameRR[y][1]:
+                                        with open(filepath+'/RussianRouletteFiles/'+playerRR+'.csv',"w") as Game:
+                                            writer=csv.writer(Game, lineterminator= "\n")
+                                            writer.writerow([GameRR[y][2]])
+                                            Game.close()
+                                    await ctx.send("Please use !RRgame to go to next game")
+                                    break
+                                else:
+                                    await ctx.send("Blank")
+
+                                    del GameRR[y][3][0]
+                                    if GameRR[y][3][0]== []:
+                                        await ctx.send("No one died...")
+                                        await ctx.send("Please use !RRgame to go to next game")
+                                    await ctx.send("Are you going to shoot yourself or shoot the new dealer? (send !S or !D) ")
+                                    GameRR[y].append("response")
+                                    break
+                            elif DealersChoice== 1 or DealersChoice== 2 or DealersChoice== 3:
+                                await ctx.send("Dealer is choosing to shoot you")
+                                if GameRR[y][3][0]== 1:
+                                    await ctx.send("You died...")
+                                    #end
+                                    if int(GameRR[y][2])== 0:
+                                        await ctx.send("L bozo")
+                    
+                                    elif int(GameRR[y][2]) > GameRR[y][1]:
+                                        with open(filepath+'/RussianRouletteFiles/'+playerRR+'.csv',"w") as Game:
+                                            writer=csv.writer(Game, lineterminator= "\n")
+                                            writer.writerow([GameRR[y][2]])
+                                            Game.close()
+                                    GameRR[y][2]= 0
+                                    break
+                                else:
+                                    await ctx.send("Blank")
+
+                                    del GameRR[y][3][0]
+                                    if GameRR[y][3][0]== []:
+                                        await ctx.send("No one died...")
+                                        await ctx.send("Please use !RRgame to go to next game")
+                                    else:
+                                        await ctx.send("Are you going to shoot yourself or shoot the new dealer? (send !S or !D) ")
+                                        GameRR[y].append("response")
+                                    break
+        except:
+            await ctx.send("Please use !RRgame to start the game")
+
 
 @bot.command()
 async def QuitRR(ctx):
@@ -234,9 +360,9 @@ async def QuitRR(ctx):
             for u in range(len(PlayerlistRR)):
                 if str(ctx.author) == PlayerlistRR[u]:
                     del PlayerlistRR[u]
-                    with open ("./ImportantTxtfiles/Logs.txt", "a") as log:
+                    with open (filepath+"/ImportantTxtfiles/Logs.log", "a") as log:
                         currenttime= str(datetime.now())
-                        log.write(currenttime+ "   (Game) "+ str(ctx.author)+"Has stopped playing Russian Roulette")
+                        log.write(currenttime+ "   (Game) "+ str(ctx.author)+"Has stopped playing Russian Roulette\n")
                     log.close()
                     print("Quit successful ("+str(ctx.author)+")")
                     await ctx.send("Quit Successful")
