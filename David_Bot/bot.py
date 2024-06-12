@@ -1,6 +1,7 @@
-# bot.py
+
 import os
 import os.path
+from re import A
 import discord
 from discord import *
 from discord.ext import commands
@@ -148,7 +149,11 @@ async def startRR(ctx):
         playerRR= Dude
         PlayerlistRR.append(Dude)
         print(Dude,"Added to Russian Roulette")
-        file_exists = os.path.exists('./RussianRouletteFiles/'+playerRR+'.csv')
+        try:
+            os.mkdir(filepath+"/RussianRouletteFiles")
+        except:
+            pass
+        file_exists = os.path.exists(filepath+'/RussianRouletteFiles/'+playerRR+'.csv')
         if file_exists== True:
                 with open(filepath+'/RussianRouletteFiles/'+playerRR+'.csv',"r") as Game: 
                     reader= csv.reader(Game)
@@ -161,32 +166,176 @@ async def startRR(ctx):
                 writer=csv.writer(Game, lineterminator= "\n")
                 writer.writerow(["0"])
             Game.close
-        if ActiveGame== "True":
-                    await ctx.send("You have an active game <@"+DudeID+">\nWould you like to continue it? #yes #no")
-                    GameRR.append([playerRR,Bullets,HighScoreRR,"response"])
-                    options = ["yes", "no"]
-                    def check(m):
-                        return (
-                            m.content.startswith("#")
-                            and m.content.lower()[1:] in options
-                            and m.channel.id == ctx.channel.id
-                            and m.author.id== ctx.author.id
-                        )
-                    i=0    
-                    while True:
-                        msg = await bot.wait_for("message", check=check)
-                        try:
-                            if Dude== GameRR[i][0] and GameRR[i][3]== "response":
-                                if str(msg.content).lower()== "#yes":
-                                    await ctx.send("Loading game...")
-                                    del GameRR[i][3]
-                                    index= i
-                                    await RRgame()
+        GameRR.append([playerRR,HighScoreRR,0])        
+        print(Dude,"Loaded")
+        
+        await ctx.send("Loaded. Please use !RRgame to start")
+
+    else:
+        await ctx.send("you are already playing")
+scoreRR= 0        
+@bot.command()
+async def RRgame(ctx):
+    
+    global scoreRR
+    global GameRR
+    global BulletsRR
+    Dude= ctx.author
+    DudeID= Dude.id
+    DudeID= str(DudeID)
+    Dude= str(Dude)
+    for o in range(len(GameRR)):
+        if GameRR[o][0]== Dude:
+            await ctx.send("That command can be used to restart the game")
+            print(GameRR)
+            BulletsRR= [1]
+            global scoreRR
+            Dude= ctx.author
+            DudeID= Dude.id
+            DudeID= str(DudeID)
+            Dude= str(Dude)
+            BulletsRR= [1]
+            for i in range(random.randint(1,5)):
+                BulletsRR.append(0)
+            random.shuffle(BulletsRR)
+            print("shuffled")
+            msg= "The ammount of Bullets in the revolver is ", str(len(BulletsRR))
+            msg= ("".join(msg))
+            await ctx.send(msg)
+            print("part 2 complete")
+            try:
+                del GameRR[o][3]
+                try:
+                    del GameRR[o][3]
+                except:
+                    print()
+            except:
+                print()
+            GameRR[o].append(BulletsRR)
+            GameRR[o].append("response")
+            print(GameRR)
+            await ctx.send("Are you going to shoot yourself or shoot the dealer? (send !S or !D) ")
+
+@bot.command()
+async def S(ctx):
+    global scoreRR
+    global GameRR
+    Dude= ctx.author
+    DudeID= Dude.id
+    DudeID= str(DudeID)
+    Dude= str(Dude)
+    global BulletsRR
+    for y in range(len(GameRR)):
+        try:
+            if GameRR[y][0]== Dude and GameRR[y][4]== "response":
+                print(Dude,"chose to shoot themselves")
+                del GameRR[y][4]
+                if GameRR[y][3][0]== 1:
+                    await ctx.send("You died...")
+                    #end
+                    if int(GameRR[y][2])== 0:
+                        await ctx.send("L bozo")
+                    
+                    elif int(GameRR[y][2]) > GameRR[y][1]:
+                        with open(filepath+'/RussianRouletteFiles/'+playerRR+'.csv',"w") as Game:
+                            writer=csv.writer(Game, lineterminator= "\n")
+                            writer.writerow([GameRR[y][2]])
+                            Game.close()
+                    GameRR[y][2]= 0    
+                else:
+                    await ctx.send("Blank")
+
+                    del GameRR[y][3][0]
+                    if GameRR[y][3]== []:
+                        await ctx.send("No one died")
+                        time.sleep(1)
+                        await ctx.send("Please use !RRgame to go to next game")
+                        del GameRR[y][3], 
+                    
+                    else:
+                        await ctx.send("Are you going to shoot yourself or shoot the dealer? (send !S or !D) ")
+                        GameRR[y].append("response")
+        except:
+            await ctx.send("Please use !RRgame to start the game")
+@bot.command()
+async def D(ctx):
+    global scoreRR
+    global GameRR
+    Dude= ctx.author
+    DudeID= Dude.id
+    DudeID= str(DudeID)
+    Dude= str(Dude)
+    global BulletsRR
+    for y in range(len(GameRR)):
+        try:
+            if GameRR[y][0]== Dude and GameRR[y][4]== "response":
+                print(Dude,"chose to shoot the Dealer")
+                del GameRR[y][4]
+                if GameRR[y][3][0]== 1:
+                    await ctx.send("The Dealer is dead")
+                    int(GameRR[y][2])
+                    GameRR[y][2]= GameRR[y][2]+1
+                    if GameRR[y][2] > GameRR[y][1]:
+                        with open(filepath+'/RussianRouletteFiles/'+playerRR+'.csv',"w") as Game:
+                            writer=csv.writer(Game, lineterminator= "\n")
+                            writer.writerow([GameRR[y][2]])
+                            Game.close()
+                    await ctx.send("Please use !RRgame to go to next game")
+                else:
+                    print("Blank")
+                    del GameRR[y][3][0]
+                    if GameRR[y][3][0]== []:
+                        time.sleep(1)
+                        await ctx.send("Please use !RRgame to go to next game")
+                    else:
+                    
+
+                        #####dealer#####
+
+                        while True:
+                            print("Dealer is choosing for",Dude)
+                            if GameRR[y][3][0]== [1]:
+                                DealersChoice= 1
+                            else:
+                                DealersChoice= random.randint(1,4)
+                            if DealersChoice== 4:
+                                await ctx.send("Dealer is choosing to shoot themself")
+                                time.sleep(1.5)
+                                if GameRR[y][3][0]== 1:
+                                    print("The Dealer is dead")
+                                    int(GameRR[y][2])
+                                    GameRR[y][2]= GameRR[y][2]+1
+                                    if GameRR[y][2] > GameRR[y][1]:
+                                        with open(filepath+'/RussianRouletteFiles/'+playerRR+'.csv',"w") as Game:
+                                            writer=csv.writer(Game, lineterminator= "\n")
+                                            writer.writerow([GameRR[y][2]])
+                                            Game.close()
+                                    await ctx.send("Please use !RRgame to go to next game")
                                     break
                                 else:
-                                    await ctx.send("starting new game...")
-                                    del GameRR[i][3],  GameRR[i][2],
-                                    await RRgame()
+                                    await ctx.send("Blank")
+
+                                    del GameRR[y][3][0]
+                                    if GameRR[y][3][0]== []:
+                                        await ctx.send("No one died...")
+                                        await ctx.send("Please use !RRgame to go to next game")
+                                    await ctx.send("Are you going to shoot yourself or shoot the new dealer? (send !S or !D) ")
+                                    GameRR[y].append("response")
+                                    break
+                            elif DealersChoice== 1 or DealersChoice== 2 or DealersChoice== 3:
+                                await ctx.send("Dealer is choosing to shoot you")
+                                if GameRR[y][3][0]== 1:
+                                    await ctx.send("You died...")
+                                    #end
+                                    if int(GameRR[y][2])== 0:
+                                        await ctx.send("L bozo")
+                    
+                                    elif int(GameRR[y][2]) > GameRR[y][1]:
+                                        with open(filepath+'/RussianRouletteFiles/'+playerRR+'.csv',"w") as Game:
+                                            writer=csv.writer(Game, lineterminator= "\n")
+                                            writer.writerow([GameRR[y][2]])
+                                            Game.close()
+                                    GameRR[y][2]= 0
                                     break
                                 else:
                                     await ctx.send("Blank")
