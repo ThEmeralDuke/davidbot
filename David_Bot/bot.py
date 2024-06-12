@@ -1,8 +1,6 @@
 # bot.py
-# bot.py
 import os
 import os.path
-from re import A
 import discord
 from discord import *
 from discord.ext import commands
@@ -150,6 +148,10 @@ async def startRR(ctx):
         playerRR= Dude
         PlayerlistRR.append(Dude)
         print(Dude,"Added to Russian Roulette")
+        try:
+            os.mkdir(filepath+"/RussianRouletteFiles")
+        except:
+            pass
         file_exists = os.path.exists(filepath+'/RussianRouletteFiles/'+playerRR+'.csv')
         if file_exists== True:
                 with open(filepath+'/RussianRouletteFiles/'+playerRR+'.csv',"r") as Game: 
@@ -297,11 +299,11 @@ async def D(ctx):
                                 DealersChoice= random.randint(1,4)
                             if DealersChoice== 4:
                                 await ctx.send("Dealer is choosing to shoot themself")
-                                time.sleep(1.5)
                                 if GameRR[y][3][0]== 1:
-                                    print("The Dealer is dead")
-                                    int(GameRR[y][2])
-                                    GameRR[y][2]= GameRR[y][2]+1
+                                    del GameRR[y][3][0]
+                                    await ctx.send("The Dealer is dead")
+                                    temp= GameRR[y][2]
+                                    GameRR[y][2]= temp+1
                                     if GameRR[y][2] > GameRR[y][1]:
                                         with open(filepath+'/RussianRouletteFiles/'+playerRR+'.csv',"w") as Game:
                                             writer=csv.writer(Game, lineterminator= "\n")
@@ -316,7 +318,7 @@ async def D(ctx):
                                     if GameRR[y][3][0]== []:
                                         await ctx.send("No one died...")
                                         await ctx.send("Please use !RRgame to go to next game")
-                                    await ctx.send("Are you going to shoot yourself or shoot the new dealer? (send !S or !D) ")
+                                    await ctx.send("Are you going to shoot yourself or shoot the dealer? (send !S or !D) ")
                                     GameRR[y].append("response")
                                     break
                             elif DealersChoice== 1 or DealersChoice== 2 or DealersChoice== 3:
