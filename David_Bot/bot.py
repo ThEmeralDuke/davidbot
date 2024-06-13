@@ -1,7 +1,5 @@
-from operator import le
 import os
 import os.path
-from timeit import Timer
 import discord
 from discord import *
 from discord.ext import commands
@@ -9,7 +7,6 @@ from discord.utils import *
 import time as timee
 import datetime
 from datetime import *
-from subprocess import Popen
 import csv
 import random
 import threading
