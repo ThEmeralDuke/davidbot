@@ -35,7 +35,8 @@ bot = commands.Bot(command_prefix='!', intents=discord.Intents.all(), activity =
 @bot.command(pass_context=True)
 @commands.has_role(Adminrole)
 async def Settings(ctx):
-    pass
+    pass    
+
 
 
 
