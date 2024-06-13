@@ -1,16 +1,18 @@
 import os
 import os.path
-from re import A
+from timeit import Timer
 import discord
 from discord import *
 from discord.ext import commands
 from discord.utils import *
-import time
+import time as timee
 import datetime
 from datetime import *
 from subprocess import Popen
 import csv
 import random
+import threading
+
 filepath= (r"C:\Users\matty\Documents\Visual Studio 2022\Repos\ThEmeralDuke\David_Bot\David_Bot") # make this your file path
 person= ""
 with open (filepath+"/ImportantTxtfiles/important.csv", "r") as info:
@@ -19,7 +21,12 @@ with open (filepath+"/ImportantTxtfiles/important.csv", "r") as info:
         TOKEN= row[0]
         Adminrole=row[1]
 info.close()
-
+with open (filepath+"/ImportantTxtfiles/settings.csv", "r") as settings:
+    reader= csv.reader(settings)
+    for row in reader:
+        LeaderboardDelay= row[0]
+        LeaderboardDelay= int(LeaderboardDelay)
+settings.close()
 SystemChannelID= 1240997501750743221
 bot = commands.Bot(command_prefix='!', intents=discord.Intents.all(), activity = discord.Activity(type=discord.ActivityType.listening, name="!Commands"))
 
@@ -225,7 +232,7 @@ async def S(ctx):
                     print(GameRR[y][3])
                     if GameRR[y][3]== []:
                         await ctx.send("No one died")
-                        time.sleep(1)
+                        timee.sleep(1)
                         await ctx.send("Please use !RRgame to go to next game")
                         del GameRR[y][3], 
                     
@@ -263,7 +270,7 @@ async def D(ctx):
                     del GameRR[y][3][0]
                     print(GameRR[y][3])
                     if GameRR[y][3][0]== []:
-                        time.sleep(1)
+                        timee.sleep(1)
                         await ctx.send("Please use !RRgame to go to next game")
                     else:
                     
@@ -329,10 +336,31 @@ async def D(ctx):
         except:
             await ctx.send("Please use !RRgame to start the game")
 
+RrLBoardToggle= True     
+RRtimer= 0
+def TimerLeaderboard():
+    global RrLBoardToggle
+    global RRtimer
+    while True:
+        timee.sleep(1)
+        RRtimer= RRtimer+1
+        print(RRtimer)
+        if RRtimer>= LeaderboardDelay:
+            print("TTT")
+            RrLBoardToggle= True
+            RRtimer= 0
+            break
 
 @bot.command()
 async def RRleaderboard(ctx):
-    pass
+    global RrLBoardToggle
+    if RrLBoardToggle== True:
+        RrLBoardToggle= False
+        RRthread = threading.Thread(target=TimerLeaderboard)
+        RRthread.start()
+        await ctx.send("HEYYY")
+    else:
+        await ctx.send("Please wait until ("+str(LeaderboardDelay)+") second(s) have passed since last leaderboard request")
 
 @bot.command()
 async def QuitRR(ctx):
@@ -356,7 +384,5 @@ async def QuitRR(ctx):
     if Quitting== False:
         print("Couldn't quit (Person not playing)("+str(ctx.author)+")")
         await ctx.send("Couldn't quit (Person not playing)")
-        
-
 
 bot.run(TOKEN)
