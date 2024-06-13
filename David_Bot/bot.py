@@ -1,3 +1,4 @@
+from operator import le
 import os
 import os.path
 from timeit import Timer
@@ -19,6 +20,7 @@ with open (filepath+"/ImportantTxtfiles/important.csv", "r") as info:
     reader= csv.reader(info)
     for row in reader:
         TOKEN= row[0]
+        botrole= row[1]
         Adminrole=row[1]
 info.close()
 with open (filepath+"/ImportantTxtfiles/settings.csv", "r") as settings:
@@ -29,6 +31,13 @@ with open (filepath+"/ImportantTxtfiles/settings.csv", "r") as settings:
 settings.close()
 SystemChannelID= 1240997501750743221
 bot = commands.Bot(command_prefix='!', intents=discord.Intents.all(), activity = discord.Activity(type=discord.ActivityType.listening, name="!Commands"))
+
+@bot.command(pass_context=True)
+@commands.has_role(Adminrole)
+async def Settings(ctx):
+    pass
+
+
 
 @bot.command()
 async def Commands(ctx):
@@ -58,7 +67,7 @@ async def hi(ctx):
     await ctx.send("Hey <@"+personID+">")
 
 @bot.command(pass_context=True)
-@commands.has_role("BotKing")
+@commands.has_role(Adminrole)
 async def shutdown(ctx):
     global person
     person= ctx.author
@@ -344,23 +353,88 @@ def TimerLeaderboard():
     while True:
         timee.sleep(1)
         RRtimer= RRtimer+1
-        print(RRtimer)
         if RRtimer>= LeaderboardDelay:
-            print("TTT")
+            print("RR leaderboard is useable again")
             RrLBoardToggle= True
             RRtimer= 0
             break
 
+
+RRLBcontinue= False
+LeaderboardListRR= []
 @bot.command()
 async def RRleaderboard(ctx):
+    global LeaderboardListRR
     global RrLBoardToggle
+    person= ctx.author
+    personID= person.id
+    person= str(person)
+    personID= str(personID)
+    LeaderboardListRR= []
     if RrLBoardToggle== True:
         RrLBoardToggle= False
-        RRthread = threading.Thread(target=TimerLeaderboard)
-        RRthread.start()
-        await ctx.send("HEYYY")
+        RRtimethread = threading.Thread(target=TimerLeaderboard)
+        RRtimethread.start()
+        bannedrole = discord.utils.get(ctx.guild.roles, name=botrole)
+        n=0
+        for member in ctx.guild.members:
+            #try:
+            if bannedrole in member.roles:
+                pass
+            else:
+                n=n+1
+                Dude= member.name
+                Dude= str(Dude)
+                LeaderboardListRR.append([Dude])
+            #except:
+                pass
+        RRLBcontinue= False
+        RRlboardthread = threading.Thread(target=checkRRfiles, args=(ctx,))
+        RRlboardthread.start()
+        #while RRLBcontinue== False:
+         #   pass
+        RRlboardthread.join()
+        # Sort the 2D array based on the second column (index 1)
+        arr= LeaderboardListRR
+        col_index= 1
+        insertion_sort_2d_Descending(arr, col_index)
+        print(arr)
+        try:
+            msg= "These are the 3 best people at Russian Roulette\n1. ",str(arr[0][0])," with ",str(arr[0][1])," points\n2. ",str(arr[1][0])," with ",str(arr[1][1])," points\n3. ",str(arr[2][0])," with ",str(arr[2][1])," points\n<@"+personID+">"
+            
+            msg= ("".join(msg))
+            await ctx.send(msg)
+        except:
+            try:
+                msg= "These are the 2 best people at Russian Roulette\n1. ",str(arr[0][0])," with ",str(arr[0][1])," points\n2. ",str(arr[1][0])," with ",str(arr[1][1])," points\n<@"+personID+">"
+                msg= ("".join(msg))
+                await ctx.send(msg)
+            except:
+                msg= "This is the best at Russian Roulette\n1. ",str(arr[0][0])," with ",str(arr[0][1])," points\n<@"+personID+">"
+                msg= ("".join(msg))
+                await ctx.send(msg)
     else:
         await ctx.send("Please wait until ("+str(LeaderboardDelay)+") second(s) have passed since last leaderboard request")
+
+def checkRRfiles(ctx):
+    global LeaderboardListRR
+    global RRLBcontinue
+    b=0
+    for member in ctx.guild.members:
+        try:
+            with open(filepath+'/RussianRouletteFiles/'+LeaderboardListRR[b][0]+'.csv',"r") as listing: 
+                reader= csv.reader(listing)
+                for row in reader:
+                    HighScoreRR= row[0]
+                    HighScoreRR= int(HighScoreRR)
+            listing.close
+            LeaderboardListRR[b].append(HighScoreRR)
+            b= b+1
+        except:
+            pass
+    print("Collected data for leaderboard")
+
+
 
 @bot.command()
 async def QuitRR(ctx):
@@ -384,5 +458,34 @@ async def QuitRR(ctx):
     if Quitting== False:
         print("Couldn't quit (Person not playing)("+str(ctx.author)+")")
         await ctx.send("Couldn't quit (Person not playing)")
+
+
+####    MISC    ####
+
+
+col_index= 0
+def insertion_sort_2d_Descending(arr, col_index):
+    # Traverse through 1 to len(arr)
+    try:
+        for i in range(1, len(arr)):
+            key = arr[i]
+            j = i - 1
+        
+            # Move elements of arr[0..i-1], that are greater than key,
+            # to one position ahead of their current position
+            while j >= 0 and arr[j][col_index] < key[col_index]:
+                arr[j + 1] = arr[j]
+                j -= 1
+            arr[j + 1] = key
+    except:
+        return arr
+
+
+
+
+
+
+
+
 
 bot.run(TOKEN)
