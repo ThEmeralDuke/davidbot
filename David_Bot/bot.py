@@ -21,7 +21,15 @@ with open (filepath+"/ImportantTxtfiles/important.csv", "r") as info:
 info.close()
 
 SystemChannelID= 1240997501750743221
-bot = commands.Bot(command_prefix='!', intents=discord.Intents.all())
+bot = commands.Bot(command_prefix='!', intents=discord.Intents.all(), activity = discord.Activity(type=discord.ActivityType.listening, name="!Commands"))
+
+@bot.command()
+async def Commands(ctx):
+    person= ctx.author
+    personID= person.id
+    person= str(person)
+    personID= str(personID)
+    await ctx.send("List of commands: (Case sensitive)\n1. !hi\n2. !shutdown (admin protected)\n3. !startRR\n4. !RRleaderboard\n5. !QuitRR\n<@"+personID+">")
 
 @bot.event
 async def on_ready():
@@ -40,42 +48,7 @@ async def hi(ctx):
     await bot.change_presence(status=discord.Status.online)
     personID= ctx.author.id
     personID= str(personID)
-    #await ctx.send("Hey")
     await ctx.send("Hey <@"+personID+">")
-
-
-
-@bot.command(pass_context=True)
-@commands.has_role(Adminrole)
-async def restart(ctx):
-    global person
-    person= ctx.author
-    person= str(person)
-    print("Bot restarted by "+ person)
-    await ctx.send("Restarting...")
-    with open (filepath+"/ImportantTxtfiles/Logs.log", "a") as log:
-        currenttime= str(datetime.now())
-        log.write(currenttime+"   Bot Restarted by "+ person+"\n")
-    log.close()
-    await bot.change_presence(status=discord.Status.do_not_disturb)
-    Popen('python restart.py')
-    exit()
-    
-
-@restart.error
-async def restartError(ctx ,error):
-    global person
-    if isinstance(error, commands.CheckFailure):
-        person= ctx.author
-        personID= person.id
-        person= str(person)
-        personID= str(personID)
-        with open (filepath+"/ImportantTxtfiles/Logs.log", "a") as log:
-            currenttime= str(datetime.now())
-            log.write(currenttime+ "   (FAIL) Bot Restart attempted by "+ person+"\n")
-        log.close()
-        await ctx.send("You dont have permissions ("+Adminrole+") to do this <@"+personID+">")
-        
 
 @bot.command(pass_context=True)
 @commands.has_role("BotKing")
@@ -91,10 +64,8 @@ async def shutdown(ctx):
     log.close()
     while True:
         await bot.change_presence(status=discord.Status.invisible)
-        time.sleep(1)
-        w = 0/0
-        print(w)
-    
+        exit()
+        
 @shutdown.error
 async def shutdownError(ctx ,error):
     global person
@@ -186,7 +157,13 @@ async def RRgame(ctx):
     for o in range(len(GameRR)):
         if GameRR[o][0]== Dude:
             await ctx.send("That command can be used to restart the game")
-            print(GameRR)
+            with open(filepath+'/RussianRouletteFiles/'+playerRR+'.csv',"r") as Game: 
+                reader= csv.reader(Game)
+                for row in reader:
+                    HighScoreRR= row[0]
+                    HighScoreRR= int(HighScoreRR)
+                    GameRR[o][1]= HighScoreRR
+            Game.close
             BulletsRR= [1]
             global scoreRR
             Dude= ctx.author
@@ -245,6 +222,7 @@ async def S(ctx):
                     await ctx.send("Blank")
 
                     del GameRR[y][3][0]
+                    print(GameRR[y][3])
                     if GameRR[y][3]== []:
                         await ctx.send("No one died")
                         time.sleep(1)
@@ -283,6 +261,7 @@ async def D(ctx):
                 else:
                     print("Blank")
                     del GameRR[y][3][0]
+                    print(GameRR[y][3])
                     if GameRR[y][3][0]== []:
                         time.sleep(1)
                         await ctx.send("Please use !RRgame to go to next game")
@@ -299,9 +278,8 @@ async def D(ctx):
                                 DealersChoice= random.randint(1,4)
                             if DealersChoice== 4:
                                 await ctx.send("Dealer is choosing to shoot themself")
-                                time.sleep(1.5)
                                 if GameRR[y][3][0]== 1:
-                                    print("The Dealer is dead")
+                                    await ctx.send("The Dealer is dead")
                                     int(GameRR[y][2])
                                     GameRR[y][2]= GameRR[y][2]+1
                                     if GameRR[y][2] > GameRR[y][1]:
@@ -315,6 +293,7 @@ async def D(ctx):
                                     await ctx.send("Blank")
 
                                     del GameRR[y][3][0]
+                                    print(GameRR[y][3])
                                     if GameRR[y][3][0]== []:
                                         await ctx.send("No one died...")
                                         await ctx.send("Please use !RRgame to go to next game")
@@ -350,6 +329,10 @@ async def D(ctx):
         except:
             await ctx.send("Please use !RRgame to start the game")
 
+
+@bot.command()
+async def RRleaderboard(ctx):
+    pass
 
 @bot.command()
 async def QuitRR(ctx):
