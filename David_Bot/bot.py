@@ -1,28 +1,49 @@
-# bot.py
 import os
 import os.path
-from re import A
 import discord
 from discord import *
 from discord.ext import commands
 from discord.utils import *
-import time
+import time as timee
 import datetime
 from datetime import *
-from subprocess import Popen
 import csv
 import random
+import threading
+
 filepath= (r"C:\Users\matty\Documents\Visual Studio 2022\Repos\ThEmeralDuke\David_Bot\David_Bot") # make this your file path
 person= ""
 with open (filepath+"/ImportantTxtfiles/important.csv", "r") as info:
     reader= csv.reader(info)
     for row in reader:
         TOKEN= row[0]
+        botrole= row[1]
         Adminrole=row[1]
 info.close()
-
+with open (filepath+"/ImportantTxtfiles/settings.csv", "r") as settings:
+    reader= csv.reader(settings)
+    for row in reader:
+        LeaderboardDelay= row[0]
+        LeaderboardDelay= int(LeaderboardDelay)
+settings.close()
 SystemChannelID= 1240997501750743221
-bot = commands.Bot(command_prefix='!', intents=discord.Intents.all())
+bot = commands.Bot(command_prefix='!', intents=discord.Intents.all(), activity = discord.Activity(type=discord.ActivityType.listening, name="!Commands"))
+
+@bot.command(pass_context=True)
+@commands.has_role(Adminrole)
+async def Settings(ctx):
+    pass    
+
+
+
+
+@bot.command()
+async def Commands(ctx):
+    person= ctx.author
+    personID= person.id
+    person= str(person)
+    personID= str(personID)
+    await ctx.send("List of commands: (Case sensitive)\n1. !hi\n2. !shutdown (admin protected)\n3. !startRR\n4. !RRleaderboard\n5. !QuitRR\n<@"+personID+">")
 
 @bot.event
 async def on_ready():
@@ -41,45 +62,10 @@ async def hi(ctx):
     await bot.change_presence(status=discord.Status.online)
     personID= ctx.author.id
     personID= str(personID)
-    #await ctx.send("Hey")
     await ctx.send("Hey <@"+personID+">")
-
-
 
 @bot.command(pass_context=True)
 @commands.has_role(Adminrole)
-async def restart(ctx):
-    global person
-    person= ctx.author
-    person= str(person)
-    print("Bot restarted by "+ person)
-    await ctx.send("Restarting...")
-    with open (filepath+"/ImportantTxtfiles/Logs.log", "a") as log:
-        currenttime= str(datetime.now())
-        log.write(currenttime+"   Bot Restarted by "+ person+"\n")
-    log.close()
-    await bot.change_presence(status=discord.Status.do_not_disturb)
-    Popen('python restart.py')
-    exit()
-    
-
-@restart.error
-async def restartError(ctx ,error):
-    global person
-    if isinstance(error, commands.CheckFailure):
-        person= ctx.author
-        personID= person.id
-        person= str(person)
-        personID= str(personID)
-        with open (filepath+"/ImportantTxtfiles/Logs.log", "a") as log:
-            currenttime= str(datetime.now())
-            log.write(currenttime+ "   (FAIL) Bot Restart attempted by "+ person+"\n")
-        log.close()
-        await ctx.send("You dont have permissions ("+Adminrole+") to do this <@"+personID+">")
-        
-
-@bot.command(pass_context=True)
-@commands.has_role("BotKing")
 async def shutdown(ctx):
     global person
     person= ctx.author
@@ -92,10 +78,8 @@ async def shutdown(ctx):
     log.close()
     while True:
         await bot.change_presence(status=discord.Status.invisible)
-        time.sleep(1)
-        w = 0/0
-        print(w)
-    
+        exit()
+        
 @shutdown.error
 async def shutdownError(ctx ,error):
     global person
@@ -149,6 +133,10 @@ async def startRR(ctx):
         playerRR= Dude
         PlayerlistRR.append(Dude)
         print(Dude,"Added to Russian Roulette")
+        try:
+            os.mkdir(filepath+"/RussianRouletteFiles")
+        except:
+            pass
         file_exists = os.path.exists(filepath+'/RussianRouletteFiles/'+playerRR+'.csv')
         if file_exists== True:
                 with open(filepath+'/RussianRouletteFiles/'+playerRR+'.csv',"r") as Game: 
@@ -183,7 +171,13 @@ async def RRgame(ctx):
     for o in range(len(GameRR)):
         if GameRR[o][0]== Dude:
             await ctx.send("That command can be used to restart the game")
-            print(GameRR)
+            with open(filepath+'/RussianRouletteFiles/'+playerRR+'.csv',"r") as Game: 
+                reader= csv.reader(Game)
+                for row in reader:
+                    HighScoreRR= row[0]
+                    HighScoreRR= int(HighScoreRR)
+                    GameRR[o][1]= HighScoreRR
+            Game.close
             BulletsRR= [1]
             global scoreRR
             Dude= ctx.author
@@ -242,9 +236,10 @@ async def S(ctx):
                     await ctx.send("Blank")
 
                     del GameRR[y][3][0]
+                    print(GameRR[y][3])
                     if GameRR[y][3]== []:
                         await ctx.send("No one died")
-                        time.sleep(1)
+                        timee.sleep(1)
                         await ctx.send("Please use !RRgame to go to next game")
                         del GameRR[y][3], 
                     
@@ -280,8 +275,9 @@ async def D(ctx):
                 else:
                     print("Blank")
                     del GameRR[y][3][0]
+                    print(GameRR[y][3])
                     if GameRR[y][3][0]== []:
-                        time.sleep(1)
+                        timee.sleep(1)
                         await ctx.send("Please use !RRgame to go to next game")
                     else:
                     
@@ -296,9 +292,8 @@ async def D(ctx):
                                 DealersChoice= random.randint(1,4)
                             if DealersChoice== 4:
                                 await ctx.send("Dealer is choosing to shoot themself")
-                                time.sleep(1.5)
                                 if GameRR[y][3][0]== 1:
-                                    print("The Dealer is dead")
+                                    await ctx.send("The Dealer is dead")
                                     int(GameRR[y][2])
                                     GameRR[y][2]= GameRR[y][2]+1
                                     if GameRR[y][2] > GameRR[y][1]:
@@ -312,6 +307,7 @@ async def D(ctx):
                                     await ctx.send("Blank")
 
                                     del GameRR[y][3][0]
+                                    print(GameRR[y][3])
                                     if GameRR[y][3][0]== []:
                                         await ctx.send("No one died...")
                                         await ctx.send("Please use !RRgame to go to next game")
@@ -347,6 +343,96 @@ async def D(ctx):
         except:
             await ctx.send("Please use !RRgame to start the game")
 
+RrLBoardToggle= True     
+RRtimer= 0
+def TimerLeaderboard():
+    global RrLBoardToggle
+    global RRtimer
+    while True:
+        timee.sleep(1)
+        RRtimer= RRtimer+1
+        if RRtimer>= LeaderboardDelay:
+            print("RR leaderboard is useable again")
+            RrLBoardToggle= True
+            RRtimer= 0
+            break
+
+
+RRLBcontinue= False
+LeaderboardListRR= []
+@bot.command()
+async def RRleaderboard(ctx):
+    global LeaderboardListRR
+    global RrLBoardToggle
+    person= ctx.author
+    personID= person.id
+    person= str(person)
+    personID= str(personID)
+    LeaderboardListRR= []
+    if RrLBoardToggle== True:
+        RrLBoardToggle= False
+        RRtimethread = threading.Thread(target=TimerLeaderboard)
+        RRtimethread.start()
+        bannedrole = discord.utils.get(ctx.guild.roles, name=botrole)
+        n=0
+        for member in ctx.guild.members:
+            #try:
+            if bannedrole in member.roles:
+                pass
+            else:
+                n=n+1
+                Dude= member.name
+                Dude= str(Dude)
+                LeaderboardListRR.append([Dude])
+            #except:
+                pass
+        RRLBcontinue= False
+        RRlboardthread = threading.Thread(target=checkRRfiles, args=(ctx,))
+        RRlboardthread.start()
+        #while RRLBcontinue== False:
+         #   pass
+        RRlboardthread.join()
+        # Sort the 2D array based on the second column (index 1)
+        arr= LeaderboardListRR
+        col_index= 1
+        insertion_sort_2d_Descending(arr, col_index)
+        print(arr)
+        try:
+            msg= "These are the 3 best people at Russian Roulette\n1. ",str(arr[0][0])," with ",str(arr[0][1])," points\n2. ",str(arr[1][0])," with ",str(arr[1][1])," points\n3. ",str(arr[2][0])," with ",str(arr[2][1])," points\n<@"+personID+">"
+            
+            msg= ("".join(msg))
+            await ctx.send(msg)
+        except:
+            try:
+                msg= "These are the 2 best people at Russian Roulette\n1. ",str(arr[0][0])," with ",str(arr[0][1])," points\n2. ",str(arr[1][0])," with ",str(arr[1][1])," points\n<@"+personID+">"
+                msg= ("".join(msg))
+                await ctx.send(msg)
+            except:
+                msg= "This is the best at Russian Roulette\n1. ",str(arr[0][0])," with ",str(arr[0][1])," points\n<@"+personID+">"
+                msg= ("".join(msg))
+                await ctx.send(msg)
+    else:
+        await ctx.send("Please wait until ("+str(LeaderboardDelay)+") second(s) have passed since last leaderboard request")
+
+def checkRRfiles(ctx):
+    global LeaderboardListRR
+    global RRLBcontinue
+    b=0
+    for member in ctx.guild.members:
+        try:
+            with open(filepath+'/RussianRouletteFiles/'+LeaderboardListRR[b][0]+'.csv',"r") as listing: 
+                reader= csv.reader(listing)
+                for row in reader:
+                    HighScoreRR= row[0]
+                    HighScoreRR= int(HighScoreRR)
+            listing.close
+            LeaderboardListRR[b].append(HighScoreRR)
+            b= b+1
+        except:
+            pass
+    print("Collected data for leaderboard")
+
+
 
 @bot.command()
 async def QuitRR(ctx):
@@ -370,7 +456,34 @@ async def QuitRR(ctx):
     if Quitting== False:
         print("Couldn't quit (Person not playing)("+str(ctx.author)+")")
         await ctx.send("Couldn't quit (Person not playing)")
+
+
+####    MISC    ####
+
+
+col_index= 0
+def insertion_sort_2d_Descending(arr, col_index):
+    # Traverse through 1 to len(arr)
+    try:
+        for i in range(1, len(arr)):
+            key = arr[i]
+            j = i - 1
         
+            # Move elements of arr[0..i-1], that are greater than key,
+            # to one position ahead of their current position
+            while j >= 0 and arr[j][col_index] < key[col_index]:
+                arr[j + 1] = arr[j]
+                j -= 1
+            arr[j + 1] = key
+    except:
+        return arr
+
+
+
+
+
+
+
 
 
 bot.run(TOKEN)
