@@ -11,7 +11,7 @@ import csv
 import random
 import threading
 
-filepath= (r"C:\Users\matty\Documents\Visual Studio 2022\Repos\ThEmeralDuke\David_Bot\David_Bot") # make this your file path
+filepath= (r"") # make this your file path
 person= ""
 with open (filepath+"/ImportantTxtfiles/important.csv", "r") as info:
     reader= csv.reader(info)
