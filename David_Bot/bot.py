@@ -10,15 +10,19 @@ from datetime import *
 import csv
 import random
 import threading
-
-filepath= (r"C:\Users\matty\Documents\Visual Studio 2022\Repos\ThEmeralDuke\David_Bot\David_Bot") # make this your file path
+import subprocess
+import psutil
+TOKEN= []
+botrole= []
+Adminrole= []
+filepath= (r"") # make this your file path
 person= ""
 with open (filepath+"/ImportantTxtfiles/important.csv", "r") as info:
     reader= csv.reader(info)
     for row in reader:
         TOKEN= row[0]
         botrole= row[1]
-        Adminrole=row[1]
+        Adminrole=row[2]
 info.close()
 with open (filepath+"/ImportantTxtfiles/settings.csv", "r") as settings:
     reader= csv.reader(settings)
@@ -29,22 +33,13 @@ settings.close()
 SystemChannelID= 1240997501750743221
 bot = commands.Bot(command_prefix='!', intents=discord.Intents.all(), activity = discord.Activity(type=discord.ActivityType.listening, name="!Commands"))
 
-@bot.command(pass_context=True)
-@commands.has_role(Adminrole)
-async def Settings(ctx):
-    pass    
-
-
-
-
 @bot.command()
 async def Commands(ctx):
     person= ctx.author
     personID= person.id
     person= str(person)
     personID= str(personID)
-    await ctx.send("List of commands: (Case sensitive)\n1. !hi\n2. !shutdown (admin protected)\n3. !startRR\n4. !RRleaderboard\n5. !QuitRR\n<@"+personID+">")
-
+    await ctx.send("List of commands: (Case sensitive)\n1. !hi\n2. Usage\n3. !shutdown (admin protected)\n4. !startRR\n5. !RRleaderboard\n6. !QuitRR\n\n<@"+personID+">")
 @bot.event
 async def on_ready():
     print("Bot is ready\n\n")
@@ -63,6 +58,22 @@ async def hi(ctx):
     personID= ctx.author.id
     personID= str(personID)
     await ctx.send("Hey <@"+personID+">")
+
+@bot.command()
+async def Usage(ctx):
+    person= ctx.author
+    personID= person.id
+    person= str(person)
+    personID= str(personID)
+    # Get the load average (1, 5, 15 minutes)
+    load_avg = psutil.getloadavg()
+    # Get CPU utilization
+    cpu_util = psutil.cpu_percent(interval=1)
+    # Get memory usage
+    memory_info = psutil.virtual_memory()
+    await ctx.send(f"Load Average (1, 5, 15 minutes): {load_avg}")
+    await ctx.send(f"CPU Utilization: {cpu_util}%")
+    await ctx.send(f"Memory Usage: {memory_info.percent}% used ({memory_info.used / (1024**3):.2f} GB / {memory_info.total / (1024**3):.2f} GB)\n<@"+personID+">")
 
 @bot.command(pass_context=True)
 @commands.has_role(Adminrole)
@@ -94,7 +105,36 @@ async def shutdownError(ctx ,error):
         log.close()
         await ctx.send("You dont have permissions ("+Adminrole+") to do this <@"+personID+">")
 
-
+@bot.command(pass_context=True)
+@commands.has_role(Adminrole)
+async def reboot(ctx):
+    global person
+    person= ctx.author
+    person= str(person)
+    print("Bot rebooted by "+ person)
+    await ctx.send("rebooting...")
+    with open (filepath+"/ImportantTxtfiles/Logs.log", "a") as log:
+        currenttime= str(datetime.now())
+        log.write(currenttime+ "   Bot Srebooted by "+ person+"\n")
+    log.close()
+    while True:
+        await bot.change_presence(status=discord.Status.invisible)
+        subprocess.run(["sudo", "reboot"])
+        exit()
+        
+@shutdown.error
+async def rebootError(ctx ,error):
+    global person
+    if isinstance(error, commands.CheckFailure):
+        person= ctx.author
+        personID= person.id
+        person= str(person)
+        personID= str(personID)
+        with open (filepath+"/ImportantTxtfiles/Logs.log", "a") as log:
+            currenttime= str(datetime.now())
+            log.write(currenttime+ "   (FAIL) Bot reboot attempted by "+ person+"\n")
+        log.close()
+        await ctx.send("You dont have permissions ("+Adminrole+") to do this <@"+personID+">")
 
 
 
@@ -364,6 +404,7 @@ LeaderboardListRR= []
 async def RRleaderboard(ctx):
     global LeaderboardListRR
     global RrLBoardToggle
+    global RRLBcontinue
     person= ctx.author
     personID= person.id
     person= str(person)
@@ -389,13 +430,14 @@ async def RRleaderboard(ctx):
         RRLBcontinue= False
         RRlboardthread = threading.Thread(target=checkRRfiles, args=(ctx,))
         RRlboardthread.start()
-        #while RRLBcontinue== False:
-         #   pass
+        while RRLBcontinue== False:
+            pass
         RRlboardthread.join()
         # Sort the 2D array based on the second column (index 1)
         arr= LeaderboardListRR
         col_index= 1
         insertion_sort_2d_Descending(arr, col_index)
+        continueIS2D= False 
         print(arr)
         try:
             msg= "These are the 3 best people at Russian Roulette\n1. ",str(arr[0][0])," with ",str(arr[0][1])," points\n2. ",str(arr[1][0])," with ",str(arr[1][1])," points\n3. ",str(arr[2][0])," with ",str(arr[2][1])," points\n<@"+personID+">"
@@ -414,22 +456,32 @@ async def RRleaderboard(ctx):
     else:
         await ctx.send("Please wait until ("+str(LeaderboardDelay)+") second(s) have passed since last leaderboard request")
 
-def checkRRfiles(ctx):
+def checkRRfiles(ctx,):
     global LeaderboardListRR
     global RRLBcontinue
     b=0
     for member in ctx.guild.members:
         try:
-            with open(filepath+'/RussianRouletteFiles/'+LeaderboardListRR[b][0]+'.csv',"r") as listing: 
-                reader= csv.reader(listing)
-                for row in reader:
-                    HighScoreRR= row[0]
-                    HighScoreRR= int(HighScoreRR)
-            listing.close
-            LeaderboardListRR[b].append(HighScoreRR)
-            b= b+1
+
+
+            try:
+
+                with open(filepath+'/RussianRouletteFiles/'+LeaderboardListRR[b][0]+'.csv',"r") as listing: 
+                    reader= csv.reader(listing)
+                    for row in reader:
+                        HighScoreRR= row[0]
+                        HighScoreRR= int(HighScoreRR)
+                listing.close
+                LeaderboardListRR[b].append(HighScoreRR)
+            
+                print("fitt")
+            except:
+                print("unfitt")
+                pass
+            b=b+1
         except:
-            pass
+            b=0
+    RRLBcontinue=True
     print("Collected data for leaderboard")
 
 
@@ -460,9 +512,11 @@ async def QuitRR(ctx):
 
 ####    MISC    ####
 
-
+continueIS2D= False
 col_index= 0
 def insertion_sort_2d_Descending(arr, col_index):
+    global continueIS2D
+    continueIS2D= False
     # Traverse through 1 to len(arr)
     try:
         for i in range(1, len(arr)):
@@ -476,14 +530,12 @@ def insertion_sort_2d_Descending(arr, col_index):
                 j -= 1
             arr[j + 1] = key
     except:
+
         return arr
 
 
 
 
 
-
-
-
-
 bot.run(TOKEN)
+
