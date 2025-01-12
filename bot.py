@@ -1,3 +1,10 @@
+filepath= (r"/home/server/serverfiles/bots/davidbot") # make this your file path
+Errorlog= filepath+"/ImportantTxtfiles/Logs/Error.log"
+def LogError(Level,Reason):
+    with open (Errorlog, "a") as log:
+            currenttime= str(datetime.now())
+            log.write(currenttime+"    ("+Level+") "+Reason)
+    log.close()
 import os
 import os.path
 import discord
@@ -12,11 +19,17 @@ import random
 import threading
 import subprocess
 import psutil
+try:
+    pass
+except :
+    pass
 TOKEN= []
 botrole= []
 Adminrole= []
-filepath= (r"") # make this your file path
+filepath= (r"/home/server/serverfiles/bots/davidbot") # make this your file path
 person= ""
+Generallog= filepath+"/ImportantTxtfiles/Logs/General.log"
+
 with open (filepath+"/ImportantTxtfiles/important.csv", "r") as info:
     reader= csv.reader(info)
     for row in reader:
@@ -39,7 +52,7 @@ async def Commands(ctx):
     personID= person.id
     person= str(person)
     personID= str(personID)
-    await ctx.send("List of commands: (Case sensitive)\n1. !hi\n2. Usage\n3. !shutdown (admin protected)\n4. !startRR\n5. !RRleaderboard\n6. !QuitRR\n\n<@"+personID+">")
+    await ctx.send("List of commands: (Case sensitive)\n1. !hi\n2. !Usage\n3. !shutdown (admin protected)\n4. !startRR\n5. !RRleaderboard\n6. !QuitRR\n\n<@"+personID+">")
 @bot.event
 async def on_ready():
     print("Bot is ready\n\n")
@@ -47,7 +60,7 @@ async def on_ready():
     SystemChannel= bot.get_channel(SystemChannelID)
     
     await SystemChannel.send("Bot is ACTIVE at "+currenttime)
-    with open (filepath+"/ImportantTxtfiles/Logs.log", "a") as log:
+    with open (Generallog, "a") as log:
         currenttime= str(datetime.now())
         log.write("\n"+currenttime+ "   Bot Started\n")
     log.close()
@@ -65,77 +78,67 @@ async def Usage(ctx):
     personID= person.id
     person= str(person)
     personID= str(personID)
-    # Get the load average (1, 5, 15 minutes)
+    Get the load average (1, 5, 15 minutes)
     load_avg = psutil.getloadavg()
-    # Get CPU utilization
+    Get CPU utilization
     cpu_util = psutil.cpu_percent(interval=1)
-    # Get memory usage
+    Get memory usage
     memory_info = psutil.virtual_memory()
     await ctx.send(f"Load Average (1, 5, 15 minutes): {load_avg}")
     await ctx.send(f"CPU Utilization: {cpu_util}%")
     await ctx.send(f"Memory Usage: {memory_info.percent}% used ({memory_info.used / (1024**3):.2f} GB / {memory_info.total / (1024**3):.2f} GB)\n<@"+personID+">")
 
+
 @bot.command(pass_context=True)
 @commands.has_role(Adminrole)
 async def shutdown(ctx):
-    global person
-    person= ctx.author
-    person= str(person)
-    print("Bot Shutdown by "+ person)
-    await ctx.send("Shutting down...")
-    with open (filepath+"/ImportantTxtfiles/Logs.log", "a") as log:
-        currenttime= str(datetime.now())
-        log.write(currenttime+ "   Bot Shutdown by "+ person+"\n")
-    log.close()
-    while True:
-        await bot.change_presence(status=discord.Status.invisible)
-        exit()
+    try:
         
-@shutdown.error
-async def shutdownError(ctx ,error):
-    global person
-    if isinstance(error, commands.CheckFailure):
+        global person
         person= ctx.author
-        personID= person.id
         person= str(person)
-        personID= str(personID)
-        with open (filepath+"/ImportantTxtfiles/Logs.log", "a") as log:
+        print("Bot Shutdown by "+ person)
+        await ctx.send("Shutting down...")
+        with open (Generallog, "a") as log:
             currenttime= str(datetime.now())
-            log.write(currenttime+ "   (FAIL) Bot Shutdown attempted by "+ person+"\n")
+            log.write(currenttime+ "   Bot Shutdown by "+ person+"\n")
         log.close()
-        await ctx.send("You dont have permissions ("+Adminrole+") to do this <@"+personID+">")
+        while True:
+            await bot.change_presence(status=discord.Status.invisible)
+            exit()
+        pass
+    except :
+        Level= "Warn"
+        Reason= ("Unauthorised Bot Shutdown attempted by",person)
+        await ctx.send("You dont have permissions ("+Adminrole+") to do this <@"+person.id+">")
+        LogError(Level,Reason)
+        pass
+        
 
 @bot.command(pass_context=True)
 @commands.has_role(Adminrole)
 async def reboot(ctx):
-    global person
-    person= ctx.author
-    person= str(person)
-    print("Bot rebooted by "+ person)
-    await ctx.send("rebooting...")
-    with open (filepath+"/ImportantTxtfiles/Logs.log", "a") as log:
-        currenttime= str(datetime.now())
-        log.write(currenttime+ "   Bot Srebooted by "+ person+"\n")
-    log.close()
-    while True:
-        await bot.change_presence(status=discord.Status.invisible)
-        subprocess.run(["sudo", "reboot"])
-        exit()
-        
-@shutdown.error
-async def rebootError(ctx ,error):
-    global person
-    if isinstance(error, commands.CheckFailure):
+    try:
+        global person
         person= ctx.author
-        personID= person.id
         person= str(person)
-        personID= str(personID)
-        with open (filepath+"/ImportantTxtfiles/Logs.log", "a") as log:
+        print("Bot rebooted by "+ person)
+        await ctx.send("rebooting...")
+        with open (Generallog, "a") as log:
             currenttime= str(datetime.now())
-            log.write(currenttime+ "   (FAIL) Bot reboot attempted by "+ person+"\n")
+            log.write(currenttime+ "   Bot rebooted by "+ person+"\n")
         log.close()
-        await ctx.send("You dont have permissions ("+Adminrole+") to do this <@"+personID+">")
-
+        while True:
+            await bot.change_presence(status=discord.Status.invisible)
+            subprocess.run(["sudo", "reboot"])
+            exit()
+        pass
+    except:
+        Level= "Warn"
+        Reason= ("Unauthorised Bot reboot attempted by",person)
+        await ctx.send("You dont have permissions ("+Adminrole+") to do this <@"+person.id+">")
+        LogError(Level,Reason)
+        pass
 
 
 
@@ -166,7 +169,7 @@ async def startRR(ctx):
                 found= True
                 print(Dude, "found")
     if found== False:
-        with open (filepath+"/ImportantTxtfiles/Logs.log", "a") as log:
+        with open (Generallog, "a") as log:
             currenttime= str(datetime.now())
             log.write(currenttime+ "   (Game) "+ Dude+"Has started playing Russian Roulette\n")
         log.close()
@@ -466,7 +469,7 @@ def checkRRfiles(ctx,):
 
             try:
 
-                with open(filepath+'/RussianRouletteFiles/'+LeaderboardListRR[b][0]+'.csv',"r") as listing: 
+                with open(filepath+'/RussianRouletteFiles/'+LeaderboardListRR[b][0]+'#0.csv',"r") as listing: 
                     reader= csv.reader(listing)
                     for row in reader:
                         HighScoreRR= row[0]
@@ -477,6 +480,7 @@ def checkRRfiles(ctx,):
                 print("fitt")
             except:
                 print("unfitt")
+                LeaderboardListRR[b].append(0)
                 pass
             b=b+1
         except:
@@ -497,7 +501,7 @@ async def QuitRR(ctx):
             for u in range(len(PlayerlistRR)):
                 if str(ctx.author) == PlayerlistRR[u]:
                     del PlayerlistRR[u]
-                    with open (filepath+"/ImportantTxtfiles/Logs.log", "a") as log:
+                    with open (Generallog, "a") as log:
                         currenttime= str(datetime.now())
                         log.write(currenttime+ "   (Game) "+ str(ctx.author)+"Has stopped playing Russian Roulette\n")
                     log.close()
@@ -515,26 +519,31 @@ async def QuitRR(ctx):
 continueIS2D= False
 col_index= 0
 def insertion_sort_2d_Descending(arr, col_index):
-    global continueIS2D
-    continueIS2D= False
-    # Traverse through 1 to len(arr)
     try:
-        for i in range(1, len(arr)):
-            key = arr[i]
-            j = i - 1
         
-            # Move elements of arr[0..i-1], that are greater than key,
-            # to one position ahead of their current position
-            while j >= 0 and arr[j][col_index] < key[col_index]:
-                arr[j + 1] = arr[j]
-                j -= 1
-            arr[j + 1] = key
+        global continueIS2D
+        continueIS2D= False
+        # Traverse through 1 to len(arr)
+        try:
+            for i in range(1, len(arr)):
+                key = arr[i]
+                j = i - 1
+        
+                # Move elements of arr[0..i-1], that are greater than key,
+                # to one position ahead of their current position
+                while j >= 0 and arr[j][col_index] < key[col_index]:
+                    arr[j + 1] = arr[j]
+                    j -= 1
+                arr[j + 1] = key
+        except:
+
+            return arr
+            pass
     except:
-
-        return arr
-
-
-
+        Level= "Severe"
+        Reason= "Bot failed to do the 2d sort"
+        LogError(Level,Reason)
+        pass
 
 
 bot.run(TOKEN)
