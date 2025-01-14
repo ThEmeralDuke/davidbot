@@ -19,14 +19,9 @@ import random
 import threading
 import subprocess
 import psutil
-try:
-    pass
-except :
-    pass
 TOKEN= []
 botrole= []
 Adminrole= []
-filepath= (r"/home/server/serverfiles/bots/davidbot") # make this your file path
 person= ""
 Generallog= filepath+"/ImportantTxtfiles/Logs/General.log"
 
