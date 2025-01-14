@@ -1,4 +1,4 @@
-filepath= (r"/home/server/serverfiles/bots/davidbot") # make this your file path
+filepath= (r".") # make this your file path
 Errorlog= filepath+"/ImportantTxtfiles/Logs/Error.log"
 def LogError(Level,Reason):
     with open (Errorlog, "a") as log:
