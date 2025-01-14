@@ -5,6 +5,12 @@ def LogError(Level,Reason):
             currenttime= str(datetime.now())
             log.write(currenttime+"    ("+Level+") "+Reason)
     log.close()
+Resourcelog= filepath+"/ImportantTxtfiles/Logs/Resource.log"
+def LogResource(Level,Reason,Percent):
+    with open (Resourcelog, "a") as log:
+            currenttime= str(datetime.now())
+            log.write(f"{currenttime}    ({Level}) {Reason} at {Percent}%")
+    log.close()
 import os
 import os.path
 import discord
@@ -48,17 +54,34 @@ def Warningsystem():
         cpu_util = psutil.cpu_percent(interval=1)
         if rampercent >=95:
             print(f"(Critical) Ram usage Very high ({rampercent}%)")
+            level="Critical"
+            reason="RAM"
+            LogResource(level,reason,rampercent)
         elif rampercent >=90:
             print(f"(Serious) Ram usage high ({rampercent}%)")
-        elif rampercent >=80:
+            level="Serious"
+            reason="RAM"
+            LogResource(level,reason,rampercent)
+        elif rampercent >=10:
             print(f"(Warning) Ram usage getting high ({rampercent}%)")
+            level="Warning"
+            reason="RAM"
+            LogResource(level,reason,rampercent)
         if cpu_util >=95:
             print(f"(Critical) CPU usage Very high ({rampercent}%)")
+            level="Critical"
+            reason="CPU"
+            LogResource(level,reason,cpu_util)
         elif cpu_util >=90:
             print(f"(Serious) CPU usage high ({rampercent}%)")
-        elif cpu_util >=80:
+            level="Serious"
+            reason="CPU"
+            LogResource(level,reason,cpu_util)
+        elif cpu_util >=2:
             print(f"(Warning) CPU usage getting high ({rampercent}%)")
-        print("Warning system working")
+            level="Warning"
+            reason="CPU"
+            LogResource(level,reason,cpu_util)
         timee.sleep(20)
 
 
