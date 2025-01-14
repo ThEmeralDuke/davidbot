@@ -42,11 +42,24 @@ settings.close()
 bot = commands.Bot(command_prefix='!', intents=discord.Intents.all(), activity = discord.Activity(type=discord.ActivityType.listening, name="!Commands"))
 
 def Warningsystem():
-    memory_info = psutil.virtual_memory()
-    rampercent= float(f"{memory_info.percent}")
-    if rampercent >=10:
-        print(f"warning Ram usage high ({rampercent})")
-    pass
+    while True:
+        memory_info = psutil.virtual_memory()
+        rampercent= float(f"{memory_info.percent}")
+        cpu_util = psutil.cpu_percent(interval=1)
+        if rampercent >=95:
+            print(f"(Critical) Ram usage Very high ({rampercent}%)")
+        elif rampercent >=90:
+            print(f"(Serious) Ram usage high ({rampercent}%)")
+        elif rampercent >=80:
+            print(f"(Warning) Ram usage getting high ({rampercent}%)")
+        if cpu_util >=95:
+            print(f"(Critical) CPU usage Very high ({rampercent}%)")
+        elif cpu_util >=90:
+            print(f"(Serious) CPU usage high ({rampercent}%)")
+        elif cpu_util >=80:
+            print(f"(Warning) CPU usage getting high ({rampercent}%)")
+        print("Warning system working")
+        time.sleep(20)
 
 
 @bot.command()
@@ -90,7 +103,6 @@ async def Usage(ctx):
     await ctx.send(f"Load Average (1, 5, 15 minutes): {load_avg}")
     await ctx.send(f"CPU Utilization: {cpu_util}%")
     await ctx.send(f"Memory Usage: {memory_info.percent}% used ({memory_info.used / (1024**3):.2f} GB / {memory_info.total / (1024**3):.2f} GB)\n<@"+personID+">")
-    Warningsystem()
 
 
 
@@ -546,6 +558,6 @@ def insertion_sort_2d_Descending(arr, col_index):
         LogError(Level,Reason)
         pass
 
-
+Warningsystem()
 bot.run(TOKEN)
 
