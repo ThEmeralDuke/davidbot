@@ -41,6 +41,14 @@ settings.close()
 #SystemChannelID= 1240997501750743221 #This should be the test channel for your bot to see if it starts (delete if unnessecary)
 bot = commands.Bot(command_prefix='!', intents=discord.Intents.all(), activity = discord.Activity(type=discord.ActivityType.listening, name="!Commands"))
 
+def Warningsystem():
+    memory_info = psutil.virtual_memory()
+    rampercent= {memory_info.percent}
+    if rampercent >=10:
+        print("warning Ram usage high")
+    pass
+
+
 @bot.command()
 async def Commands(ctx):
     person= ctx.author
@@ -82,6 +90,7 @@ async def Usage(ctx):
     await ctx.send(f"Load Average (1, 5, 15 minutes): {load_avg}")
     await ctx.send(f"CPU Utilization: {cpu_util}%")
     await ctx.send(f"Memory Usage: {memory_info.percent}% used ({memory_info.used / (1024**3):.2f} GB / {memory_info.total / (1024**3):.2f} GB)\n<@"+personID+">")
+    Warningsystem()
 
 
 
