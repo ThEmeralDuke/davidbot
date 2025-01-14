@@ -43,7 +43,7 @@ with open (filepath+"/ImportantTxtfiles/settings.csv", "r") as settings:
         LeaderboardDelay= row[0]
         LeaderboardDelay= int(LeaderboardDelay)
 settings.close()
-SystemChannelID= 1240997501750743221
+#SystemChannelID= 1240997501750743221 #This should be the test channel for your bot to see if it starts (delete if unnessecary)
 bot = commands.Bot(command_prefix='!', intents=discord.Intents.all(), activity = discord.Activity(type=discord.ActivityType.listening, name="!Commands"))
 
 @bot.command()
@@ -57,9 +57,9 @@ async def Commands(ctx):
 async def on_ready():
     print("Bot is ready\n\n")
     currenttime= str(datetime.now())
-    SystemChannel= bot.get_channel(SystemChannelID)
+    #SystemChannel= bot.get_channel(SystemChannelID)
     
-    await SystemChannel.send("Bot is ACTIVE at "+currenttime)
+    #await SystemChannel.send("Bot is ACTIVE at "+currenttime)
     with open (Generallog, "a") as log:
         currenttime= str(datetime.now())
         log.write("\n"+currenttime+ "   Bot Started\n")
@@ -465,10 +465,7 @@ def checkRRfiles(ctx,):
     b=0
     for member in ctx.guild.members:
         try:
-
-
             try:
-
                 with open(filepath+'/RussianRouletteFiles/'+LeaderboardListRR[b][0]+'#0.csv',"r") as listing: 
                     reader= csv.reader(listing)
                     for row in reader:
@@ -476,10 +473,9 @@ def checkRRfiles(ctx,):
                         HighScoreRR= int(HighScoreRR)
                 listing.close
                 LeaderboardListRR[b].append(HighScoreRR)
-            
-                print("fitt")
+                #print("fit")
             except:
-                print("unfitt")
+                #print("unfit")
                 LeaderboardListRR[b].append(0)
                 pass
             b=b+1
