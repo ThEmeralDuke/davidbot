@@ -59,7 +59,7 @@ def Warningsystem():
         elif cpu_util >=80:
             print(f"(Warning) CPU usage getting high ({rampercent}%)")
         print("Warning system working")
-        time.sleep(20)
+        timee.sleep(20)
 
 
 @bot.command()
