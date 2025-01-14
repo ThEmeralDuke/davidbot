@@ -3,13 +3,13 @@ Errorlog= filepath+"/ImportantTxtfiles/Logs/Error.log"
 def LogError(Level,Reason):
     with open (Errorlog, "a") as log:
             currenttime= str(datetime.now())
-            log.write(currenttime+"    ("+Level+") "+Reason)
+            log.write(f"{currenttime}    ({Level}) {Reason}\n")
     log.close()
 Resourcelog= filepath+"/ImportantTxtfiles/Logs/Resource.log"
 def LogResource(Level,Reason,Percent):
     with open (Resourcelog, "a") as log:
             currenttime= str(datetime.now())
-            log.write(f"{currenttime}    ({Level}) {Reason} at {Percent}%")
+            log.write(f"{currenttime}    ({Level}) {Reason} at {Percent}%\n")
     log.close()
 import os
 import os.path
@@ -68,17 +68,17 @@ def Warningsystem():
             reason="RAM"
             LogResource(level,reason,rampercent)
         if cpu_util >=95:
-            print(f"(Critical) CPU usage Very high ({rampercent}%)")
+            print(f"(Critical) CPU usage Very high ({cpu_util}%)")
             level="Critical"
             reason="CPU"
             LogResource(level,reason,cpu_util)
         elif cpu_util >=90:
-            print(f"(Serious) CPU usage high ({rampercent}%)")
+            print(f"(Serious) CPU usage high ({cpu_util}%)")
             level="Serious"
             reason="CPU"
             LogResource(level,reason,cpu_util)
         elif cpu_util >=2:
-            print(f"(Warning) CPU usage getting high ({rampercent}%)")
+            print(f"(Warning) CPU usage getting high ({cpu_util}%)")
             level="Warning"
             reason="CPU"
             LogResource(level,reason,cpu_util)
