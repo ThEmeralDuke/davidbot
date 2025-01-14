@@ -45,7 +45,7 @@ def Warningsystem():
     memory_info = psutil.virtual_memory()
     rampercent= float(f"{memory_info.percent}")
     if rampercent >=10:
-        print("warning Ram usage high")
+        print("warning Ram usage high ("+rampercent+")")
     pass
 
 
