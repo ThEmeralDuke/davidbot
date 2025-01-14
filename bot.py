@@ -558,6 +558,7 @@ def insertion_sort_2d_Descending(arr, col_index):
         LogError(Level,Reason)
         pass
 
-Warningsystem()
+Warningsystemthread= threading.Thread(target=Warningsystem)
+Warningsystemthread.start()
 bot.run(TOKEN)
 
