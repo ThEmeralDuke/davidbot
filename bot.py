@@ -43,7 +43,7 @@ bot = commands.Bot(command_prefix='!', intents=discord.Intents.all(), activity =
 
 def Warningsystem():
     memory_info = psutil.virtual_memory()
-    rampercent= float({memory_info.percent})
+    rampercent= float(f"{memory_info.percent}")
     if rampercent >=10:
         print("warning Ram usage high")
     pass
