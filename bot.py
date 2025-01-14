@@ -78,11 +78,11 @@ async def Usage(ctx):
     personID= person.id
     person= str(person)
     personID= str(personID)
-    Get the load average (1, 5, 15 minutes)
+    #Get the load average (1, 5, 15 minutes)
     load_avg = psutil.getloadavg()
-    Get CPU utilization
+    #Get CPU utilization
     cpu_util = psutil.cpu_percent(interval=1)
-    Get memory usage
+    #Get memory usage
     memory_info = psutil.virtual_memory()
     await ctx.send(f"Load Average (1, 5, 15 minutes): {load_avg}")
     await ctx.send(f"CPU Utilization: {cpu_util}%")
