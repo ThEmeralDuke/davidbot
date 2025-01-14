@@ -82,7 +82,7 @@ async def Usage(ctx):
     await ctx.send(f"Load Average (1, 5, 15 minutes): {load_avg}")
     await ctx.send(f"CPU Utilization: {cpu_util}%")
     await ctx.send(f"Memory Usage: {memory_info.percent}% used ({memory_info.used / (1024**3):.2f} GB / {memory_info.total / (1024**3):.2f} GB)\n<@"+personID+">")
-    print(f"memory{memory_info.percent}%")
+
 
 
 @bot.command(pass_context=True)
