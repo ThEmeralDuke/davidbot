@@ -57,12 +57,12 @@ def Warningsystem():
             level="Critical"
             reason="RAM"
             LogResource(level,reason,rampercent)
-        elif rampercent >=90:
+        elif rampercent >=85:
             print(f"(Serious) Ram usage high ({rampercent}%)")
             level="Serious"
             reason="RAM"
             LogResource(level,reason,rampercent)
-        elif rampercent >=10:
+        elif rampercent >=75:
             print(f"(Warning) Ram usage getting high ({rampercent}%)")
             level="Warning"
             reason="RAM"
@@ -72,12 +72,12 @@ def Warningsystem():
             level="Critical"
             reason="CPU"
             LogResource(level,reason,cpu_util)
-        elif cpu_util >=90:
+        elif cpu_util >=85:
             print(f"(Serious) CPU usage high ({cpu_util}%)")
             level="Serious"
             reason="CPU"
             LogResource(level,reason,cpu_util)
-        elif cpu_util >=2:
+        elif cpu_util >=75:
             print(f"(Warning) CPU usage getting high ({cpu_util}%)")
             level="Warning"
             reason="CPU"
