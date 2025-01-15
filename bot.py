@@ -39,9 +39,6 @@ with open (filepath+"/ImportantTxtfiles/important.csv", "r") as info:
         Adminrole=row[1]
 info.close()
 
-##Minecraft settings##
-Minecraftserverfilepath="/opt/minecraft" #Change this to the filepath of your minecraft server
-Minecraftbackupfilepath="/opt/backups/"+gametype+"/"+version+"/" #Change this to the filepath of your minecraft server backups
 
 with open (filepath+"/ImportantTxtfiles/settings.csv", "r") as settings:
     reader= csv.reader(settings)
@@ -51,6 +48,16 @@ with open (filepath+"/ImportantTxtfiles/settings.csv", "r") as settings:
         gametype= str(row[1])
         version= str(row[2])
 settings.close()
+
+##Minecraft settings##
+
+gametype=None
+version=None
+Minecraftserverfilepath="/opt/minecraft" #Change this to the filepath of your minecraft server
+Minecraftbackupfilepath="/opt/backups/"+gametype+"/"+version+"/" #Change this to the filepath of your minecraft server backups
+
+##
+
 #SystemChannelID= 1240997501750743221 #This should be the test channel for your bot to see if it starts (delete if unnessecary)
 bot = commands.Bot(command_prefix='!', intents=discord.Intents.all(), activity = discord.Activity(type=discord.ActivityType.listening, name="!Commands"))
 
