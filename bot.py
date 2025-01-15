@@ -50,9 +50,6 @@ with open (filepath+"/ImportantTxtfiles/settings.csv", "r") as settings:
 settings.close()
 
 ##Minecraft settings##
-
-gametype=None
-version=None
 Minecraftserverfilepath="/opt/minecraft" #Change this to the filepath of your minecraft server
 Minecraftbackupfilepath="/opt/backups/"+gametype+"/"+version+"/" #Change this to the filepath of your minecraft server backups
 
