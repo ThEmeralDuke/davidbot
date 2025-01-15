@@ -30,7 +30,7 @@ botrole= []
 Adminrole= []
 person= ""
 Generallog= filepath+"/ImportantTxtfiles/Logs/General.log"
-
+LocalFilepath= "/home/server/" #Change this to your local devices filepath
 with open (filepath+"/ImportantTxtfiles/important.csv", "r") as info:
     reader= csv.reader(info)
     for row in reader:
@@ -153,7 +153,28 @@ async def reboot(ctx):
         LogError(Level,Reason)
         pass
 
-
+@bot.command(pass_context=True)
+@commands.has_role(Adminrole)
+async def MCrestart(ctx):
+    try:
+        global person
+        person= ctx.author
+        person= str(person)
+        print("Minecraft rebooted by "+ person)
+        await ctx.send("Restarting Minecraft...")
+        with open (Generallog, "a") as log:
+            currenttime= str(datetime.now())
+            log.write(currenttime+ "   Minecraft restarted by "+ person+"\n")
+        log.close
+        subprocess.run(["tmux","kill-session","-t","Minecraft"])
+        subprocess.run(["sudo", LocalFilepath+"/sh/mcstart.sh"])
+        pass
+    except:
+        Level= "Warn"
+        Reason= ("Unauthorised Minecraft reboot attempted by",person)
+        await ctx.send("You dont have permissions ("+Adminrole+") to do this <@"+person.id+">")
+        LogError(Level,Reason)
+        pass
 
 
 #######      RUSSIAN ROULETTE      ######
