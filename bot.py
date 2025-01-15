@@ -256,7 +256,7 @@ async def MCbackup(ctx):
     if backupfile_exists== False:
         os.mkdir(Minecraftbackupfilepath+"/"+day)
         print("test 3")
-        subprocess.run(["sudo","cp",Minecraftserverfilepath+"/world",Minecraftbackupfilepath+"/"+day+"/"])
+        subprocess.run(["sudo","cp",Minecraftserverfilepath+"/world",Minecraftbackupfilepath+"/"+day+"/","-rf"])
         subprocess.run(["sudo","-u","server","tmux", "send-keys", "-t", "Minecraft", "/save-on", "ENTER"])
     else:
         print("test 4")
@@ -271,7 +271,7 @@ async def MCbackup(ctx):
         backupfile_exists = os.path.isdir(backupfilepath)
         if backupfile_exists== False:
             os.mkdir(Minecraftbackupfilepath+"/"+hour)
-            subprocess.run(["sudo","cp",Minecraftserverfilepath+"/world",Minecraftbackupfilepath+"/"+hour+"/"])
+            subprocess.run(["sudo","cp",Minecraftserverfilepath+"/world",Minecraftbackupfilepath+"/"+hour+"/","-rf"])
             subprocess.run(["sudo","-u","server","tmux", "send-keys", "-t", "Minecraft", "/save-on", "ENTER"])
         else:
             print("Backup already exists so fuck you")
