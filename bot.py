@@ -101,7 +101,7 @@ async def Commands(ctx):
     personID= person.id
     person= str(person)
     personID= str(personID)
-    await ctx.send("List of commands: (Case sensitive)\n1. !hi\n2. !Usage\n3. !Reboot (admin protected)\n4. !MCrestart (admin protected)\n5. !startRR\n6. !RRleaderboard\n7. !QuitRR\n\n<@"+personID+">")
+    await ctx.send("List of commands: (Case sensitive)\n1. !hi\n2. !Usage\n3. !Reboot (admin protected)\n4. !MCrestart (admin protected)\n5. !MCbackup (admin protected)\n6. !startRR\n7. !RRleaderboard\n8. !QuitRR\n\n<@"+personID+">")
 @bot.event
 async def on_ready():
     print("Bot is ready\n\n")
