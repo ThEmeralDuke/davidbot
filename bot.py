@@ -246,7 +246,7 @@ async def MCbackup(ctx):
     print(f"gametype: {gametype}")
     print(f"version: {version}")
     print(f"day: {day}")
-    print(f"Minecraftbackupfilepath: {Minecraftbackupfilepath}")
+    print(Minecraftbackupfilepath)
 
     print(Minecraftbackupfilepath+"/"+day)
     backupfile_exists = os.path.abspath(Minecraftbackupfilepath+"/"+day)
