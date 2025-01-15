@@ -51,7 +51,7 @@ settings.close()
 
 ##Minecraft settings##
 Minecraftserverfilepath=("/opt/minecraft") #Change this to the filepath of your minecraft server
-Minecraftbackupfilepath=("/opt/backups/"+gametype+"/"+version+"/") #Change this to the filepath of your minecraft server backups
+Minecraftbackupfilepath=("/opt/backups/"+gametype+"/"+version) #Change this to the filepath of your minecraft server backups
 
 ##
 
