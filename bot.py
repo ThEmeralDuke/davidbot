@@ -677,5 +677,5 @@ def insertion_sort_2d_Descending(arr, col_index):
 
 Warningsystemthread= threading.Thread(target=Warningsystem)
 Warningsystemthread.start()
-bot.run(str(os.getenv("DAVID_KEY"))) #rename this to what your bot token variable is called in your .env file
+bot.run(str(os.getenv("BOT_KEY"))) #rename this to what your bot token variable is called in your .env file
 
