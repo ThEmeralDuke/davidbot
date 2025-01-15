@@ -242,10 +242,11 @@ async def MCbackup(ctx):
     datew= datew.split()
     day = str(datew[0])
     print("test 1.2")
-    print("test 1.2")
     print(f"gametype: {gametype}")
     print(f"version: {version}")
     print(f"day: {day}")
+    Minecraftbackupfilepath=("/opt/backups/"+gametype+"/"+version) #Change this to the filepath of your minecraft server backups
+    print("test 1.3")
     print(Minecraftbackupfilepath)
 
     print(Minecraftbackupfilepath+"/"+day)
