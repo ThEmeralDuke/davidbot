@@ -128,33 +128,6 @@ async def Usage(ctx):
     await ctx.send(f"Memory Usage: {memory_info.percent}% used ({memory_info.used / (1024**3):.2f} GB / {memory_info.total / (1024**3):.2f} GB)\n<@"+personID+">")
 
 
-
-@bot.command(pass_context=True)
-@commands.has_role(Adminrole)
-async def shutdown(ctx):
-    try:
-        
-        global person
-        person= ctx.author
-        person= str(person)
-        print("Bot Shutdown by "+ person)
-        await ctx.send("Shutting down...")
-        with open (Generallog, "a") as log:
-            currenttime= str(datetime.now())
-            log.write(currenttime+ "   Bot Shutdown by "+ person+"\n")
-        log.close()
-        while True:
-            await bot.change_presence(status=discord.Status.invisible)
-            exit()
-        pass
-    except :
-        Level= "Warn"
-        Reason= ("Unauthorised Bot Shutdown attempted by",person)
-        await ctx.send("You dont have permissions ("+Adminrole+") to do this <@"+person.id+">")
-        LogError(Level,Reason)
-        pass
-        
-
 @bot.command(pass_context=True)
 @commands.has_role(Adminrole)
 async def reboot(ctx):
