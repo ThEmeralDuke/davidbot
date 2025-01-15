@@ -156,25 +156,25 @@ async def reboot(ctx):
 @bot.command(pass_context=True)
 @commands.has_role(Adminrole)
 async def MCrestart(ctx):
-    try:
-        global person
-        person= ctx.author
-        person= str(person)
-        print("Minecraft rebooted by "+ person)
-        await ctx.send("Restarting Minecraft...")
-        with open (Generallog, "a") as log:
-            currenttime= str(datetime.now())
-            log.write(currenttime+ "   Minecraft restarted by "+ person+"\n")
-        log.close
-        subprocess.run(["tmux","kill-session","-t","Minecraft"])
-        subprocess.run([LocalFilepath+"/sh/mcstart.sh"])
-        pass
-    except:
-        Level= "Warn"
-        Reason= ("Unauthorised Minecraft reboot attempted by",person)
-        await ctx.send("You dont have permissions ("+Adminrole+") to do this <@"+person.id+">")
-        LogError(Level,Reason)
-        pass
+    #try:
+    global person
+    person= ctx.author
+    person= str(person)
+    print("Minecraft rebooted by "+ person)
+    await ctx.send("Restarting Minecraft...")
+    with open (Generallog, "a") as log:
+        currenttime= str(datetime.now())
+        log.write(currenttime+ "   Minecraft restarted by "+ person+"\n")
+    log.close
+    subprocess.run(["tmux","kill-session","-t","Minecraft"])
+    subprocess.run([LocalFilepath+"/sh/mcstart.sh"])
+    pass
+    #except:
+     #   Level= "Warn"
+      #  Reason= ("Unauthorised Minecraft reboot attempted by",person)
+       # await ctx.send("You dont have permissions ("+Adminrole+") to do this <@"+person.id+">")
+        #LogError(Level,Reason)
+         #pass
 
 
 #######      RUSSIAN ROULETTE      ######
