@@ -166,7 +166,7 @@ async def MCrestart(ctx):
         currenttime= str(datetime.now())
         log.write(currenttime+ "   Minecraft restarted by "+ person+"\n")
     log.close
-    subprocess.run(["tmux","kill-session","-t","Minecraft"])
+    subprocess.run(["sudo", "-u", "server","tmux","kill-session","-t","Minecraft"])
     result = subprocess.run(
             ["sudo", "-u", "server", "/bin/bash", "/home/server/sh/mcstart.sh"], 
             check=True, 
