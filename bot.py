@@ -167,13 +167,16 @@ async def MCrestart(ctx):
             log.write(currenttime+ "   Minecraft restarted by "+ person+"\n")
         log.close
         try:
-            subprocess.run(["sudo","-u","server","tmux", "send-keys", "-t", "Minecraft", "/stop", "ENTER"])
-            #result = subprocess.run(
-            #        ["sudo", "-u", "server", "/bin/bash", "/home/server/sh/mcstart.sh"], 
-            #        check=True, 
-            #        stdout=subprocess.PIPE, 
-            #        stderr=subprocess.PIPE
-            #        )
+            try:
+                subprocess.run(["sudo","-u","server","tmux", "send-keys", "-t", "Minecraft", "/stop", "ENTER"])
+            except:
+                pass
+            result = subprocess.run(
+                    ["sudo", "-u", "server", "/bin/bash", "/home/server/sh/mcstart.sh"], 
+                    check=True, 
+                    stdout=subprocess.PIPE, 
+                    stderr=subprocess.PIPE
+                    )
             pass
         except:
             Level= "Severe"
