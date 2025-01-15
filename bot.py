@@ -50,6 +50,9 @@ with open (filepath+"/ImportantTxtfiles/settings.csv", "r") as settings:
 settings.close()
 
 ##Minecraft settings##
+print(f"gametype: {gametype}")
+print(f"version: {version}")
+
 Minecraftserverfilepath=("/opt/minecraft") #Change this to the filepath of your minecraft server
 Minecraftbackupfilepath=("/opt/backups/"+gametype+"/"+version) #Change this to the filepath of your minecraft server backups
 
@@ -242,8 +245,9 @@ async def MCbackup(ctx):
     print("test 1.2")
     print(f"gametype: {gametype}")
     print(f"version: {version}")
-    print(f"Minecraftbackupfilepath: {Minecraftbackupfilepath}")
     print(f"day: {day}")
+    print(f"Minecraftbackupfilepath: {Minecraftbackupfilepath}")
+
     print(Minecraftbackupfilepath+"/"+day)
     backupfile_exists = os.path.abspath(Minecraftbackupfilepath+"/"+day)
     print("test 1.5")
