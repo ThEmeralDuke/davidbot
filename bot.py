@@ -238,7 +238,9 @@ async def MCbackup(ctx):
     datew= str(datetime.today())
     datew= datew.split()
     day = str(datew[0])
+    print("test 1.2")
     backupfile_exists = os.path.exists(Minecraftbackupfilepath+"/"+day)
+    print("test 1.5")
     print("test 2")
     if backupfile_exists== False:
         os.mkdir(Minecraftbackupfilepath+"/"+day)
