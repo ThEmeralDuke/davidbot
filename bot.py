@@ -610,5 +610,6 @@ def insertion_sort_2d_Descending(arr, col_index):
 Warningsystemthread= threading.Thread(target=Warningsystem)
 Warningsystemthread.start()
 load_dotenv()
+print(os.getenv("DAVID_KEY"))
 bot.run(str(os.getenv("DAVID_KEY")))
 
