@@ -156,30 +156,44 @@ async def reboot(ctx):
 @bot.command(pass_context=True)
 @commands.has_role(Adminrole)
 async def MCrestart(ctx):
-    #try:
-    global person
-    person= ctx.author
-    person= str(person)
-    print("Minecraft rebooted by "+ person)
-    await ctx.send("Restarting Minecraft...")
-    with open (Generallog, "a") as log:
-        currenttime= str(datetime.now())
-        log.write(currenttime+ "   Minecraft restarted by "+ person+"\n")
-    log.close
-    subprocess.run(["sudo", "-u", "server","tmux","kill-session","-t","Minecraft"])
-    result = subprocess.run(
-            ["sudo", "-u", "server", "/bin/bash", "/home/server/sh/mcstart.sh"], 
-            check=True, 
-            stdout=subprocess.PIPE, 
-            stderr=subprocess.PIPE
-            )
-    pass
-    #except:
-     #   Level= "Warn"
-      #  Reason= ("Unauthorised Minecraft reboot attempted by",person)
-       # await ctx.send("You dont have permissions ("+Adminrole+") to do this <@"+person.id+">")
-        #LogError(Level,Reason)
-         #pass
+    try:
+        global person
+        person= ctx.author
+        person= str(person)
+        print("Minecraft rebooted by "+ person)
+        await ctx.send("Restarting Minecraft...")
+        with open (Generallog, "a") as log:
+            currenttime= str(datetime.now())
+            log.write(currenttime+ "   Minecraft restarted by "+ person+"\n")
+        log.close
+        try:
+            result = subprocess.run(
+                ["sudo", "-u", "server", "/bin/bash", "/home/server/sh/mcstart.sh"], 
+                check=True, 
+                stdout=subprocess.PIPE, 
+                stderr=subprocess.PIPE
+                )
+            pass
+            subprocess.run(["sudo", "-u", "server","tmux","kill-session","-t","Minecraft"])
+            result = subprocess.run(
+                    ["sudo", "-u", "server", "/bin/bash", "/home/server/sh/mcstart.sh"], 
+                    check=True, 
+                    stdout=subprocess.PIPE, 
+                    stderr=subprocess.PIPE
+                    )
+            pass
+        except:
+            Level= "Severe"
+            Reason= "Minecraft failed to restart"
+            await ctx.send("Minecraft Failed to restart")
+            LogError(Level,Reason)
+            pass
+    except:
+        Level= "Warn"
+        Reason= ("Unauthorised Minecraft reboot attempted by",person)
+        await ctx.send("You dont have permissions ("+Adminrole+") to do this <@"+person.id+">")
+        LogError(Level,Reason)
+        pass
 
 
 #######      RUSSIAN ROULETTE      ######
