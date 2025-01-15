@@ -239,7 +239,7 @@ async def MCbackup(ctx):
     datew= datew.split()
     day = str(datew[0])
     print("test 1.2")
-    backupfile_exists = os.path.exists(Minecraftbackupfilepath+"/"+day)
+    backupfile_exists = os.path.isdir(Minecraftbackupfilepath+"/"+day)
     print("test 1.5")
     print("test 2")
     if backupfile_exists== False:
@@ -254,7 +254,7 @@ async def MCbackup(ctx):
         hour=hour.split(":")
         hour=hour[0]+":"+hour[1]
         Minecraftbackupfilepath= Minecraftbackupfilepath+"/"+day
-        backupfile_exists = os.path.exists(Minecraftbackupfilepath+"/"+hour)
+        backupfile_exists = os.path.isdir(Minecraftbackupfilepath+"/"+hour)
         if backupfile_exists== False:
             os.mkdir(Minecraftbackupfilepath+"/"+hour)
             subprocess.run(["sudo","cp",Minecraftserverfilepath+"world",Minecraftbackupfilepath+"/"+hour+"/"])
