@@ -50,8 +50,6 @@ with open (filepath+"/ImportantTxtfiles/settings.csv", "r") as settings:
 settings.close()
 
 ##Minecraft settings##
-print(f"gametype: {gametype}")
-print(f"version: {version}")
 
 Minecraftserverfilepath=("/opt/minecraft") #Change this to the filepath of your minecraft server
 Minecraftbackupfilepath=("/opt/backups/"+gametype+"/"+version) #Change this to the filepath of your minecraft server backups
@@ -237,36 +235,21 @@ async def MCbackup(ctx):
     log.close
     #try:
     subprocess.run(["sudo","-u","server","tmux", "send-keys", "-t", "Minecraft", "/save-off", "ENTER"])
-    print("test 1")
     datew= str(datetime.today())
     datew= datew.split()
     day = str(datew[0])
-    print("test 1.2")
-    print(f"gametype: {gametype}")
-    print(f"version: {version}")
-    print(f"day: {day}")
     Minecraftbackupfilepath=("/opt/backups/"+gametype+"/"+version) #Change this to the filepath of your minecraft server backups
-    print("test 1.3")
-    print(Minecraftbackupfilepath)
-
-    print(Minecraftbackupfilepath+"/"+day)
     backupfile_exists = os.path.isdir(Minecraftbackupfilepath+"/"+day)
-    print("test 1.5")
-    print("test 2")
     if backupfile_exists== False:
         os.mkdir(Minecraftbackupfilepath+"/"+day)
-        print("test 3")
         subprocess.run(["sudo","cp",Minecraftserverfilepath+"/world",Minecraftbackupfilepath+"/"+day+"/","-rf"])
         subprocess.run(["sudo","-u","server","tmux", "send-keys", "-t", "Minecraft", "/save-on", "ENTER"])
     else:
-        print("test 4")
         datew= datew[1].split(".")
         hour=str((datew[0]))
         hour=hour.split(":")
         hour=hour[0]+":"+hour[1]
-        print("test 5")
         Minecraftbackupfilepath= (Minecraftbackupfilepath+"/"+day)
-        print(Minecraftbackupfilepath)
         backupfilepath= Minecraftbackupfilepath+"/"+hour
         backupfile_exists = os.path.isdir(backupfilepath)
         if backupfile_exists== False:
