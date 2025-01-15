@@ -168,7 +168,7 @@ async def MCrestart(ctx):
     log.close
     subprocess.run(["tmux","kill-session","-t","Minecraft"])
     result = subprocess.run(
-            ["/bin/bash", "/home/server/sh/mcstart.sh"], 
+            ["sudo", "-u", "server", "/bin/bash", "/home/server/sh/mcstart.sh"], 
             check=True, 
             stdout=subprocess.PIPE, 
             stderr=subprocess.PIPE
