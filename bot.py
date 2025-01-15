@@ -38,11 +38,21 @@ with open (filepath+"/ImportantTxtfiles/important.csv", "r") as info:
         botrole= row[0]
         Adminrole=row[1]
 info.close()
+
+##Minecraft settings##
+
+gametype=None
+version=None
+Minecraftserverfilepath="/opt/minecraft" #Change this to the filepath of your minecraft server
+Minecraftbackupfilepath="/opt/backups/"+gametype+"/"+version+"/" #Change this to the filepath of your minecraft server backups
+
 with open (filepath+"/ImportantTxtfiles/settings.csv", "r") as settings:
     reader= csv.reader(settings)
     for row in reader:
         LeaderboardDelay= row[0]
         LeaderboardDelay= int(LeaderboardDelay)
+        gametype= str(row[1])
+        version= str(row[2])
 settings.close()
 #SystemChannelID= 1240997501750743221 #This should be the test channel for your bot to see if it starts (delete if unnessecary)
 bot = commands.Bot(command_prefix='!', intents=discord.Intents.all(), activity = discord.Activity(type=discord.ActivityType.listening, name="!Commands"))
@@ -160,7 +170,8 @@ async def rebootError(ctx ,error):
         LogError(Level,Reason)
 
 
-
+Minecraftserverfilepath="/opt/minecraft" #Change this to the filepath of your minecraft server
+Minecraftbackupfilepath="/opt/backups/"+gametype+"/"+version+"/" #Change this to the filepath of your minecraft server backups
 @bot.command(pass_context=True)
 @commands.has_role(Adminrole)
 async def MCrestart(ctx):
@@ -207,7 +218,64 @@ async def MCrestartError(ctx ,error):
         await ctx.send("You dont have permissions ("+Adminrole+") to do this <@"+personID+">")
         LogError(Level,Reason)
 
+@bot.command(pass_context=True)
+@commands.has_role(Adminrole)
+async def MCbackup(ctx):
 
+    global person
+    person= ctx.author
+    person= str(person)
+    print("Minecraft Backedup by "+ person)
+    await ctx.send("Backing up Minecraft...")
+    with open (Generallog, "a") as log:
+        currenttime= str(datetime.now())
+        log.write(currenttime+ "   Minecraft Backed up by "+ person+"\n")
+    log.close
+    try:
+        subprocess.run(["sudo","-u","server","tmux", "send-keys", "-t", "Minecraft", "/save-off", "ENTER"])
+        datew= str(datetime.today())
+        datew= datew.split()
+        day = str(datew[0])
+        backupfile_exists = os.path.exists(Minecraftbackupfilepath+"/"+day)
+        if backupfile_exists== False:
+            os.mkdir(Minecraftbackupfilepath+"/"+day)
+            subprocess.run(["sudo","cp",Minecraftserverfilepath+"world",Minecraftbackupfilepath+"/"+day+"/"])
+            subprocess.run(["sudo","-u","server","tmux", "send-keys", "-t", "Minecraft", "/save-on", "ENTER"])
+        else:
+            datew= datew[1].split(".")
+            hour=str((datew[0]))
+            hour=hour.split(":")
+            hour=hour[0]+":"+hour[1]
+            Minecraftbackupfilepath= Minecraftbackupfilepath+"/"+day
+            backupfile_exists = os.path.exists(Minecraftbackupfilepath+"/"+hour)
+            if backupfile_exists== False:
+                os.mkdir(Minecraftbackupfilepath+"/"+hour)
+                subprocess.run(["sudo","cp",Minecraftserverfilepath+"world",Minecraftbackupfilepath+"/"+hour+"/"])
+                subprocess.run(["sudo","-u","server","tmux", "send-keys", "-t", "Minecraft", "/save-on", "ENTER"])
+            else:
+                print("Backup already exists so fuck you")
+                subprocess.run(["sudo","-u","server","tmux", "send-keys", "-t", "Minecraft", "/save-on", "ENTER"])
+                crash=0/0
+                print(crash)
+    except:
+        Level= "Severe"
+        Reason= "Minecraft failed to Backup"
+        await ctx.send("Minecraft Failed to Backup")
+        LogError(Level,Reason)
+        pass
+    pass
+@MCbackup.error
+async def MCbackupError(ctx ,error):
+    global person
+    if isinstance(error, commands.CheckFailure):
+        person= ctx.author
+        personID= person.id
+        person= str(person)
+        personID= str(personID)
+        Level= "Warn"
+        Reason= ("Unauthorised Minecraft Backup attempted by",person)
+        await ctx.send("You dont have permissions ("+Adminrole+") to do this <@"+personID+">")
+        LogError(Level,Reason)
 
 #######      RUSSIAN ROULETTE      ######
 
