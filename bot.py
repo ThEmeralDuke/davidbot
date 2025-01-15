@@ -91,7 +91,7 @@ async def Commands(ctx):
     personID= person.id
     person= str(person)
     personID= str(personID)
-    await ctx.send("List of commands: (Case sensitive)\n1. !hi\n2. !Usage\n3. !shutdown (admin protected)\n4. !startRR\n5. !RRleaderboard\n6. !QuitRR\n\n<@"+personID+">")
+    await ctx.send("List of commands: (Case sensitive)\n1. !hi\n2. !Usage\n3. !Reboot (admin protected)\n4. !MCrestart (admin protected)\n5. !startRR\n6. !RRleaderboard\n7. !QuitRR\n\n<@"+personID+">")
 @bot.event
 async def on_ready():
     print("Bot is ready\n\n")
@@ -152,11 +152,11 @@ async def reboot(ctx):
         await ctx.send("You dont have permissions ("+Adminrole+") to do this <@"+person.id+">")
         LogError(Level,Reason)
         pass
+try:
+    @bot.command(pass_context=True)
+    @commands.has_role(Adminrole)
+    async def MCrestart(ctx):
 
-@bot.command(pass_context=True)
-@commands.has_role(Adminrole)
-async def MCrestart(ctx):
-    try:
         global person
         person= ctx.author
         person= str(person)
@@ -185,12 +185,12 @@ async def MCrestart(ctx):
             await ctx.send("Minecraft Failed to restart")
             LogError(Level,Reason)
             pass
-    except:
-        Level= "Warn"
-        Reason= ("Unauthorised Minecraft reboot attempted by",person)
-        await ctx.send("You dont have permissions ("+Adminrole+") to do this <@"+person.id+">")
-        LogError(Level,Reason)
         pass
+except:
+    Level= "Warn"
+    Reason= ("Unauthorised Minecraft reboot attempted by",person)
+    LogError(Level,Reason)
+    pass
 
 
 #######      RUSSIAN ROULETTE      ######
