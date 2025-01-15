@@ -128,69 +128,85 @@ async def Usage(ctx):
     await ctx.send(f"Memory Usage: {memory_info.percent}% used ({memory_info.used / (1024**3):.2f} GB / {memory_info.total / (1024**3):.2f} GB)\n<@"+personID+">")
 
 
-try:
-    @bot.command(pass_context=True)
-    @commands.has_role(Adminrole)
-    async def reboot(ctx):
+@bot.command(pass_context=True)
+@commands.has_role(Adminrole)
+async def reboot(ctx):
 
-        global person
-        person= ctx.author
-        person= str(person)
-        print("Bot rebooted by "+ person)
-        await ctx.send("rebooting...")
-        with open (Generallog, "a") as log:
-            currenttime= str(datetime.now())
-            log.write(currenttime+ "   Bot rebooted by "+ person+"\n")
-        log.close()
-        while True:
-            await bot.change_presence(status=discord.Status.invisible)
-            subprocess.run(["sudo", "reboot"])
-            exit()
-        pass
-except:
-    Level= "Warn"
-    Reason= ("Unauthorised Bot reboot attempted by",person)
-    LogError(Level,Reason)
+    global person
+    person= ctx.author
+    person= str(person)
+    print("Bot rebooted by "+ person)
+    await ctx.send("rebooting...")
+    with open (Generallog, "a") as log:
+        currenttime= str(datetime.now())
+        log.write(currenttime+ "   Bot rebooted by "+ person+"\n")
+    log.close()
+    while True:
+        await bot.change_presence(status=discord.Status.invisible)
+        subprocess.run(["sudo", "reboot"])
+        exit()
     pass
-try:
-    @bot.command(pass_context=True)
-    @commands.has_role(Adminrole)
-    async def MCrestart(ctx):
-
-        global person
+@reboot.error
+async def rebootError(ctx ,error):
+    global person
+    if isinstance(error, commands.CheckFailure):
         person= ctx.author
+        personID= person.id
         person= str(person)
-        print("Minecraft rebooted by "+ person)
-        await ctx.send("Restarting Minecraft...")
-        with open (Generallog, "a") as log:
-            currenttime= str(datetime.now())
-            log.write(currenttime+ "   Minecraft restarted by "+ person+"\n")
-        log.close
+        personID= str(personID)
+        Level= "Warn"
+        Reason= ("Unauthorised Bot reboot attempted by",person)
+        await ctx.send("You dont have permissions ("+Adminrole+") to do this <@"+personID+">")
+        LogError(Level,Reason)
+
+
+
+@bot.command(pass_context=True)
+@commands.has_role(Adminrole)
+async def MCrestart(ctx):
+
+    global person
+    person= ctx.author
+    person= str(person)
+    print("Minecraft rebooted by "+ person)
+    await ctx.send("Restarting Minecraft...")
+    with open (Generallog, "a") as log:
+        currenttime= str(datetime.now())
+        log.write(currenttime+ "   Minecraft restarted by "+ person+"\n")
+    log.close
+    try:
         try:
-            try:
-                subprocess.run(["sudo","-u","server","tmux", "send-keys", "-t", "Minecraft", "/stop", "ENTER"])
-            except:
-                pass
-            timee.sleep(3)
-            result = subprocess.run(
-                    ["sudo", "-u", "server", "/bin/bash", "/home/server/sh/mcstart.sh"], 
-                    check=True, 
-                    stdout=subprocess.PIPE, 
-                    stderr=subprocess.PIPE
-                    )
-            pass
+            subprocess.run(["sudo","-u","server","tmux", "send-keys", "-t", "Minecraft", "/stop", "ENTER"])
         except:
-            Level= "Severe"
-            Reason= "Minecraft failed to restart"
-            await ctx.send("Minecraft Failed to restart")
-            LogError(Level,Reason)
             pass
+        timee.sleep(3)
+        result = subprocess.run(
+                ["sudo", "-u", "server", "/bin/bash", "/home/server/sh/mcstart.sh"], 
+                check=True, 
+                stdout=subprocess.PIPE, 
+                stderr=subprocess.PIPE
+                )
         pass
-except:
-    Level= "Warn"
-    Reason= ("Unauthorised Minecraft reboot attempted by",person)
-    LogError(Level,Reason)
+    except:
+        Level= "Severe"
+        Reason= "Minecraft failed to restart"
+        await ctx.send("Minecraft Failed to restart")
+        LogError(Level,Reason)
+        pass
     pass
+@MCrestart.error
+async def MCrestartError(ctx ,error):
+    global person
+    if isinstance(error, commands.CheckFailure):
+        person= ctx.author
+        personID= person.id
+        person= str(person)
+        personID= str(personID)
+        Level= "Warn"
+        Reason= ("Unauthorised Minecraft reboot attempted by",person)
+        await ctx.send("You dont have permissions ("+Adminrole+") to do this <@"+personID+">")
+        LogError(Level,Reason)
+
 
 
 #######      RUSSIAN ROULETTE      ######
