@@ -26,12 +26,12 @@ import random
 import threading
 import subprocess
 import psutil
-TOKEN= []
 botrole= []
 Adminrole= []
 person= ""
 Generallog= filepath+"/ImportantTxtfiles/Logs/General.log"
 LocalFilepath= "/home/server/" #Change this to your local devices filepath
+load_dotenv(filepath+"/ImportantTxtfiles/.env")
 with open (filepath+"/ImportantTxtfiles/important.csv", "r") as info:
     reader= csv.reader(info)
     for row in reader:
@@ -609,7 +609,5 @@ def insertion_sort_2d_Descending(arr, col_index):
 
 Warningsystemthread= threading.Thread(target=Warningsystem)
 Warningsystemthread.start()
-load_dotenv(filepath+"/ImportantTxtfiles/.env")
-print(os.getenv("DAVID_KEY"))
-bot.run(str(os.getenv("DAVID_KEY")))
+bot.run(str(os.getenv("DAVID_KEY"))) #rename this to what your bot token variable is called in your .env file
 
