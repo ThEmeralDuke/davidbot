@@ -167,7 +167,12 @@ async def MCrestart(ctx):
         log.write(currenttime+ "   Minecraft restarted by "+ person+"\n")
     log.close
     subprocess.run(["tmux","kill-session","-t","Minecraft"])
-    subprocess.run([LocalFilepath+"sh/mcstart.sh"])
+    result = subprocess.run(
+            ["/bin/bash", "/home/server/sh/mcstart.sh"], 
+            check=True, 
+            stdout=subprocess.PIPE, 
+            stderr=subprocess.PIPE
+            )
     pass
     #except:
      #   Level= "Warn"
