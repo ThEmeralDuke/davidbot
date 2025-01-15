@@ -13,6 +13,7 @@ def LogResource(Level,Reason,Percent):
     log.close()
 import os
 import os.path
+from dotenv import *
 import discord
 from discord import *
 from discord.ext import commands
@@ -34,9 +35,8 @@ LocalFilepath= "/home/server/" #Change this to your local devices filepath
 with open (filepath+"/ImportantTxtfiles/important.csv", "r") as info:
     reader= csv.reader(info)
     for row in reader:
-        TOKEN= row[0]
-        botrole= row[1]
-        Adminrole=row[2]
+        botrole= row[0]
+        Adminrole=row[1]
 info.close()
 with open (filepath+"/ImportantTxtfiles/settings.csv", "r") as settings:
     reader= csv.reader(settings)
@@ -609,5 +609,6 @@ def insertion_sort_2d_Descending(arr, col_index):
 
 Warningsystemthread= threading.Thread(target=Warningsystem)
 Warningsystemthread.start()
-bot.run(TOKEN)
+load_dotenv()
+bot.run(os.getenv("DAVID_KEY"))
 
