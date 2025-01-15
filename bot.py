@@ -128,10 +128,11 @@ async def Usage(ctx):
     await ctx.send(f"Memory Usage: {memory_info.percent}% used ({memory_info.used / (1024**3):.2f} GB / {memory_info.total / (1024**3):.2f} GB)\n<@"+personID+">")
 
 
-@bot.command(pass_context=True)
-@commands.has_role(Adminrole)
-async def reboot(ctx):
-    try:
+try:
+    @bot.command(pass_context=True)
+    @commands.has_role(Adminrole)
+    async def reboot(ctx):
+
         global person
         person= ctx.author
         person= str(person)
@@ -146,12 +147,11 @@ async def reboot(ctx):
             subprocess.run(["sudo", "reboot"])
             exit()
         pass
-    except:
-        Level= "Warn"
-        Reason= ("Unauthorised Bot reboot attempted by",person)
-        await ctx.send("You dont have permissions ("+Adminrole+") to do this <@"+person.id+">")
-        LogError(Level,Reason)
-        pass
+except:
+    Level= "Warn"
+    Reason= ("Unauthorised Bot reboot attempted by",person)
+    LogError(Level,Reason)
+    pass
 try:
     @bot.command(pass_context=True)
     @commands.has_role(Adminrole)
