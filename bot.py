@@ -234,17 +234,12 @@ async def MCbackup(ctx):
         log.write(currenttime+ "   Minecraft Backed up by "+ person+"\n")
     log.close
     #try:
-    subprocess.run(["sudo","-u","server","tmux", "send-keys", "-t", "Minecraft", "/save-off", "ENTER"])
-    datew= str(datetime.today())
-    datew= datew.split()
-    day = str(datew[0])
-    Minecraftbackupfilepath=("/opt/backups/"+gametype+"/"+version) #Change this to the filepath of your minecraft server backups
-    backupfile_exists = os.path.isdir(Minecraftbackupfilepath+"/"+day)
-    if backupfile_exists== False:
-        os.mkdir(Minecraftbackupfilepath+"/"+day)
-        subprocess.run(["sudo","cp",Minecraftserverfilepath+"/world",Minecraftbackupfilepath+"/"+day+"/","-rf"])
-        subprocess.run(["sudo","-u","server","tmux", "send-keys", "-t", "Minecraft", "/save-on", "ENTER"])
-    else:
+        subprocess.run(["sudo","-u","server","tmux", "send-keys", "-t", "Minecraft", "/save-off", "ENTER"])
+        datew= str(datetime.today())
+        datew= datew.split()
+        day = str(datew[0])
+        Minecraftbackupfilepath=("/opt/backups/"+gametype+"/"+version) #Change this to the filepath of your minecraft server backups
+        backupfile_exists = os.path.isdir(Minecraftbackupfilepath+"/"+day)
         datew= datew[1].split(".")
         hour=str((datew[0]))
         hour=hour.split(":")
