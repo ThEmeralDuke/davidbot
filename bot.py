@@ -189,6 +189,7 @@ async def MCrestart(ctx):
     log.close
     try:
         try:
+            subprocess.run(["sudo","-u","server","tmux", "send-keys", "-t", "Minecraft", "ENTER"])
             subprocess.run(["sudo","-u","server","tmux", "send-keys", "-t", "Minecraft", "/stop", "ENTER"])
         except:
             pass
@@ -234,6 +235,7 @@ async def MCbackup(ctx):
         log.write(currenttime+ "   Minecraft Backed up by "+ person+"\n")
     log.close
     try:
+        subprocess.run(["sudo","-u","server","tmux", "send-keys", "-t", "Minecraft", "ENTER"])
         subprocess.run(["sudo","-u","server","tmux", "send-keys", "-t", "Minecraft", "/save-off", "ENTER"])
         datew= str(datetime.today())
         datew= datew.split()
