@@ -242,7 +242,7 @@ async def MCbackup(ctx):
         backupfile_exists = os.path.isdir(Minecraftbackupfilepath+"/"+day)
         if backupfile_exists== False:
             print("TEST 2")
-            os.path.join(Minecraftbackupfilepath,day)
+            Minecraftbackupfilepath= os.path.join(Minecraftbackupfilepath,day)
             os.path.mkdir(Minecraftbackupfilepath)
             print("TEST 3")
         datew= datew[1].split(".")
