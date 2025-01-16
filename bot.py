@@ -194,7 +194,7 @@ async def MCrestart(ctx):
             subprocess.run(["sudo","-u","server","tmux", "send-keys", "-t", "Minecraft", "/stop", "ENTER"])
         except:
             pass
-        timee.sleep(3)
+        timee.sleep(7) #Just give it more time to close
         result = subprocess.run(
                 ["sudo", "-u", "server", "/bin/bash", "/home/server/sh/mcstart.sh"], 
                 check=True, 
