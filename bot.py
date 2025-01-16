@@ -175,6 +175,7 @@ async def rebootError(ctx ,error):
 Minecraftserverfilepath="/opt/minecraft" #Change this to the filepath of your minecraft server
 Minecraftbackupfilepath="/opt/backups/"+gametype+"/"+version+"/" #Change this to the filepath of your minecraft server backups
 #@bot.command(pass_context=True)
+@bot.command()
 #@commands.has_role(Adminrole)
 async def MCrestart(ctx):
 
