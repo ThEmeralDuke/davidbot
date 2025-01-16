@@ -246,7 +246,7 @@ async def MCbackup(ctx):
         hour=str((datew[0]))
         hour=hour.split(":")
         hour=hour[0]+":"+hour[1]
-        Minecraftbackupfilepath= (Minecraftbackupfilepath+"/"+day)w
+        Minecraftbackupfilepath= (Minecraftbackupfilepath+"/"+day)
         backupfilepath= Minecraftbackupfilepath+"/"+hour
         backupfile_exists = os.path.isdir(backupfilepath)
         if backupfile_exists== False:
