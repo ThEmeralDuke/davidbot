@@ -1,3 +1,5 @@
+
+#Loading Log files
 filepath= (r".")
 Errorlog= filepath+"/ImportantTxtfiles/Logs/Error.log"
 def LogError(Level,Reason):
@@ -11,6 +13,8 @@ def LogResource(Level,Reason,Percent):
             currenttime= str(datetime.now())
             log.write(f"{currenttime}    ({Level}) {Reason} at {Percent}%\n")
     log.close()
+
+#loading libraries
 import os
 import os.path
 from dotenv import *
@@ -26,12 +30,14 @@ import random
 import threading
 import subprocess
 import psutil
+#stuff
 botrole= []
 Adminrole= []
 person= ""
 Generallog= filepath+"/ImportantTxtfiles/Logs/General.log"
 LocalFilepath= "/home/server/" #Change this to your local devices filepath
 load_dotenv(filepath+"/ImportantTxtfiles/.env")
+#load roles (potentially merge this with the settings file)
 with open (filepath+"/ImportantTxtfiles/important.csv", "r") as info:
     reader= csv.reader(info)
     for row in reader:
@@ -39,7 +45,7 @@ with open (filepath+"/ImportantTxtfiles/important.csv", "r") as info:
         Adminrole=row[1]
 info.close()
 
-
+#load settings
 with open (filepath+"/ImportantTxtfiles/settings.csv", "r") as settings:
     reader= csv.reader(settings)
     for row in reader:
@@ -59,6 +65,7 @@ Minecraftbackupfilepath=("/opt/backups/"+gametype+"/"+version) #Change this to t
 #SystemChannelID= 1240997501750743221 #This should be the test channel for your bot to see if it starts (delete if unnessecary)
 bot = commands.Bot(command_prefix='!', intents=discord.Intents.all(), activity = discord.Activity(type=discord.ActivityType.listening, name="!Commands"))
 
+#Wanrs the user if the ram or cpu usage is too high
 def Warningsystem():
     while True:
         memory_info = psutil.virtual_memory()
@@ -97,6 +104,7 @@ def Warningsystem():
         timee.sleep(20)
 
 
+#Commands of what the bot can do
 @bot.command()
 async def Commands(ctx):
     person= ctx.author
@@ -104,6 +112,7 @@ async def Commands(ctx):
     person= str(person)
     personID= str(personID)
     await ctx.send("List of commands: (Case sensitive)\n1. !hi\n2. !Usage\n3. !Reboot (admin protected)\n4. !MCrestart\n5. !MCbackup (admin protected)\n6. !startRR\n7. !RRleaderboard\n8. !QuitRR\n\n<@"+personID+">")
+
 @bot.event
 async def on_ready():
     print("Bot is ready\n\n")
@@ -123,6 +132,7 @@ async def hi(ctx):
     personID= str(personID)
     await ctx.send("Hey <@"+personID+">")
 
+#manually shows the usage of the computers resources
 @bot.command()
 async def Usage(ctx):
     person= ctx.author
@@ -139,11 +149,10 @@ async def Usage(ctx):
     await ctx.send(f"CPU Utilization: {cpu_util}%")
     await ctx.send(f"Memory Usage: {memory_info.percent}% used ({memory_info.used / (1024**3):.2f} GB / {memory_info.total / (1024**3):.2f} GB)\n<@"+personID+">")
 
-
+#Reboots the ENTIRE server/computer (DO NOT TOUCH)
 @bot.command(pass_context=True)
 @commands.has_role(Adminrole)
 async def reboot(ctx):
-
     global person
     person= ctx.author
     person= str(person)
@@ -158,6 +167,7 @@ async def reboot(ctx):
         subprocess.run(["sudo", "reboot"])
         exit()
     pass
+#This will be called if the person running the command does not have the correct role
 @reboot.error
 async def rebootError(ctx ,error):
     global person
@@ -174,6 +184,7 @@ async def rebootError(ctx ,error):
 
 Minecraftserverfilepath="/opt/minecraft" #Change this to the filepath of your minecraft server
 Minecraftbackupfilepath="/opt/backups/"+gametype+"/"+version+"/" #Change this to the filepath of your minecraft server backups
+#This remotely restarts the minecraft server
 #@bot.command(pass_context=True)
 @bot.command()
 #@commands.has_role(Adminrole)
@@ -190,6 +201,7 @@ async def MCrestart(ctx):
     log.close
     try:
         try:
+            #sends the command to the tmux session
             subprocess.run(["sudo","-u","server","tmux", "send-keys", "-t", "Minecraft", "ENTER"])
             subprocess.run(["sudo","-u","server","tmux", "send-keys", "-t", "Minecraft", "/stop", "ENTER"])
             sleepyboi= 7
@@ -197,14 +209,10 @@ async def MCrestart(ctx):
             sleepyboi= 0
             pass
         timee.sleep(sleepyboi) #Just give it more time to close
-        result = subprocess.run(
-                ["sudo", "-u", "server", "/bin/bash", "/home/server/sh/mcstart.sh"], 
-                check=True, 
-                stdout=subprocess.PIPE, 
-                stderr=subprocess.PIPE
-                )
+        result = subprocess.run(["sudo", "-u", "server", "/bin/bash", "/home/server/sh/mcstart.sh"])
         pass
     except:
+        #If there is an error, log it and tell the user
         Level= "Severe"
         Reason= "Minecraft failed to restart"
         await ctx.send("Minecraft Failed to restart")
@@ -224,6 +232,8 @@ async def MCrestart(ctx):
 #        await ctx.send("You dont have permissions ("+Adminrole+") to do this <@"+personID+">")
 #        LogError(Level,Reason)
 
+
+#This creates a backup of the minecraft server
 @bot.command(pass_context=True)
 @commands.has_role(Adminrole)
 async def MCbackup(ctx):
@@ -238,8 +248,11 @@ async def MCbackup(ctx):
         log.write(currenttime+ "   Minecraft Backed up by "+ person+"\n")
     log.close
     try:
+        #more MC commands for the tmux session
         subprocess.run(["sudo","-u","server","tmux", "send-keys", "-t", "Minecraft", "ENTER"])
+        #turns off automatic saving on the minecraft server so the backup is not corrupted
         subprocess.run(["sudo","-u","server","tmux", "send-keys", "-t", "Minecraft", "/save-off", "ENTER"])
+        #Spilitting time and becoming a time lord
         datew= str(datetime.today())
         datew= datew.split()
         day = str(datew[0])
@@ -247,34 +260,40 @@ async def MCbackup(ctx):
         backupfile_exists = os.path.isdir(Minecraftbackupfilepath+"/"+day)
         Minecraftbackupfilepath= os.path.join(Minecraftbackupfilepath,day)
         if backupfile_exists== False:
-            print("TEST 2")
+            #print("TEST 2")
+            #Creates a new folder for the backup if its a new day
             os.mkdir(Minecraftbackupfilepath)
-            print("TEST 3")
+            #print("TEST 3")
+        #More time lord stuff
         datew= datew[1].split(".")
         hour=str((datew[0]))
         hour=hour.split(":")
         hour=hour[0]+":"+hour[1]
         backupfilepath= os.path.join(Minecraftbackupfilepath,hour)
         backupfile_exists = os.path.isdir(backupfilepath)
-        print("test4")
+        #print("test4")
         if backupfile_exists== False:
             Minecraftbackupfilepath= os.path.join(Minecraftbackupfilepath,hour)
+            #makes the backup under the hour and minute
             os.mkdir(Minecraftbackupfilepath)
             subprocess.run(["sudo","cp",Minecraftserverfilepath+"/world",Minecraftbackupfilepath+"/"+hour+"/","-rf"])
+            #turns on automatic saving on the minecraft server as the backup is done
             subprocess.run(["sudo","-u","server","tmux", "send-keys", "-t", "Minecraft", "/save-on", "ENTER"])
         else:
             print("Backup already exists so fuck you")
+            #Boo-hoo the backup already existed in that minute so why the fuck are you making another
             subprocess.run(["sudo","-u","server","tmux", "send-keys", "-t", "Minecraft", "/save-on", "ENTER"])
-            crash=0/0
-            print(crash)
     except:
+        #error catching and logging
         Level= "Severe"
         Reason= "Minecraft failed to Backup"
         await ctx.send("Minecraft Failed to Backup")
         LogError(Level,Reason)
+        #turns on saving so it doesnt stay off if there is an error
         subprocess.run(["sudo","-u","server","tmux", "send-keys", "-t", "Minecraft", "/save-on", "ENTER"])
         pass
     pass
+#Incase someone doesnt have permissions
 @MCbackup.error
 async def MCbackupError(ctx ,error):
     global person
