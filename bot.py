@@ -233,42 +233,42 @@ async def MCbackup(ctx):
         currenttime= str(datetime.now())
         log.write(currenttime+ "   Minecraft Backed up by "+ person+"\n")
     log.close
-    #try:
-    subprocess.run(["sudo","-u","server","tmux", "send-keys", "-t", "Minecraft", "/save-off", "ENTER"])
-    datew= str(datetime.today())
-    datew= datew.split()
-    day = str(datew[0])
-    Minecraftbackupfilepath=("/opt/backups/"+gametype+"/"+version) #Change this to the filepath of your minecraft server backups
-    backupfile_exists = os.path.isdir(Minecraftbackupfilepath+"/"+day)
-    Minecraftbackupfilepath= os.path.join(Minecraftbackupfilepath,day)
-    if backupfile_exists== False:
-        print("TEST 2")
-        os.mkdir(Minecraftbackupfilepath)
-        print("TEST 3")
-    datew= datew[1].split(".")
-    hour=str((datew[0]))
-    hour=hour.split(":")
-    hour=hour[0]+":"+hour[1]
-    backupfilepath= os.path.join(Minecraftbackupfilepath,hour)
-    backupfile_exists = os.path.isdir(backupfilepath)
-    print("test4")
-    if backupfile_exists== False:
-        Minecraftbackupfilepath= os.path.join(Minecraftbackupfilepath,hour)
-        os.mkdir(Minecraftbackupfilepath)
-        subprocess.run(["sudo","cp",Minecraftserverfilepath+"/world",Minecraftbackupfilepath+"/"+hour+"/","-rf"])
+    try:
+        subprocess.run(["sudo","-u","server","tmux", "send-keys", "-t", "Minecraft", "/save-off", "ENTER"])
+        datew= str(datetime.today())
+        datew= datew.split()
+        day = str(datew[0])
+        Minecraftbackupfilepath=("/opt/backups/"+gametype+"/"+version) #Change this to the filepath of your minecraft server backups
+        backupfile_exists = os.path.isdir(Minecraftbackupfilepath+"/"+day)
+        Minecraftbackupfilepath= os.path.join(Minecraftbackupfilepath,day)
+        if backupfile_exists== False:
+            print("TEST 2")
+            os.mkdir(Minecraftbackupfilepath)
+            print("TEST 3")
+        datew= datew[1].split(".")
+        hour=str((datew[0]))
+        hour=hour.split(":")
+        hour=hour[0]+":"+hour[1]
+        backupfilepath= os.path.join(Minecraftbackupfilepath,hour)
+        backupfile_exists = os.path.isdir(backupfilepath)
+        print("test4")
+        if backupfile_exists== False:
+            Minecraftbackupfilepath= os.path.join(Minecraftbackupfilepath,hour)
+            os.mkdir(Minecraftbackupfilepath)
+            subprocess.run(["sudo","cp",Minecraftserverfilepath+"/world",Minecraftbackupfilepath+"/"+hour+"/","-rf"])
+            subprocess.run(["sudo","-u","server","tmux", "send-keys", "-t", "Minecraft", "/save-on", "ENTER"])
+        else:
+            print("Backup already exists so fuck you")
+            subprocess.run(["sudo","-u","server","tmux", "send-keys", "-t", "Minecraft", "/save-on", "ENTER"])
+            crash=0/0
+            print(crash)
+    except:
+        Level= "Severe"
+        Reason= "Minecraft failed to Backup"
+        await ctx.send("Minecraft Failed to Backup")
+        LogError(Level,Reason)
         subprocess.run(["sudo","-u","server","tmux", "send-keys", "-t", "Minecraft", "/save-on", "ENTER"])
-    else:
-        print("Backup already exists so fuck you")
-        subprocess.run(["sudo","-u","server","tmux", "send-keys", "-t", "Minecraft", "/save-on", "ENTER"])
-        crash=0/0
-        print(crash)
-#except:
-    #    Level= "Severe"
-    #    Reason= "Minecraft failed to Backup"
-    #   await ctx.send("Minecraft Failed to Backup")
-    #    LogError(Level,Reason)
-    #    subprocess.run(["sudo","-u","server","tmux", "send-keys", "-t", "Minecraft", "/save-on", "ENTER"])
-    #    pass
+        pass
     pass
 @MCbackup.error
 async def MCbackupError(ctx ,error):
