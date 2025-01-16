@@ -241,12 +241,12 @@ async def MCbackup(ctx):
         Minecraftbackupfilepath=("/opt/backups/"+gametype+"/"+version) #Change this to the filepath of your minecraft server backups
         backupfile_exists = os.path.isdir(Minecraftbackupfilepath+"/"+day)
         if backupfile_exists== False:
-            os.path.isdir(Minecraftbackupfilepath+"/"+day)
+            os.path.mkdir(Minecraftbackupfilepath+"/"+day)
         datew= datew[1].split(".")
         hour=str((datew[0]))
         hour=hour.split(":")
         hour=hour[0]+":"+hour[1]
-        Minecraftbackupfilepath= (Minecraftbackupfilepath+"/"+day)
+        Minecraftbackupfilepath= (Minecraftbackupfilepath+"/"+day)w
         backupfilepath= Minecraftbackupfilepath+"/"+hour
         backupfile_exists = os.path.isdir(backupfilepath)
         if backupfile_exists== False:
