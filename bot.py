@@ -242,7 +242,8 @@ async def MCbackup(ctx):
         backupfile_exists = os.path.isdir(Minecraftbackupfilepath+"/"+day)
         if backupfile_exists== False:
             print("TEST 2")
-            os.path.mkdir(Minecraftbackupfilepath+"/"+day)
+            os.path.join(Minecraftbackupfilepath,day)
+            os.path.mkdir(Minecraftbackupfilepath)
             print("TEST 3")
         datew= datew[1].split(".")
         hour=str((datew[0]))
@@ -253,7 +254,7 @@ async def MCbackup(ctx):
         backupfile_exists = os.path.isdir(backupfilepath)
         print("test4")
         if backupfile_exists== False:
-            os.mkdir(Minecraftbackupfilepath+"/"+hour)
+            os.path.join(Minecraftbackupfilepath,hour)
             subprocess.run(["sudo","cp",Minecraftserverfilepath+"/world",Minecraftbackupfilepath+"/"+hour+"/","-rf"])
             subprocess.run(["sudo","-u","server","tmux", "send-keys", "-t", "Minecraft", "/save-on", "ENTER"])
         else:
@@ -266,6 +267,7 @@ async def MCbackup(ctx):
         Reason= "Minecraft failed to Backup"
         await ctx.send("Minecraft Failed to Backup")
         LogError(Level,Reason)
+        subprocess.run(["sudo","-u","server","tmux", "send-keys", "-t", "Minecraft", "/save-on", "ENTER"])
         pass
     pass
 @MCbackup.error
