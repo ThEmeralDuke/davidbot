@@ -174,8 +174,8 @@ async def rebootError(ctx ,error):
 
 Minecraftserverfilepath="/opt/minecraft" #Change this to the filepath of your minecraft server
 Minecraftbackupfilepath="/opt/backups/"+gametype+"/"+version+"/" #Change this to the filepath of your minecraft server backups
-@bot.command(pass_context=True)
-@commands.has_role(Adminrole)
+#@bot.command(pass_context=True)
+#@commands.has_role(Adminrole)
 async def MCrestart(ctx):
 
     global person
@@ -207,18 +207,18 @@ async def MCrestart(ctx):
         LogError(Level,Reason)
         pass
     pass
-@MCrestart.error
-async def MCrestartError(ctx ,error):
-    global person
-    if isinstance(error, commands.CheckFailure):
-        person= ctx.author
-        personID= person.id
-        person= str(person)
-        personID= str(personID)
-        Level= "Warn"
-        Reason= ("Unauthorised Minecraft reboot attempted by",person)
-        await ctx.send("You dont have permissions ("+Adminrole+") to do this <@"+personID+">")
-        LogError(Level,Reason)
+#@MCrestart.error
+#async def MCrestartError(ctx ,error):
+#    global person
+#    if isinstance(error, commands.CheckFailure):
+#        person= ctx.author
+#        personID= person.id
+#        person= str(person)
+#        personID= str(personID)
+#        Level= "Warn"
+#        Reason= ("Unauthorised Minecraft reboot attempted by",person)
+#        await ctx.send("You dont have permissions ("+Adminrole+") to do this <@"+personID+">")
+#        LogError(Level,Reason)
 
 @bot.command(pass_context=True)
 @commands.has_role(Adminrole)
