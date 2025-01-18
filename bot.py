@@ -279,6 +279,7 @@ async def MCbackup(ctx):
             subprocess.run(["sudo","cp",Minecraftserverfilepath+"/world",Minecraftbackupfilepath+"/"+hour+"/","-rf"])
             #turns on automatic saving on the minecraft server as the backup is done
             subprocess.run(["sudo","-u","server","tmux", "send-keys", "-t", "Minecraft", "/save-on", "ENTER"])
+            await ctx.send("Minecraft backed up succesfully")
         else:
             print("Backup already exists so fuck you")
             #Boo-hoo the backup already existed in that minute so why the fuck are you making another
