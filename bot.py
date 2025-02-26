@@ -30,6 +30,7 @@ import random
 import threading
 import subprocess
 import psutil
+import keyboard
 #stuff
 botrole= []
 Adminrole= []
@@ -44,6 +45,8 @@ with open (filepath+"/ImportantTxtfiles/important.csv", "r") as info:
         botrole= row[0]
         Adminrole=row[1]
 info.close()
+
+
 
 #load settings
 with open (filepath+"/ImportantTxtfiles/settings.csv", "r") as settings:
