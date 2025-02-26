@@ -114,7 +114,7 @@ async def Commands(ctx):
     personID= person.id
     person= str(person)
     personID= str(personID)
-    await ctx.send("List of commands: (Case sensitive)\n1. !hi\n2. !Usage\n3. !Reboot (admin protected)\n4. !MCrestart\n5. !MCbackup (admin protected)\n6. !startRR\n7. !RRleaderboard\n8. !QuitRR\n\n<@"+personID+">")
+    await ctx.send("List of commands: (Case sensitive)\n1. !hi\n2. !Usage\n3. !reboot (admin protected)\n4. !MCrestart\n5. !MCbackup (admin protected)\n6. !startRR\n7. !RRleaderboard\n8. !QuitRR\n\n<@"+personID+">")
 
 @bot.event
 async def on_ready():
@@ -714,6 +714,13 @@ def insertion_sort_2d_Descending(arr, col_index):
         Reason= "Bot failed to do the 2d sort"
         LogError(Level,Reason)
         pass
+
+print("Loading cogs")
+coggers= {'cogs.admin','cogs.minecraft','cogs.rr'}
+if __name__ == '__main__':
+    for cog in coggers:
+        bot.load_extension(cog)
+        print(f'{cog} loaded')
 
 Warningsystemthread= threading.Thread(target=Warningsystem)
 Warningsystemthread.start()
