@@ -259,27 +259,33 @@ async def MCbackup(ctx):
         datew= str(datetime.today())
         datew= datew.split()
         day = str(datew[0])
+        print("Dating done")
         Minecraftbackupfilepath=("/opt/backups/"+gametype+"/"+version) #Change this to the filepath of your minecraft server backups
         backupfile_exists = os.path.isdir(Minecraftbackupfilepath+"/"+day)
         Minecraftbackupfilepath= os.path.join(Minecraftbackupfilepath,day)
         if backupfile_exists== False:
-            #print("TEST 2")
+            print("New day making")
             #Creates a new folder for the backup if its a new day
             os.mkdir(Minecraftbackupfilepath)
-            #print("TEST 3")
+            print("New day made")
+        print("Datechecked/made")
         #More time lord stuff
         datew= datew[1].split(".")
         hour=str((datew[0]))
         hour=hour.split(":")
         hour=hour[0]+":"+hour[1]
+        print("Hours calculated")
         backupfilepath= os.path.join(Minecraftbackupfilepath,hour)
         backupfile_exists = os.path.isdir(backupfilepath)
-        #print("test4")
+        print("Hours checked")
         if backupfile_exists== False:
             Minecraftbackupfilepath= os.path.join(Minecraftbackupfilepath,hour)
+            print("Hour joined")
             #makes the backup under the hour and minute
             os.mkdir(Minecraftbackupfilepath)
+            print("File made")
             subprocess.run(["sudo","cp",Minecraftserverfilepath+"/world",Minecraftbackupfilepath+"/"+hour+"/","-rf"])
+            print("copied over the files")
             #turns on automatic saving on the minecraft server as the backup is done
             subprocess.run(["sudo","-u","server","tmux", "send-keys", "-t", "Minecraft", "/save-on", "ENTER"])
             await ctx.send("Minecraft backed up succesfully")
