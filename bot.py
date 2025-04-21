@@ -186,7 +186,7 @@ async def rebootError(ctx ,error):
 
 
 Minecraftserverfilepath="/opt/minecraft" #Change this to the filepath of your minecraft server
-Minecraftbackupfilepath="/opt/backups/"+gametype+"/"+version+"/" #Change this to the filepath of your minecraft server backups
+Minecraftbackupfilepath="/opt/backups/minecraft/"+gametype+"/"+version+"/" #Change this to the filepath of your minecraft server backups
 #This remotely restarts the minecraft server
 #@bot.command(pass_context=True)
 @bot.command()
@@ -260,7 +260,7 @@ async def MCbackup(ctx):
         datew= datew.split()
         day = str(datew[0])
         print("Dating done")
-        Minecraftbackupfilepath=("/opt/backups/"+gametype+"/"+version) #Change this to the filepath of your minecraft server backups
+        Minecraftbackupfilepath=("/opt/backups/minecraft/"+gametype+"/"+version) #Change this to the filepath of your minecraft server backups
         backupfile_exists = os.path.isdir(Minecraftbackupfilepath+"/"+day)
         Minecraftbackupfilepath= os.path.join(Minecraftbackupfilepath,day)
         if backupfile_exists== False:
