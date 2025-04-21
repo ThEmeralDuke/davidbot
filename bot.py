@@ -715,12 +715,12 @@ def insertion_sort_2d_Descending(arr, col_index):
         LogError(Level,Reason)
         pass
 
-print("Loading cogs")
-coggers= {'cogs.admin','cogs.minecraft','cogs.rr'}
-if __name__ == '__main__':
-    for cog in coggers:
-        bot.load_extension(cog)
-        print(f'{cog} loaded')
+#print("Loading cogs")
+#coggers= {'cogs.admin','cogs.minecraft','cogs.rr'}
+#if __name__ == '__main__':
+#    for cog in coggers:
+#        bot.load_extension(cog)
+#        print(f'{cog} loaded')
 
 Warningsystemthread= threading.Thread(target=Warningsystem)
 Warningsystemthread.start()
