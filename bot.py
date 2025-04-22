@@ -4,7 +4,7 @@ filepath= "."
 Errorlog= filepath+"/ImportantTxtFiles/Logs/Error.log"
 def LogError(Level,Reason):
     with open (Errorlog, "a") as log:
-            currenttime= str(time.strftime("%Y%M%D %H:%M:%S", time.localtime()))
+            currenttime= str(time.strftime("%Y-%m-%D %H:%M:%S", time.localtime()))
             log.write(f"{currenttime}    ({Level}) {Reason}\n")
     log.close()
 Resourcelog= filepath+"/ImportantTxtFiles/Logs/Resource.log"
@@ -18,7 +18,7 @@ def LogResource(Level,Reason,Percent):
     currenttime= str(time.strftime("%H:%M:%S", time.localtime()))
     print(f"{currenttime}    ({Level}) {Reason} usage {descriptor} ({Percent}%)")
     with open (Resourcelog, "a") as log:
-            currenttime= str(time.strftime("%Y%M%D %H:%M:%S", time.localtime()))
+            currenttime= str(time.strftime("%Y-%m-%D %H:%M:%S", time.localtime()))
             log.write(f"{currenttime}    ({Level}) {Reason} at {Percent}%\n")
 
     log.close()
@@ -120,7 +120,7 @@ async def Commands(ctx):
 @bot.event
 async def on_ready():
     print("Bot is ready\n\n")
-    currenttime= str(time.strftime("%Y%M%D %H:%M:%S", time.localtime()))
+    currenttime= str(time.strftime("%Y-%m-%D %H:%M:%S", time.localtime()))
     #SystemChannel= bot.get_channel(SystemChannelID)
     
     #await SystemChannel.send("Bot is ACTIVE at "+currenttime)
@@ -162,7 +162,7 @@ async def reboot(ctx):
     print("Bot rebooted by "+ person)
     await ctx.send("rebooting...")
     with open (Generallog, "a") as log:
-        currenttime= str(time.strftime("%Y%M%D %H:%M:%S", time.localtime()))
+        currenttime= str(time.strftime("%Y-%m-%D %H:%M:%S", time.localtime()))
         log.write(currenttime+ "   Bot rebooted by "+ person+"\n")
     log.close()
     while True:
@@ -199,7 +199,7 @@ async def MCrestart(ctx):
     print("Minecraft rebooted by "+ person)
     await ctx.send("Restarting Minecraft...")
     with open (Generallog, "a") as log:
-        currenttime= str(time.strftime("%Y%M%D %H:%M:%S", time.localtime()))
+        currenttime= str(time.strftime("%Y-%m-%D %H:%M:%S", time.localtime()))
         log.write(currenttime+ "   Minecraft restarted by "+ person+"\n")
     log.close
     try:
@@ -247,7 +247,7 @@ async def MCbackup(ctx):
     print("Minecraft Backedup by "+ person)
     await ctx.send("Backing up Minecraft...")
     with open (Generallog, "a") as log:
-        currenttime= str(time.strftime("%Y%M%D %H:%M:%S", time.localtime()))
+        currenttime= str(time.strftime("%Y-%m-%D %H:%M:%S", time.localtime()))
         log.write(currenttime+ "   Minecraft Backed up by "+ person+"\n")
     log.close
     try:
@@ -340,7 +340,7 @@ async def startRR(ctx):
                 print(Dude, "found")
     if found== False:
         with open (Generallog, "a") as log:
-            currenttime= str(time.strftime("%Y%M%D %H:%M:%S", time.localtime()))
+            currenttime= str(time.strftime("%Y-%m-%D %H:%M:%S", time.localtime()))
             log.write(currenttime+ "   (Game) "+ Dude+"Has started playing Russian Roulette\n")
         log.close()
         playerRR= Dude
@@ -668,7 +668,7 @@ async def QuitRR(ctx):
                 if str(ctx.author) == PlayerlistRR[u]:
                     del PlayerlistRR[u]
                     with open (Generallog, "a") as log:
-                        currenttime= str(time.strftime("%Y%M%D %H:%M:%S", time.localtime()))
+                        currenttime= str(time.strftime("%Y-%m-%D %H:%M:%S", time.localtime()))
                         log.write(currenttime+ "   (Game) "+ str(ctx.author)+"Has stopped playing Russian Roulette\n")
                     log.close()
                     print("Quit successful ("+str(ctx.author)+")")
