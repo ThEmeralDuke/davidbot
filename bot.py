@@ -284,7 +284,7 @@ async def MCbackup(ctx):
             #makes the backup under the hour and minute
             os.mkdir(Minecraftbackupfilepath)
             print("File made")
-            subprocess.run(["sudo","cp",Minecraftserverfilepath+"/world",Minecraftbackupfilepath+"/"+hour+"/","-rf"])
+            subprocess.run(["sudo","cp",Minecraftserverfilepath+"/world",Minecraftbackupfilepath+"/world/","-rf"])
             print("copied over the files")
             #turns on automatic saving on the minecraft server as the backup is done
             subprocess.run(["sudo","-u","server","tmux", "send-keys", "-t", "Minecraft", "/save-on", "ENTER"])
