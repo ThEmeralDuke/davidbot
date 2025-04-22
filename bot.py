@@ -9,9 +9,18 @@ def LogError(Level,Reason):
     log.close()
 Resourcelog= filepath+"/ImportantTxtFiles/Logs/Resource.log"
 def LogResource(Level,Reason,Percent):
+    if Level=="Critical":
+        descriptor= "very high"
+    elif Level=="Serious":
+        descriptor= "high"
+    else:
+        descriptor= "getting high"
+    currenttime= str(time.strftime("%H:%M:%S", time.localtime()))
+    print(f"{currenttime}    ({Level}) {Reason} usage {descriptor} ({Percent}%)")
     with open (Resourcelog, "a") as log:
             currenttime= str(time.strftime("%Y%M%D %H:%M:%S", time.localtime()))
             log.write(f"{currenttime}    ({Level}) {Reason} at {Percent}%\n")
+
     log.close()
 
 #loading libraries
@@ -73,36 +82,30 @@ def Warningsystem():
         rampercent= float(f"{memory_info.percent}")
         cpu_util = psutil.cpu_percent(interval=1)
         if rampercent >=95:
-            print(f"(Critical) Ram usage Very high ({rampercent}%)")
             level="Critical"
             reason="RAM"
             LogResource(level,reason,rampercent)
         elif rampercent >=85:
-            print(f"(Serious) Ram usage high ({rampercent}%)")
             level="Serious"
             reason="RAM"
             LogResource(level,reason,rampercent)
         elif rampercent >=75:
-            print(f"(Warning) Ram usage getting high ({rampercent}%)")
             level="Warning"
             reason="RAM"
             LogResource(level,reason,rampercent)
         if cpu_util >=95:
-            print(f"(Critical) CPU usage Very high ({cpu_util}%)")
             level="Critical"
             reason="CPU"
             LogResource(level,reason,cpu_util)
         elif cpu_util >=85:
-            print(f"(Serious) CPU usage high ({cpu_util}%)")
             level="Serious"
             reason="CPU"
             LogResource(level,reason,cpu_util)
         elif cpu_util >=75:
-            print(f"(Warning) CPU usage getting high ({cpu_util}%)")
             level="Warning"
             reason="CPU"
             LogResource(level,reason,cpu_util)
-        timee.sleep(20)
+        time.sleep(20)
 
 
 #Commands of what the bot can do
@@ -208,7 +211,7 @@ async def MCrestart(ctx):
         except:
             sleepyboi= 0
             pass
-        timee.sleep(sleepyboi) #Just give it more time to close
+        time.sleep(sleepyboi) #Just give it more time to close
         result = subprocess.run(["sudo", "-u", "server", "/bin/bash", "/home/server/sh/mcstart.sh"])
         pass
     except:
@@ -449,7 +452,7 @@ async def S(ctx):
                     print(GameRR[y][3])
                     if GameRR[y][3]== []:
                         await ctx.send("No one died")
-                        timee.sleep(1)
+                        time.sleep(1)
                         await ctx.send("Please use !RRgame to go to next game")
                         del GameRR[y][3], 
                     
@@ -487,7 +490,7 @@ async def D(ctx):
                     del GameRR[y][3][0]
                     print(GameRR[y][3])
                     if GameRR[y][3][0]== []:
-                        timee.sleep(1)
+                        time.sleep(1)
                         await ctx.send("Please use !RRgame to go to next game")
                     else:
                     
@@ -559,7 +562,7 @@ def TimerLeaderboard():
     global RrLBoardToggle
     global RRtimer
     while True:
-        timee.sleep(1)
+        time.sleep(1)
         RRtimer= RRtimer+1
         if RRtimer>= LeaderboardDelay:
             print("RR leaderboard is useable again")
