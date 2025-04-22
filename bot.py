@@ -4,13 +4,13 @@ filepath= (r".")
 Errorlog= filepath+"/ImportantTxtFiles/Logs/Error.log"
 def LogError(Level,Reason):
     with open (Errorlog, "a") as log:
-            currenttime= str(datetime.now())
+            currenttime= str(time.strftime("%Y%M%D %H:%M:%S", time.localtime()))
             log.write(f"{currenttime}    ({Level}) {Reason}\n")
     log.close()
 Resourcelog= filepath+"/ImportantTxtFiles/Logs/Resource.log"
 def LogResource(Level,Reason,Percent):
     with open (Resourcelog, "a") as log:
-            currenttime= str(datetime.now())
+            currenttime= str(time.strftime("%Y%M%D %H:%M:%S", time.localtime()))
             log.write(f"{currenttime}    ({Level}) {Reason} at {Percent}%\n")
     log.close()
 
@@ -22,9 +22,7 @@ import discord
 from discord import *
 from discord.ext import commands
 from discord.utils import *
-import time as timee
-import datetime
-from datetime import *
+import time
 import csv
 import random
 import threading
@@ -119,12 +117,11 @@ async def Commands(ctx):
 @bot.event
 async def on_ready():
     print("Bot is ready\n\n")
-    currenttime= str(datetime.now())
+    currenttime= str(time.strftime("%Y%M%D %H:%M:%S", time.localtime()))
     #SystemChannel= bot.get_channel(SystemChannelID)
     
     #await SystemChannel.send("Bot is ACTIVE at "+currenttime)
     with open (Generallog, "a") as log:
-        currenttime= str(datetime.now())
         log.write("\n"+currenttime+ "   Bot Started\n")
     log.close()
 
@@ -162,7 +159,7 @@ async def reboot(ctx):
     print("Bot rebooted by "+ person)
     await ctx.send("rebooting...")
     with open (Generallog, "a") as log:
-        currenttime= str(datetime.now())
+        currenttime= str(time.strftime("%Y%M%D %H:%M:%S", time.localtime()))
         log.write(currenttime+ "   Bot rebooted by "+ person+"\n")
     log.close()
     while True:
@@ -199,7 +196,7 @@ async def MCrestart(ctx):
     print("Minecraft rebooted by "+ person)
     await ctx.send("Restarting Minecraft...")
     with open (Generallog, "a") as log:
-        currenttime= str(datetime.now())
+        currenttime= str(time.strftime("%Y%M%D %H:%M:%S", time.localtime()))
         log.write(currenttime+ "   Minecraft restarted by "+ person+"\n")
     log.close
     try:
@@ -247,7 +244,7 @@ async def MCbackup(ctx):
     print("Minecraft Backedup by "+ person)
     await ctx.send("Backing up Minecraft...")
     with open (Generallog, "a") as log:
-        currenttime= str(datetime.now())
+        currenttime= str(time.strftime("%Y%M%D %H:%M:%S", time.localtime()))
         log.write(currenttime+ "   Minecraft Backed up by "+ person+"\n")
     log.close
     try:
@@ -256,9 +253,8 @@ async def MCbackup(ctx):
         #turns off automatic saving on the minecraft server so the backup is not corrupted
         subprocess.run(["sudo","-u","server","tmux", "send-keys", "-t", "Minecraft", "/save-off", "ENTER"])
         #Spilitting time and becoming a time lord
-        datew= str(datetime.today())
-        datew= datew.split()
-        day = str(datew[0])
+
+        day = str(time.strftime("%Y%M%D", time.localtime()))
         #print("Dating done")
         Minecraftbackupfilepath=("/opt/backups/minecraft/"+gametype+"/"+version) #Change this to the filepath of your minecraft server backups
         backupfile_exists = os.path.isdir(Minecraftbackupfilepath+"/"+day)
@@ -270,10 +266,7 @@ async def MCbackup(ctx):
         #    print("New day made")
         #print("Datechecked/made")
         #More time lord stuff
-        datew= datew[1].split(".")
-        hour=str((datew[0]))
-        hour=hour.split(":")
-        hour=hour[0]+":"+hour[1]
+        hour= str(time.strftime("%H", time.localtime()))
         #print("Hours calculated")
         backupfilepath= os.path.join(Minecraftbackupfilepath,hour)
         backupfile_exists = os.path.isdir(backupfilepath)
@@ -344,7 +337,7 @@ async def startRR(ctx):
                 print(Dude, "found")
     if found== False:
         with open (Generallog, "a") as log:
-            currenttime= str(datetime.now())
+            currenttime= str(time.strftime("%Y%M%D %H:%M:%S", time.localtime()))
             log.write(currenttime+ "   (Game) "+ Dude+"Has started playing Russian Roulette\n")
         log.close()
         playerRR= Dude
@@ -672,7 +665,7 @@ async def QuitRR(ctx):
                 if str(ctx.author) == PlayerlistRR[u]:
                     del PlayerlistRR[u]
                     with open (Generallog, "a") as log:
-                        currenttime= str(datetime.now())
+                        currenttime= str(time.strftime("%Y%M%D %H:%M:%S", time.localtime()))
                         log.write(currenttime+ "   (Game) "+ str(ctx.author)+"Has stopped playing Russian Roulette\n")
                     log.close()
                     print("Quit successful ("+str(ctx.author)+")")
