@@ -37,6 +37,8 @@ import threading
 import subprocess
 import psutil
 import keyboard
+import json
+
 #stuff
 botrole= []
 Adminrole= []
@@ -93,7 +95,6 @@ def Warningsystem():
         elif cpu_util >=75:
             LogResource("Warning","CPU",cpu_util)
         time.sleep(20)
-
 
 #Commands of what the bot can do
 @bot.command()
@@ -196,17 +197,14 @@ async def MCrestart(ctx):
             sleepyboi= 7
         except:
             sleepyboi= 0
-            pass
         time.sleep(sleepyboi) #Just give it more time to close
-        result = subprocess.run(["sudo", "-u", "server", "/bin/bash", "/home/server/sh/mcstart.sh"])
-        pass
+        subprocess.run(["sudo", "-u", "server", "/bin/bash", "/home/server/sh/mcstart.sh"])
     except:
         #If there is an error, log it and tell the user
         Level= "Severe"
         Reason= "Minecraft failed to restart"
         await ctx.send("Minecraft Failed to restart")
         LogError(Level,Reason)
-        pass
     pass
 #@MCrestart.error
 #async def MCrestartError(ctx ,error):
@@ -698,12 +696,12 @@ def insertion_sort_2d_Descending(arr, col_index):
         LogError(Level,Reason)
         pass
 
-#print("Loading cogs")
-#coggers= {'cogs.admin','cogs.minecraft','cogs.rr'}
-#if __name__ == '__main__':
-#    for cog in coggers:
-#        bot.load_extension(cog)
-#        print(f'{cog} loaded')
+print("Loading cogs")
+coggers= {'cogs.admin','cogs.minecraft','cogs.rr'}
+if __name__ == '__main__':
+    for cog in coggers:
+        bot.load_extension(cog)
+        print(f'{cog} loaded')
 
 Warningsystemthread= threading.Thread(target=Warningsystem)
 Warningsystemthread.start()
