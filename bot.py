@@ -18,8 +18,8 @@ def LogResource(Level,Reason,Percent):
     currenttime= str(time.strftime("%H:%M:%S", time.localtime()))
     print(f"{currenttime}    ({Level}) {Reason} usage {descriptor} ({Percent}%)")
     with open (Resourcelog, "a") as log:
-            currenttime= str(time.strftime("%Y-%m-%D %H:%M:%S", time.localtime()))
-            log.write(f"{currenttime}    ({Level}) {Reason} at {Percent}%\n")
+        currenttime= str(time.strftime("%Y-%m-%D %H:%M:%S", time.localtime()))
+        log.write(f"{currenttime}    ({Level}) {Reason} at {Percent}%\n")
 
     log.close()
 
@@ -82,29 +82,17 @@ def Warningsystem():
         rampercent= float(f"{memory_info.percent}")
         cpu_util = psutil.cpu_percent(interval=1)
         if rampercent >=95:
-            level="Critical"
-            reason="RAM"
-            LogResource(level,reason,rampercent)
+            LogResource("Critical","RAM",rampercent)
         elif rampercent >=85:
-            level="Serious"
-            reason="RAM"
-            LogResource(level,reason,rampercent)
+            LogResource("Serious","RAM",rampercent)
         elif rampercent >=75:
-            level="Warning"
-            reason="RAM"
-            LogResource(level,reason,rampercent)
+            LogResource("Warning","RAM",rampercent)
         if cpu_util >=95:
-            level="Critical"
-            reason="CPU"
-            LogResource(level,reason,cpu_util)
+            LogResource("Critical","CPU",cpu_util)
         elif cpu_util >=85:
-            level="Serious"
-            reason="CPU"
-            LogResource(level,reason,cpu_util)
+            LogResource("Serious","CPU",cpu_util)
         elif cpu_util >=75:
-            level="Warning"
-            reason="CPU"
-            LogResource(level,reason,cpu_util)
+            LogResource("Warning","CPU",cpu_util)
         time.sleep(20)
 
 
