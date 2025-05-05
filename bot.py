@@ -1,4 +1,3 @@
-
 #Loading Log files
 filepath= "."
 Errorlog= filepath+"/ImportantTxtFiles/Logs/Error.log"
@@ -158,6 +157,7 @@ async def reboot(ctx):
         subprocess.run(["sudo", "reboot"])
         exit()
     pass
+
 #This will be called if the person running the command does not have the correct role
 @reboot.error
 async def rebootError(ctx ,error):
@@ -172,7 +172,6 @@ async def rebootError(ctx ,error):
         await ctx.send("You dont have permissions ("+Adminrole+") to do this <@"+personID+">")
         LogError(Level,Reason)
 
-
 Minecraftserverfilepath="/opt/minecraft" #Change this to the filepath of your minecraft server
 Minecraftbackupfilepath="/opt/backups/minecraft/"+gametype+"/"+version+"/" #Change this to the filepath of your minecraft server backups
 #This remotely restarts the minecraft server
@@ -180,7 +179,6 @@ Minecraftbackupfilepath="/opt/backups/minecraft/"+gametype+"/"+version+"/" #Chan
 @bot.command()
 #@commands.has_role(Adminrole)
 async def MCrestart(ctx):
-
     global person
     person= ctx.author
     person= str(person)
@@ -358,10 +356,11 @@ async def startRR(ctx):
 
     else:
         await ctx.send("you are already playing")
-scoreRR= 0        
+
+scoreRR= 0    
+
 @bot.command()
 async def RRgame(ctx):
-    
     global scoreRR
     global GameRR
     global BulletsRR
@@ -449,6 +448,7 @@ async def S(ctx):
                         GameRR[y].append("response")
         except:
             await ctx.send("Please use !RRgame to start the game")
+
 @bot.command()
 async def D(ctx):
     global scoreRR
@@ -557,7 +557,6 @@ def TimerLeaderboard():
             RrLBoardToggle= True
             RRtimer= 0
             break
-
 
 RRLBcontinue= False
 LeaderboardListRR= []
