@@ -25,7 +25,7 @@ def LogResource(Level,Reason,Percent):
 #loading libraries
 import os
 import os.path
-import dotenv
+from dotenv import *
 import discord
 import time
 import csv
