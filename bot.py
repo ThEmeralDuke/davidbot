@@ -25,11 +25,8 @@ def LogResource(Level,Reason,Percent):
 #loading libraries
 import os
 import os.path
-from dotenv import *
+import dotenv
 import discord
-from discord import *
-from discord.ext import commands
-from discord.utils import *
 import time
 import csv
 import random
