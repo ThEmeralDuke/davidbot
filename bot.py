@@ -38,6 +38,7 @@ import subprocess
 import psutil
 import keyboard
 import json
+import asyncio
 
 #stuff
 botrole= []
@@ -695,14 +696,14 @@ def insertion_sort_2d_Descending(arr, col_index):
         Reason= "Bot failed to do the 2d sort"
         LogError(Level,Reason)
         pass
-
-print("Loading cogs")
-coggers= {'cogs.admin','cogs.minecraft','cogs.rr'}
-if __name__ == '__main__':
-    for cog in coggers:
-        bot.load_extension(cog)
-        print(f'{cog} loaded')
-
-Warningsystemthread= threading.Thread(target=Warningsystem)
-Warningsystemthread.start()
-bot.run(str(os.getenv("BOT_KEY"))) #rename this to what your bot token variable is called in your .env file
+async def loadcogs():
+    for filename in os.listdir("./coggers"):
+        if filename.endswith(".py"):
+            await bot.load_extension(f"cogs.{filename[:-3]}")
+            print(f"{filename[:-3]} loaded")
+async def main():
+    async with bot:
+        Warningsystemthread= threading.Thread(target=Warningsystem)
+        Warningsystemthread.start()
+        await loadcogs()
+        await bot.start(str(os.getenv("BOT_KEY"))) #rename this to what your bot token variable is called in your .env file
