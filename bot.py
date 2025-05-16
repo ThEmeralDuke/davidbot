@@ -119,8 +119,8 @@ async def Commands(ctx):
     personID= person.id
     person= str(person)
     personID= str(personID)
-    await ctx.send("List of commands: (Case sensitive)\n1. !hi\n2. !Usage\n3. !reboot (admin protected)\n4. !MCrestart\n5. !MCbackup (admin protected)"
-    "\n6. !startRR\n7. !RRleaderboard\n8. !QuitRR\n9. !reload help\n\n<@"+personID+">")
+    await ctx.send("List of commands: (Case sensitive)\n. !Usage\n2. !reboot (admin protected)\n3. !MCrestart\n4. !MCbackup (admin protected)"
+    "\n5. !startRR\n6. !RRleaderboard\n7. !QuitRR\n8. !reload help\n\n<@"+personID+">")
 async def loadcogs():
     for filename in os.listdir("./coggers"):
         if filename.endswith(".py"):
