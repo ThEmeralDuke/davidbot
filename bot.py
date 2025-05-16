@@ -90,13 +90,15 @@ def Warningsystem():
         time.sleep(20)
 Coglist= ["all"]
 @bot.command()
-async def reload(ctx,arg):
+async def reload(ctx,arg=None):
     global Coglist
     arg= arg.lower()
     # Reloads the file, thus updating the Cog class.
-    if arg== None:
+    if arg is None:
         await ctx.send("Please provide an argument, If you are confused use !reload help")
-    if arg=="list":
+    if arg== "help":
+        await ctx.send("Reload Help.\n!reload list - provides a list of cogs available to be reloaded\n!reload all - Reloads all cogs\n!reload (cog) - Replace (cog) with a cog listed using the list argument")
+    elif arg=="list":
         await ctx.send("Cogs able to be reloaded:\n"+"\n".join(Coglist))
     elif arg== "all":
         for filename in os.listdir("./coggers"):
@@ -105,6 +107,7 @@ async def reload(ctx,arg):
                 print(f"{filename[:-3]} reloaded")
     elif arg in Coglist:
         await bot.reload_extension(f"coggers.{arg}")
+        print(f"{arg} reloaded")
     else: 
         await ctx.send("Cog not found. Use !reload list")
 
