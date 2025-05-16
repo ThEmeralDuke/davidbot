@@ -85,6 +85,7 @@ class rr(commands.Cog):
                     found= True
                     print(Dude, "found")
         if found== False:
+            print("sen2")
             with open (Generallog, "a") as log:
                 currenttime= str(time.strftime("%Y-%m-%D %H:%M:%S", time.localtime()))
                 log.write(currenttime+ "   (Game) "+ Dude+"Has started playing Russian Roulette\n")
