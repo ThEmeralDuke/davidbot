@@ -88,6 +88,8 @@ def Warningsystem():
         elif cpu_util >=75:
             LogResource("Warning","CPU",cpu_util)
         time.sleep(20)
+
+
 Coglist= []
 @bot.command()
 async def reload(ctx,arg=None):
@@ -112,6 +114,7 @@ async def reload(ctx,arg=None):
     else: 
         await ctx.send("Cog not found. Use !reload list")
 
+
 #Commands of what the bot can do
 @bot.command()
 async def Commands(ctx):
@@ -121,6 +124,8 @@ async def Commands(ctx):
     personID= str(personID)
     await ctx.send("List of commands: (Case sensitive)\n. !Usage\n2. !reboot (admin protected)\n3. !MCrestart\n4. !MCbackup (admin protected)"
     "\n5. !startRR\n6. !RRleaderboard\n7. !QuitRR\n8. !reload help\n\n<@"+personID+">")
+
+
 async def loadcogs():
     for filename in os.listdir("./coggers"):
         if filename.endswith(".py"):
