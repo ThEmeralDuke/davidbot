@@ -93,7 +93,7 @@ Coglist= []
 async def reload(ctx,arg):
     global Coglist
     # Reloads the file, thus updating the Cog class.
-    if arg.lower()==list:
+    if arg.lower()=="list":
         for filename in os.listdir("./coggers"):
             if filename.endswith(".py"):
                 Coglist.append(filename[:-3])
