@@ -117,6 +117,7 @@ class admin(commands.Cog):
     async def update(self ,ctx):
         print("Update started...")
         result= subprocess.run(["sudo","git","pull"])
+        print(str(result))
         if str(result)== "CompletedProcess(args=['sudo', 'git', 'pull'], returncode=0)":
             print("Already up to date.")
             await ctx.send("Already up to date")
