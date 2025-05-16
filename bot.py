@@ -95,12 +95,18 @@ async def reload(ctx,arg):
     arg= arg.lower()
     # Reloads the file, thus updating the Cog class.
     if arg=="list":
+        await ctx.send("Cogs able to be reloaded:\n"+"\n".join(Coglist))
+    if arg== "all":
         for filename in os.listdir("./coggers"):
             if filename.endswith(".py"):
-                Coglist.append(filename[:-3])
-        await ctx.send("Cogs able to be reloaded:"+"\n".join(Coglist))
-    #bot.reload_extension(f"cogs.{arg}")
-
+                await bot.reload_extension(f"coggers.{filename[:-3]}")
+                print(f"{filename[:-3]} reloaded")
+    if arg in Coglist:
+        await bot.reload_extension(f"coggers.{arg}")
+    else: 
+        await ctx.send("Cog not found. Use !reload list")
+    if arg== False:
+        await ctx.send("Please provide an argument, If you are confused use !reload help")
 #Commands of what the bot can do
 @bot.command()
 async def Commands(ctx):
@@ -115,6 +121,7 @@ async def loadcogs():
         if filename.endswith(".py"):
             await bot.load_extension(f"coggers.{filename[:-3]}")
             print(f"{filename[:-3]} loaded")
+            Coglist.append(filename[:-3])
 async def main():
     async with bot:
         Warningsystemthread= threading.Thread(target=Warningsystem)
