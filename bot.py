@@ -67,7 +67,8 @@ with open (filepath+"/ImportantTxtFiles/settings.csv", "r") as settings:
         version= str(row[2])
 settings.close()
 
-
+#SystemChannelID= 1240997501750743221 #This should be the test channel for your bot to see if it starts (delete if unnessecary)
+bot = commands.Bot(command_prefix='!', intents=discord.Intents.all(), activity = discord.Activity(type=discord.ActivityType.listening, name="!Commands"))
 async def loadcogs():
     for filename in os.listdir("./coggers"):
         if filename.endswith(".py"):
