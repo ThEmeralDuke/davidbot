@@ -1,5 +1,5 @@
 #Loading Log files
-filepath= ".."
+filepath= "."
 Errorlog= filepath+"/ImportantTxtFiles/Logs/Error.log"
 def LogError(Level,Reason):
     with open (Errorlog, "a") as log:
