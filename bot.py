@@ -88,16 +88,17 @@ def Warningsystem():
         elif cpu_util >=75:
             LogResource("Warning","CPU",cpu_util)
         time.sleep(20)
-Coglist= []
+Coglist= ["all"]
 @bot.command()
 async def reload(ctx,arg):
     global Coglist
+    arg= arg.lower()
     # Reloads the file, thus updating the Cog class.
-    if arg.lower()=="list":
+    if arg=="list":
         for filename in os.listdir("./coggers"):
             if filename.endswith(".py"):
                 Coglist.append(filename[:-3])
-        await ctx.send("".join(Coglist))
+        await ctx.send("Cogs able to be reloaded:"+"\n".join(Coglist))
     #bot.reload_extension(f"cogs.{arg}")
 
 #Commands of what the bot can do
