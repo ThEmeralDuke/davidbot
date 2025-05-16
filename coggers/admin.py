@@ -116,7 +116,8 @@ class admin(commands.Cog):
     @commands.has_role(Adminrole)
     async def update(self ,ctx):
         print("Update started...")
-        subprocess.run(["sudo","git","pull","ENTER"])
+        Test= subprocess.run(["sudo","git","pull","ENTER"])
+        print(test)
         print("Update done")
         await ctx.send("Bot Updated. if this is a cog update please !reload the cog. if not reboot the program")
     @update.error
