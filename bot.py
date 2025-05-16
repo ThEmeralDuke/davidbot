@@ -92,10 +92,11 @@ Coglist= []
 @bot.command()
 async def reload(ctx,arg=None):
     global Coglist
-    arg= arg.lower()
+    
     # Reloads the file, thus updating the Cog class.
     if arg is None:
         await ctx.send("Please provide an argument, If you are confused use !reload help")
+    arg= arg.lower()
     if arg== "help":
         await ctx.send("Reload Help.\n!reload list - provides a list of cogs available to be reloaded\n!reload all - Reloads all cogs\n!reload (cog) - Replace (cog) with a cog listed using the list argument")
     elif arg=="list":
