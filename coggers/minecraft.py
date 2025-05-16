@@ -64,8 +64,7 @@ class minecraft(commands.Cog):
          print("minecraft.py is ready")
     #This remotely restarts the minecraft server
     @commands.command(pass_context=True)
-    @commands.command()
-    #@commands.has_role(Adminrole)
+    @commands.has_role(Adminrole)
     async def MCrestart(self ,ctx):
         global person
         person= ctx.author
