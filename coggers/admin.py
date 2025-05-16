@@ -117,7 +117,7 @@ class admin(commands.Cog):
     async def update(self ,ctx):
         print("Update started...")
         result= subprocess.run(["sudo","git","pull"])
-        if result== "Already up to date.":
+        if str(result)== "Already up to date.":
             print("Already up to date.")
             await ctx.send("Already up to date")
         else:
