@@ -79,6 +79,7 @@ class rr(commands.Cog):
         DudeID= Dude.id
         DudeID= str(DudeID)
         Dude= str(Dude)
+        global PlayerlistRR
         for index in range(len(PlayerlistRR)):
             if found== False:    
                 if PlayerlistRR[index] == Dude:
