@@ -38,16 +38,7 @@ with open (filepath+"/ImportantTxtFiles/important.csv", "r") as info:
         Adminrole=row[1]
 info.close()
 
-
-
-class rr(commands.Cog):
-    def __init__(self, bot):
-        self.bot= bot
-
-    @commands.Cog.listener()
-    async def on_ready(self):
-         print("rr.py is ready")
-    #load settings
+#load settings
     with open (filepath+"/ImportantTxtFiles/settings.csv", "r") as settings:
         reader= csv.reader(settings)
         for row in reader:
@@ -56,6 +47,15 @@ class rr(commands.Cog):
             gametype= str(row[1])
             version= str(row[2])
     settings.close()
+
+class rr(commands.Cog):
+    def __init__(self, bot):
+        self.bot= bot
+
+    @commands.Cog.listener()
+    async def on_ready(self):
+         print("rr.py is ready")
+    
 
 
     #######      RUSSIAN ROULETTE      ######
@@ -102,12 +102,12 @@ class rr(commands.Cog):
                         for row in reader:
                             HighScoreRR= row[0]
                             HighScoreRR= int(HighScoreRR)
-                    Game.close
+                    Game.close()
             else:
                 with open(filepath+'/RussianRouletteFiles/'+playerRR+'.csv',"w") as Game:
                     writer=csv.writer(Game, lineterminator= "\n")
                     writer.writerow(["0"])
-                Game.close
+                Game.close()
             GameRR.append([playerRR,HighScoreRR,0])        
             print(Dude,"Loaded")
             
@@ -136,7 +136,7 @@ class rr(commands.Cog):
                         HighScoreRR= row[0]
                         HighScoreRR= int(HighScoreRR)
                         GameRR[o][1]= HighScoreRR
-                Game.close
+                Game.close()
                 BulletsRR= [1]
                 global scoreRR
                 Dude= ctx.author
