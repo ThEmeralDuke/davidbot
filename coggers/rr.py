@@ -67,6 +67,7 @@ class rr(commands.Cog):
     GameRR= []
     @commands.command()
     async def startRR(self,ctx):
+        print("Seen")
         global HighScoreRR
         global Bullets
         global mcontext
