@@ -39,14 +39,14 @@ with open (filepath+"/ImportantTxtFiles/important.csv", "r") as info:
 info.close()
 
 #load settings
-    with open (filepath+"/ImportantTxtFiles/settings.csv", "r") as settings:
-        reader= csv.reader(settings)
-        for row in reader:
-            LeaderboardDelay= row[0]
-            LeaderboardDelay= int(LeaderboardDelay)
-            gametype= str(row[1])
-            version= str(row[2])
-    settings.close()
+with open (filepath+"/ImportantTxtFiles/settings.csv", "r") as settings:
+    reader= csv.reader(settings)
+    for row in reader:
+        LeaderboardDelay= row[0]
+        LeaderboardDelay= int(LeaderboardDelay)
+        gametype= str(row[1])
+        version= str(row[2])
+settings.close()
 
 class rr(commands.Cog):
     def __init__(self, bot):
