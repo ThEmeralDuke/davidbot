@@ -111,5 +111,24 @@ class admin(commands.Cog):
             await ctx.send("You dont have permissions ("+Adminrole+") to do this <@"+personID+">")
             LogError(Level,Reason)
 
+
+    @commands.command(pass_context=True)
+    @commands.has_role(Adminrole)
+    async def update(self ,ctx):
+        subprocess.run(["cd","~/s*/b*/d*","&&","sudo","git","pull"])
+        await ctx.send("Bot Updated. if this is a cog update please !reload the cog. if not reboot the program")
+    @update.error
+    async def updateError(self ,ctx ,error):
+        global person
+        if isinstance(error, commands.CheckFailure):
+            person= ctx.author
+            personID= person.id
+            person= str(person)
+            personID= str(personID)
+            Level= "Warn"
+            Reason= ("Unauthorised Bot update attempted by",person)
+            await ctx.send("You dont have permissions ("+Adminrole+") to do this <@"+personID+">")
+            LogError(Level,Reason)
+
 async def setup(bot):
       await bot.add_cog(admin(bot))
