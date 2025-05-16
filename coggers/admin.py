@@ -116,24 +116,18 @@ class admin(commands.Cog):
     @commands.has_role(Adminrole)
     async def update(self, ctx):
         print("Update started...")
-
-        # Run git pull and capture the output
         result = subprocess.run(
             ["sudo","git", "pull"],
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
             text=True
         )
-
         output = result.stdout.strip()
         print(output)
-        if str(result)== "Already up to date.":
-            print("Already up to date.")
-            await ctx.send("Already up to date")
-
+        if "Already up to date." in output or "Already up-to-date." in output:
+            await ctx.send("Already up to date.")
         else:
-            print("Update done")
-            await ctx.send("Bot Updated. if this is a cog update please !reload the cog. if not reboot the program")
+            await ctx.send("Bot Updated. If this is a cog update, please `!reload` the cog. If not, reboot the program.")
 
     @update.error
     async def updateError(self ,ctx ,error):
