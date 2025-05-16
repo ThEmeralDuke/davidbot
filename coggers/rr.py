@@ -44,7 +44,7 @@ class rr(commands.Cog):
     def __init__(self, bot):
         self.bot= bot
 
-    @commands.cog.listener()
+    @commands.Cog.listener()
     async def on_ready(self):
          print("rr.py is ready")
     #load settings

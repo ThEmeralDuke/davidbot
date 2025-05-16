@@ -59,7 +59,7 @@ class minecraft(commands.Cog):
     def __init__(self, bot):
         self.bot= bot
 
-    @commands.cog.listener()
+    @commands.Cog.listener()
     async def on_ready(self):
          print("minecraft.py is ready")
     #This remotely restarts the minecraft server

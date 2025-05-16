@@ -57,7 +57,7 @@ class admin(commands.Cog):
     def __init__(self, bot):
         self.bot= bot
 
-    @commands.cog.listener()
+    @commands.Cog.listener()
     async def on_ready(self):
          print("admin.py is ready")
     
