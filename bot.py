@@ -88,7 +88,7 @@ def Warningsystem():
         elif cpu_util >=75:
             LogResource("Warning","CPU",cpu_util)
         time.sleep(20)
-Coglist= ["all"]
+Coglist= []
 @bot.command()
 async def reload(ctx,arg=None):
     global Coglist
