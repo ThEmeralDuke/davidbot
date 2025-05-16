@@ -124,6 +124,7 @@ class admin(commands.Cog):
         else:
             print("Update done")
             await ctx.send("Bot Updated. if this is a cog update please !reload the cog. if not reboot the program")
+            await ctx.send(result)
     @update.error
     async def updateError(self ,ctx ,error):
         global person
