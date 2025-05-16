@@ -127,6 +127,13 @@ class admin(commands.Cog):
 
         output = result.stdout.strip()
         print(output)
+        if str(result)== "Already up to date.":
+            print("Already up to date.")
+            await ctx.send("Already up to date")
+
+        else:
+            print("Update done")
+            await ctx.send("Bot Updated. if this is a cog update please !reload the cog. if not reboot the program")
 
     @update.error
     async def updateError(self ,ctx ,error):
