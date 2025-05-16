@@ -47,7 +47,11 @@ with open (filepath+"/ImportantTxtFiles/settings.csv", "r") as settings:
         gametype= str(row[1])
         version= str(row[2])
 settings.close()
-
+scoreRR= 0
+playerRR= 0
+HighScoreRR= 0
+PlayerlistRR= []
+GameRR= []
 class rr(commands.Cog):
     def __init__(self, bot):
         self.bot= bot
@@ -60,26 +64,19 @@ class rr(commands.Cog):
 
     #######      RUSSIAN ROULETTE      ######
 
-    scoreRR= 0
-    playerRR= 0
-    HighScoreRR= 0
-    PlayerlistRR= []
-    GameRR= []
+
     @commands.command()
     async def startRR(self,ctx):
         print("Seen")
         global HighScoreRR
-        global Bullets
-        global mcontext
         global playerRR
-        global ContinueResponseRR
+        global PlayerlistRR
         found= False
         ActiveGame="False"
         Dude= ctx.author
         DudeID= Dude.id
         DudeID= str(DudeID)
         Dude= str(Dude)
-        global PlayerlistRR
         for index in range(len(PlayerlistRR)):
             if found== False:    
                 if PlayerlistRR[index] == Dude:
