@@ -127,7 +127,7 @@ class admin(commands.Cog):
         if "Already up to date." in output or "Already up-to-date." in output:
             await ctx.send("Already up to date.")
         else:
-            await ctx.send("Bot Updated. If this is a cog update, please `!reload` the cog. If not, reboot the program.")
+            await ctx.send("Bot Updated. If this is a cog update, please !reload the cog. If not, reboot the program.")
 
     @update.error
     async def updateError(self ,ctx ,error):
