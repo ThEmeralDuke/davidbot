@@ -116,10 +116,13 @@ class admin(commands.Cog):
     @commands.has_role(Adminrole)
     async def update(self ,ctx):
         print("Update started...")
-        Test= subprocess.run(["sudo","git","pull"])
-        print(Test)
-        print("Update done")
-        await ctx.send("Bot Updated. if this is a cog update please !reload the cog. if not reboot the program")
+        result= subprocess.run(["sudo","git","pull"])
+        if result== "Already up to date.":
+            print("Already up to date.")
+            await ctx.send("Already up to date")
+        else:
+            print("Update done")
+            await ctx.send("Bot Updated. if this is a cog update please !reload the cog. if not reboot the program")
     @update.error
     async def updateError(self ,ctx ,error):
         global person
