@@ -120,6 +120,7 @@ class admin(commands.Cog):
         if str(result)== "Already up to date.":
             print("Already up to date.")
             await ctx.send("Already up to date")
+            await ctx.send(result)
         else:
             print("Update done")
             await ctx.send("Bot Updated. if this is a cog update please !reload the cog. if not reboot the program")
