@@ -91,7 +91,7 @@ def Warningsystem():
 async def loadcogs():
     for filename in os.listdir("./coggers"):
         if filename.endswith(".py"):
-            await bot.load_extension(f"cogs.{filename[:-3]}")
+            await bot.load_extension(f"coggers.{filename[:-3]}")
             print(f"{filename[:-3]} loaded")
 async def main():
     async with bot:
