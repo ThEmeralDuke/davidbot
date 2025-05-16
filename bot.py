@@ -98,7 +98,7 @@ async def reload(ctx,arg=None):
         await ctx.send("Please provide an argument, If you are confused use !reload help")
     arg= arg.lower()
     if arg== "help":
-        await ctx.send("Reload Help.\n!reload list - provides a list of cogs available to be reloaded\n!reload all - Reloads all cogs\n!reload (cog) - Replace (cog) with a cog listed using the list argument")
+        await ctx.send("Reload Help.\n\n!reload list - provides a list of cogs available to be reloaded\n\n!reload all - Reloads all cogs\n\n!reload (cog) - Replace (cog) with a cog listed using the list argument")
     elif arg=="list":
         await ctx.send("Cogs able to be reloaded:\n"+"\n".join(Coglist))
     elif arg== "all":
