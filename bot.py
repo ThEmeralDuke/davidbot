@@ -69,6 +69,25 @@ settings.close()
 
 #SystemChannelID= 1240997501750743221 #This should be the test channel for your bot to see if it starts (delete if unnessecary)
 bot = commands.Bot(command_prefix='!', intents=discord.Intents.all(), activity = discord.Activity(type=discord.ActivityType.listening, name="!Commands"))
+#Wanrs the user if the ram or cpu usage is too high
+def Warningsystem():
+    while True:
+        memory_info = psutil.virtual_memory()
+        rampercent= float(f"{memory_info.percent}")
+        cpu_util = psutil.cpu_percent(interval=1)
+        if rampercent >=95:
+            LogResource("Critical","RAM",rampercent)
+        elif rampercent >=85:
+            LogResource("Serious","RAM",rampercent)
+        elif rampercent >=75:
+            LogResource("Warning","RAM",rampercent)
+        if cpu_util >=95:
+            LogResource("Critical","CPU",cpu_util)
+        elif cpu_util >=85:
+            LogResource("Serious","CPU",cpu_util)
+        elif cpu_util >=75:
+            LogResource("Warning","CPU",cpu_util)
+        time.sleep(20)
 async def loadcogs():
     for filename in os.listdir("./coggers"):
         if filename.endswith(".py"):
