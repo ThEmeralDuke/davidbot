@@ -120,11 +120,11 @@ class admin(commands.Cog):
         if str(result)== "CompletedProcess(args=['sudo', 'git', 'pull'], returncode=0)":
             print("Already up to date.")
             await ctx.send("Already up to date")
-            await ctx.send(result)
+
         else:
             print("Update done")
             await ctx.send("Bot Updated. if this is a cog update please !reload the cog. if not reboot the program")
-            await ctx.send(result)
+
     @update.error
     async def updateError(self ,ctx ,error):
         global person
