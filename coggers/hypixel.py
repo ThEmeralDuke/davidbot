@@ -41,12 +41,13 @@ class hypixel(commands.Cog):
          print("hypixel.py is ready")
 
     @commands.command()
-    async def calander(self,ctx):
-        calanderchannel= self.bot.get_channel(1372924740993548360)
-        utc_now = datetime.strptime(str(datetime.now(timezone.utc)), "%Y-%m-%d %H:%M:%S")
+    async def calender(self,ctx):
+        calenderchannel= self.bot.get_channel(1372924740993548360)
+        utc_now = datetime.now(timezone.utc)
         skyblockstart="2019-06-11 17:55:00"
         try:
             days= (utc_now - datetime.strptime(skyblockstart, "%Y-%m-%d %H:%M:%S")).days
+            print(days)
         except Exception:
             print(Exception)
         print(f"The current UTC time is: {utc_now}")
@@ -57,7 +58,7 @@ class hypixel(commands.Cog):
         #embed.add_field(name="", value="", inline=False)
         #embed.add_field(name="Current Major Events", value="CurrentEvents", inline=True)
         #embed.add_field(name="Major Events soon", value="EventsSoon", inline=True)
-        #await calanderchannel.send(embed=embed)
+        #await calenderchannel.send(embed=embed)
 
 async def setup(bot):
       await bot.add_cog(hypixel(bot))
