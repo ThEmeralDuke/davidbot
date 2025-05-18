@@ -57,21 +57,21 @@ class hypixel(commands.Cog):
         MINUTES_PER_IG_MONTH = 620
         MINUTES_PER_IG_YEAR = 7440
 
-        # Compute in-game time
-        IG_year = int(minutessincestart // MINUTES_PER_IG_YEAR)
-        minutes_left = minutessincestart % MINUTES_PER_IG_YEAR
+        # Compute each unit from the largest to the smallest
+        IG_year, remainder = divmod(minutessincestart, MINUTES_PER_IG_YEAR)
+        IG_month, remainder = divmod(remainder, MINUTES_PER_IG_MONTH)
+        IG_day, remainder = divmod(remainder, MINUTES_PER_IG_DAY)
+        IG_hour, remainder = divmod(remainder, MINUTES_PER_IG_HOUR)
+        IG_minute, _ = divmod(remainder, MINUTES_PER_IG_MINUTE)
 
-        IG_month = int(minutes_left // MINUTES_PER_IG_MONTH)
-        minutes_left %= MINUTES_PER_IG_MONTH
+        # Convert to integers for display
+        IG_year = int(IG_year)
+        IG_month = int(IG_month) + 1   # +1 for human-readable months
+        IG_day = int(IG_day) + 1       # +1 for human-readable days
+        IG_hour = int(IG_hour)
+        IG_minute = int(IG_minute)
 
-        IG_day = int(minutes_left // MINUTES_PER_IG_DAY)
-        minutes_left %= MINUTES_PER_IG_DAY
-
-        IG_hour = int(minutes_left // MINUTES_PER_IG_HOUR)
-        minutes_left %= MINUTES_PER_IG_HOUR
-
-        IG_minute = int(minutes_left // MINUTES_PER_IG_MINUTE)
-        print(f"Year: {IG_year+1}, Month: {IG_month + 1}, Day: {IG_day + 1}, Hour: {IG_hour+1}, Minute: {IG_minute}")
+        print(f"Year: {IG_year}, Month: {IG_month}, Day: {IG_day}, Hour: {IG_hour}, Minute: {IG_minute}")
         #embed=discord.Embed(title="Hypixel Calander", color=0x808080)
         #embed.set_thumbnail(url="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fyt3.ggpht.com%2F-G0UwZhD1hRI%2FAAAAAAAAAAI%2FAAAAAAAAAAA%2FQ5bg4hzv6C0%2Fs900-c-k-no-mo-rj-c0xffffff%2Fphoto.jpg&f=1&nofb=1&ipt=f801051e8936792627a8168f1b1608ee768a1502e30ebdd4407b443eab91cc49")
         #embed.add_field(name="Current Hypixel time", value="(date+time+ToD)", inline=True)
