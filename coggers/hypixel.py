@@ -59,13 +59,14 @@ class hypixel(commands.Cog):
         if self.IG_month > 12:
             self.IG_month = 1
             self.IG_year += 1
-        self.IG_minute = f"{self.IG_minute:02}"
-        print(f"Year: {self.IG_year}, Month: {self.IG_month}, Day: {self.IG_day}, Hour: {self.IG_hour}, Minute: {self.IG_minute}")
+        self.IG_minutetenth = f"{self.IG_minute:02}"
+        print(f"Year: {self.IG_year}, Month: {self.IG_month}, Day: {self.IG_day}, Hour: {self.IG_hour}, Minute: {self.IG_minutetenth}")
+
         channel = self.bot.get_channel(1372924740993548360)
         if self.first== True:
             calanderembed=discord.Embed(title="Hypixel Calander", color=0x808080)
             calanderembed.set_thumbnail(url="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fyt3.ggpht.com%2F-G0UwZhD1hRI%2FAAAAAAAAAAI%2FAAAAAAAAAAA%2FQ5bg4hzv6C0%2Fs900-c-k-no-mo-rj-c0xffffff%2Fphoto.jpg&f=1&nofb=1&ipt=f801051e8936792627a8168f1b1608ee768a1502e30ebdd4407b443eab91cc49")
-            calanderembed.add_field(name="Current Hypixel time", value=(f"{self.IG_year}/{self.IG_month}/{self.IG_day}, {int(self.IG_hour)}:{self.IG_minute}"), inline=True)
+            calanderembed.add_field(name="Current Hypixel time", value=(f"{self.IG_year}/{self.IG_month}/{self.IG_day}, {int(self.IG_hour)}:{self.IG_minutetenth}"), inline=True)
             calanderembed.add_field(name="Cuurent Season", value="season", inline=True)
             calanderembed.add_field(name="", value="", inline=False)
             calanderembed.add_field(name="Current Major Events", value="CurrentEvents", inline=True)
@@ -75,7 +76,7 @@ class hypixel(commands.Cog):
         else:
             calanderembed=discord.Embed(title="Hypixel Calander", color=0x808080)
             calanderembed.set_thumbnail(url="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fyt3.ggpht.com%2F-G0UwZhD1hRI%2FAAAAAAAAAAI%2FAAAAAAAAAAA%2FQ5bg4hzv6C0%2Fs900-c-k-no-mo-rj-c0xffffff%2Fphoto.jpg&f=1&nofb=1&ipt=f801051e8936792627a8168f1b1608ee768a1502e30ebdd4407b443eab91cc49")
-            calanderembed.add_field(name="Current Hypixel time", value=(f"{self.IG_year}/{self.IG_month}/{self.IG_day}, {int(self.IG_hour)}:{self.IG_minute}"), inline=True)
+            calanderembed.add_field(name="Current Hypixel time", value=(f"{self.IG_year}/{self.IG_month}/{self.IG_day}, {int(self.IG_hour)}:{self.IG_minutetenth}"), inline=True)
             calanderembed.add_field(name="Cuurent Season", value="season", inline=True)
             calanderembed.add_field(name="", value="", inline=False)
             calanderembed.add_field(name="Current Major Events", value="CurrentEvents", inline=True)
@@ -109,8 +110,8 @@ class hypixel(commands.Cog):
             self.IG_day = IG_day + 1       # +1 for human-readable days
             self.IG_hour = IG_hour
             self.IG_minute = IG_minute
-            self.IG_minute = f"{self.IG_minute:02}"
-            print(f"Year: {self.IG_year}, Month: {self.IG_month}, Day: {self.IG_day}, Hour: {self.IG_hour}, Minute: {self.IG_minute}")
+            self.IG_minutetenth = f"{self.IG_minute:02}"
+            print(f"Year: {self.IG_year}, Month: {self.IG_month}, Day: {self.IG_day}, Hour: {self.IG_hour}, Minute: {self.IG_minutetenth}")
             await self.calenderincrement.start()
             break
         #embed=discord.Embed(title="Hypixel Calander", color=0x808080)
