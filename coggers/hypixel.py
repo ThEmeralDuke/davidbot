@@ -46,11 +46,11 @@ class hypixel(commands.Cog):
         self.bot= bot
 
     @commands.Cog.listener()
-    async def on_ready(self):
+    async def on_ready(self,):
          print("hypixel.py is ready")
 
     @commands.command()
-    async def hi(self):
+    async def hi(self,ctx):
         print("hi")
 
 async def setup(bot):
