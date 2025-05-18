@@ -1,13 +1,4 @@
-#Loading Log files
 filepath= "."
-Errorlog= filepath+"/ImportantTxtFiles/Logs/Error.log"
-def LogError(Level,Reason):
-    with open (Errorlog, "a") as log:
-            currenttime= str(time.strftime("%Y-%m-%D %H:%M:%S", time.localtime()))
-            log.write(f"{currenttime}    ({Level}) {Reason}\n")
-    log.close()
-
-
 #loading libraries
 import os
 import os.path
@@ -16,7 +7,7 @@ import discord
 from discord import *
 from discord.ext import commands
 from discord.utils import *
-import time
+from datetime import datetime
 import csv
 import psutil
 import random
@@ -51,7 +42,7 @@ class hypixel(commands.Cog):
 
     @commands.command()
     async def Calander(self,ctx):
-        print(time.localtime())
+        print(datetime.time.utc())
 
 async def setup(bot):
       await bot.add_cog(hypixel(bot))
