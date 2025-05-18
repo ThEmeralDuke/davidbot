@@ -49,6 +49,7 @@ class hypixel(commands.Cog):
         embed.set_thumbnail(url="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fyt3.ggpht.com%2F-G0UwZhD1hRI%2FAAAAAAAAAAI%2FAAAAAAAAAAA%2FQ5bg4hzv6C0%2Fs900-c-k-no-mo-rj-c0xffffff%2Fphoto.jpg&f=1&nofb=1&ipt=f801051e8936792627a8168f1b1608ee768a1502e30ebdd4407b443eab91cc49")
         embed.add_field(name="Current Hypixel time", value="(date+time+ToD)", inline=True)
         embed.add_field(name="Cuurent Season", value="season", inline=True)
+        embed.add_field(name="", value="", inline=False)
         embed.add_field(name="Current Major Events", value="CurrentEvents", inline=True)
         embed.add_field(name="Major Events soon", value="EventsSoon", inline=True)
         await calanderchannel.send(embed=embed)
