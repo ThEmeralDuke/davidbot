@@ -62,14 +62,36 @@ class hypixel(commands.Cog):
             self.IG_month = 1
             self.IG_year += 1
         self.IG_minutetenth = f"{self.IG_minute:02}"
-        if self.IG_month==1:
-            self.season="Early"
+        if self.IG_month== 1:
+            self.season= "Early Spring"
+        elif self.IG_month== 2:
+            self.season= "Spring"
+        elif self.IG_month== 3:
+            self.season= "Late Spring"
+        elif self.IG_month== 4:
+            self.season= "Early Summer"
+        elif self.IG_month== 5:
+            self.season= "Summer"
+        elif self.IG_month== 6:
+            self.season= "Late Summer"
+        elif self.IG_month== 7:
+            self.season= "Early Autumn"
+        elif self.IG_month== 8:
+            self.season= "Autumn"
+        elif self.IG_month== 9:
+            self.season= "Late Autumn"
+        elif self.IG_month== 10:
+            self.season= "Early Winter"
+        elif self.IG_month== 11:
+            self.season= "Winter"
+        elif self.IG_month== 12:
+            self.season= "Late Winter"
             
         if self.first== True:
             calanderembed=discord.Embed(title="Hypixel Calander", color=0x808080)
             calanderembed.set_thumbnail(url="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fyt3.ggpht.com%2F-G0UwZhD1hRI%2FAAAAAAAAAAI%2FAAAAAAAAAAA%2FQ5bg4hzv6C0%2Fs900-c-k-no-mo-rj-c0xffffff%2Fphoto.jpg&f=1&nofb=1&ipt=f801051e8936792627a8168f1b1608ee768a1502e30ebdd4407b443eab91cc49")
             calanderembed.add_field(name="Current Hypixel time", value=(f"{self.IG_year}/{self.IG_month}/{self.IG_day}, {int(self.IG_hour)}:{self.IG_minutetenth}"), inline=True)
-            calanderembed.add_field(name="Cuurent Season", value="season", inline=True)
+            calanderembed.add_field(name="Cuurent Season", value=self.season, inline=True)
             calanderembed.add_field(name="", value="", inline=False)
             calanderembed.add_field(name="Current Major Events", value="CurrentEvents", inline=True)
             calanderembed.add_field(name="Major Events soon", value="EventsSoon", inline=True)
@@ -86,7 +108,7 @@ class hypixel(commands.Cog):
             await self.calendar_message.edit(embed=calanderembed)
 
     async def calenderinit(self):
-        time.sleep(5)
+        time.sleep(0.1)
         while True:
             utc_now = datetime.now(timezone.utc)
             skyblockstart = datetime.strptime("2019-06-11 17:55:00", "%Y-%m-%d %H:%M:%S").replace(tzinfo=timezone.utc)
