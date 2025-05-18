@@ -49,7 +49,7 @@ class hypixel(commands.Cog):
     @tasks.loop(seconds=4.165)
     async def calenderincrement(self):
         self.IG_minute += 5
-        if self.IG_minute >= 60:
+        if self.IG_minute >= 55:
             self.IG_minute -= 60
             self.IG_hour += 1
         if self.IG_hour >= 24:
@@ -61,7 +61,7 @@ class hypixel(commands.Cog):
         if self.IG_month > 12:
             self.IG_month = 1
             self.IG_year += 1
-        self.IG_minutetenth = f"{self.IG_minute:02}"
+        self.IG_minutetenth = f"{self.IG_minute-5:02}"
         if self.IG_month== 1:
             self.season= "Early Spring"
         elif self.IG_month== 2:
@@ -136,7 +136,7 @@ class hypixel(commands.Cog):
             self.IG_day = IG_day + 1       # +1 for human-readable days
             self.IG_hour = int(IG_hour)
             self.IG_minute = int(IG_minute)
-            self.IG_minutetenth = f"{self.IG_minute:02}"
+            self.IG_minutetenth = f"{self.IG_minute-5:02}"
             if int(round(self.IG_minute)) % 5 == 0:
                 await self.calenderincrement.start()
                 break
