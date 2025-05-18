@@ -7,7 +7,7 @@ import discord
 from discord import *
 from discord.ext import commands
 from discord.utils import *
-from datetime import datetime
+from datetime import datetime, timezone
 import csv
 import psutil
 import random
@@ -42,7 +42,8 @@ class hypixel(commands.Cog):
 
     @commands.command()
     async def Calander(self,ctx):
-        print(datetime.time.utc())
+        utc_now = datetime.now(timezone.utc).strftime("%Z")
+        await ctx.send(f"The current UTC time is: {utc_now}")
 
 async def setup(bot):
       await bot.add_cog(hypixel(bot))
