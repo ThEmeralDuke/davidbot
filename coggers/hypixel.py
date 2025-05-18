@@ -60,10 +60,6 @@ class hypixel(commands.Cog):
             self.IG_month = 1
             self.IG_year += 1
         if self.IG_minute== 0:
-            self.IG_minute= 00
-        elif self.IG_minute== 5:
-            self.IG_minute=05
-        if self.IG_minute== 0:
             self.IG_minutetenth= "00"
         elif self.IG_minute== 5:
             self.IG_minutetenth="05"
