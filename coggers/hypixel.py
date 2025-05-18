@@ -71,7 +71,7 @@ class hypixel(commands.Cog):
             await self.calendar_message.edit(f"Year: {self.IG_year}, Month: {self.IG_month}, Day: {self.IG_day}, Hour: {self.IG_hour}, Minute: {self.IG_minute}") # type: ignore
             print("wewo3")
     async def calenderinit(self):
-        while true:
+        while True:
             utc_now = datetime.now(timezone.utc)
             skyblockstart = datetime.strptime("2019-06-11 17:55:00", "%Y-%m-%d %H:%M:%S").replace(tzinfo=timezone.utc)
             #IRL time
