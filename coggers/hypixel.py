@@ -69,7 +69,7 @@ class hypixel(commands.Cog):
             calanderembed.add_field(name="", value="", inline=False)
             calanderembed.add_field(name="Current Major Events", value="CurrentEvents", inline=True)
             calanderembed.add_field(name="Major Events soon", value="EventsSoon", inline=True)
-            await channel.send(embed=calanderembed)
+            self.calendar_message = await channel.send(embed=calanderembed)
             self.first=False
         else:
             calanderembed=discord.Embed(title="Hypixel Calander", color=0x808080)
@@ -79,7 +79,7 @@ class hypixel(commands.Cog):
             calanderembed.add_field(name="", value="", inline=False)
             calanderembed.add_field(name="Current Major Events", value="CurrentEvents", inline=True)
             calanderembed.add_field(name="Major Events soon", value="EventsSoon", inline=True)
-            await channel.edit(embed=calanderembed)
+            await self.calendar_message.edit(embed=calanderembed)
     async def calenderinit(self):
         while True:
             utc_now = datetime.now(timezone.utc)
