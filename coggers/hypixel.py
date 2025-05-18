@@ -43,10 +43,10 @@ class hypixel(commands.Cog):
     @commands.command()
     async def calander(self,ctx):
         calanderchannel= self.bot.get_channel(1372924740993548360)
-        utc_now = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S")
+        utc_now = datetime.strptime(str(datetime.now(timezone.utc)), "%Y-%m-%d %H:%M:%S")
         skyblockstart="2019-06-11 17:55:00"
         try:
-            days= (utc_now - datetime.strptime(skyblockstart, "%Y-%m-%d %H:%M:%S"assert)).days
+            days= (utc_now - datetime.strptime(skyblockstart, "%Y-%m-%d %H:%M:%S")).days
         except Exception:
             print(Exception)
         print(f"The current UTC time is: {utc_now}")
