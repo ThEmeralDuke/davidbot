@@ -113,12 +113,14 @@ class hypixel(commands.Cog):
             self.IG_hour = IG_hour
             self.IG_minute = IG_minute
             if self.IG_minute== 0:
-                self.IG_minute= 00
+                self.IG_minutetenth= "00"
             elif self.IG_minute== 5:
-                self.IG_minute=05
-            allowedtime= [00,05,10,15,20,25,30,35,40,45,50,55]
+                self.IG_minutetenth="05"
+            else:
+                self.IG_minutetenth=self.IG_minute
+            allowedtime= ["00","05",10,15,20,25,30,35,40,45,50,55]
             if self.IG_minute in allowedtime:
-                print(f"Year: {self.IG_year}, Month: {self.IG_month}, Day: {self.IG_day}, Hour: {self.IG_hour}, Minute: {self.IG_minute}")
+                print(f"Year: {self.IG_year}, Month: {self.IG_month}, Day: {self.IG_day}, Hour: {self.IG_hour}, Minute: {self.IG_minutetenth}")
                 await self.calenderincrement.start()
                 break
         #embed=discord.Embed(title="Hypixel Calander", color=0x808080)
