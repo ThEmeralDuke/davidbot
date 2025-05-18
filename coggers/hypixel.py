@@ -111,7 +111,7 @@ class hypixel(commands.Cog):
             self.IG_hour = int(IG_hour)
             self.IG_minute = int(IG_minute)
             self.IG_minutetenth = f"{self.IG_minute:02}"
-            if IG_minute % 5 == 0:
+            if int(round(self.IG_minute)) % 5 == 0:
                 print(f"Year: {self.IG_year}, Month: {self.IG_month}, Day: {self.IG_day}, Hour: {self.IG_hour}, Minute: {self.IG_minutetenth}")
                 await self.calenderincrement.start()
                 break
