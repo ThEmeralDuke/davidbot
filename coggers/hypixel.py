@@ -44,13 +44,18 @@ class hypixel(commands.Cog):
     async def calender(self,ctx):
         calenderchannel= self.bot.get_channel(1372924740993548360)
         utc_now = datetime.now(timezone.utc)
-        skyblockstart="2019-06-11 17:55:00"
-        #try:
-        days= (utc_now - datetime.strptime(skyblockstart, "%Y-%m-%d %H:%M:%S")).days
-        print(days)
-        #except Exception:
-        #    print(Exception)
-        print(f"The current UTC time is: {utc_now}")
+        skyblockstart = datetime.strptime("2019-06-11 17:55:00", "%Y-%m-%d %H:%M:%S").replace(tzinfo=timezone.utc)
+        #IRL time
+        secondssincestart = (utc_now - skyblockstart).total_seconds()
+        minutessincestart = int(secondssincestart// 60)
+        hourssincestart= int(minutessincestart//60)
+        # calculate in game time
+        IG_year= hourssincestart//124
+        IG_month= IG_year//12
+        IG_day= IG_month//31
+        IG_hour= IG_day//24
+        IG_minute= IG_hour//60
+        print(IG_year,IG_month,IG_day,IG_hour,IG_minute)
         #embed=discord.Embed(title="Hypixel Calander", color=0x808080)
         #embed.set_thumbnail(url="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fyt3.ggpht.com%2F-G0UwZhD1hRI%2FAAAAAAAAAAI%2FAAAAAAAAAAA%2FQ5bg4hzv6C0%2Fs900-c-k-no-mo-rj-c0xffffff%2Fphoto.jpg&f=1&nofb=1&ipt=f801051e8936792627a8168f1b1608ee768a1502e30ebdd4407b443eab91cc49")
         #embed.add_field(name="Current Hypixel time", value="(date+time+ToD)", inline=True)
