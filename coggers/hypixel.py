@@ -41,6 +41,15 @@ class hypixel(commands.Cog):
     @commands.Cog.listener()
     async def on_ready(self,):
         print("hypixel.py is ready")
+        self.bot = bot
+        self.IG_year = 0
+        self.IG_month = 0
+        self.IG_day = 0
+        self.IG_hour = 0
+        self.IG_minute = 0
+        await self.initialise_ig_time()
+        await self.calenderincrement.start()
+    async def initialise_ig_time(self):
         global utc_now
         calenderchannel= self.bot.get_channel(1372924740993548360)
         skyblockstart = datetime.strptime("2019-06-11 17:55:00", "%Y-%m-%d %H:%M:%S").replace(tzinfo=timezone.utc)
@@ -72,7 +81,7 @@ class hypixel(commands.Cog):
 
         print(f"Year: {self.IG_year}, Month: {self.IG_year}, Day: {self.IG_year}, Hour: {self.IG_year}, Minute: {self.IG_year}")
     @tasks.loop(seconds=4.165)
-    async def calenderinitial(self,ctx):
+    async def calenderincrement(self,ctx):
         self.IG_minute += 5
         if self.IG_minute >= 60:
             self.IG_minute -= 60
