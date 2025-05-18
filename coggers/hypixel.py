@@ -67,8 +67,9 @@ class hypixel(commands.Cog):
             self.calendar_message = await channel.send(f"Year: {self.IG_year}, Month: {self.IG_month}, Day: {self.IG_day}, Hour: {self.IG_hour}, Minute: {self.IG_minute}")
         else:
             # Then edit it each loop
+            print("wewo2")
             await self.calendar_message.edit(f"Year: {self.IG_year}, Month: {self.IG_month}, Day: {self.IG_day}, Hour: {self.IG_hour}, Minute: {self.IG_minute}") # type: ignore
-
+            print("wewo3")
     async def calenderinit(self):
         utc_now = datetime.now(timezone.utc)
         skyblockstart = datetime.strptime("2019-06-11 17:55:00", "%Y-%m-%d %H:%M:%S").replace(tzinfo=timezone.utc)
