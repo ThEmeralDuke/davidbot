@@ -59,20 +59,13 @@ class hypixel(commands.Cog):
         if self.IG_month > 12:
             self.IG_month = 1
             self.IG_year += 1
-        if self.IG_minute== 0:
-            self.IG_minutetenth= "00"
-        elif self.IG_minute== 5:
-            self.IG_minutetenth="05"
-        else:
-            self.IG_minutetenth=self.IG_minute
-        allowedtime= ["00","05",10,15,20,25,30,35,40,45,50,55]
-        if self.IG_minutetenth in allowedtime:
-            print(f"Year: {self.IG_year}, Month: {self.IG_month}, Day: {self.IG_day}, Hour: {self.IG_hour}, Minute: {self.IG_minutetenth}")
+        self.IG_minute = f"{self.IG_minute:02}"
+        print(f"Year: {self.IG_year}, Month: {self.IG_month}, Day: {self.IG_day}, Hour: {self.IG_hour}, Minute: {self.IG_minute}")
         channel = self.bot.get_channel(1372924740993548360)
         if self.first== True:
             calanderembed=discord.Embed(title="Hypixel Calander", color=0x808080)
             calanderembed.set_thumbnail(url="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fyt3.ggpht.com%2F-G0UwZhD1hRI%2FAAAAAAAAAAI%2FAAAAAAAAAAA%2FQ5bg4hzv6C0%2Fs900-c-k-no-mo-rj-c0xffffff%2Fphoto.jpg&f=1&nofb=1&ipt=f801051e8936792627a8168f1b1608ee768a1502e30ebdd4407b443eab91cc49")
-            calanderembed.add_field(name="Current Hypixel time", value=(f"{self.IG_year}/{self.IG_month}/{self.IG_day}, {int(self.IG_hour)}:{self.IG_minutetenth}"), inline=True)
+            calanderembed.add_field(name="Current Hypixel time", value=(f"{self.IG_year}/{self.IG_month}/{self.IG_day}, {int(self.IG_hour)}:{self.IG_minute}"), inline=True)
             calanderembed.add_field(name="Cuurent Season", value="season", inline=True)
             calanderembed.add_field(name="", value="", inline=False)
             calanderembed.add_field(name="Current Major Events", value="CurrentEvents", inline=True)
@@ -82,7 +75,7 @@ class hypixel(commands.Cog):
         else:
             calanderembed=discord.Embed(title="Hypixel Calander", color=0x808080)
             calanderembed.set_thumbnail(url="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fyt3.ggpht.com%2F-G0UwZhD1hRI%2FAAAAAAAAAAI%2FAAAAAAAAAAA%2FQ5bg4hzv6C0%2Fs900-c-k-no-mo-rj-c0xffffff%2Fphoto.jpg&f=1&nofb=1&ipt=f801051e8936792627a8168f1b1608ee768a1502e30ebdd4407b443eab91cc49")
-            calanderembed.add_field(name="Current Hypixel time", value=(f"{self.IG_year}/{self.IG_month}/{self.IG_day}, {int(self.IG_hour)}:{self.IG_minutetenth}"), inline=True)
+            calanderembed.add_field(name="Current Hypixel time", value=(f"{self.IG_year}/{self.IG_month}/{self.IG_day}, {int(self.IG_hour)}:{self.IG_minute}"), inline=True)
             calanderembed.add_field(name="Cuurent Season", value="season", inline=True)
             calanderembed.add_field(name="", value="", inline=False)
             calanderembed.add_field(name="Current Major Events", value="CurrentEvents", inline=True)
@@ -116,17 +109,10 @@ class hypixel(commands.Cog):
             self.IG_day = IG_day + 1       # +1 for human-readable days
             self.IG_hour = IG_hour
             self.IG_minute = IG_minute
-            if self.IG_minute== 0:
-                self.IG_minutetenth= "00"
-            elif self.IG_minute== 5:
-                self.IG_minutetenth="05"
-            else:
-                self.IG_minutetenth=self.IG_minute
-            allowedtime= ["00","05",10,15,20,25,30,35,40,45,50,55]
-            if self.IG_minutetenth in allowedtime:
-                print(f"Year: {self.IG_year}, Month: {self.IG_month}, Day: {self.IG_day}, Hour: {self.IG_hour}, Minute: {self.IG_minutetenth}")
-                await self.calenderincrement.start()
-                break
+            self.IG_minute = f"{self.IG_minute:02}"
+            print(f"Year: {self.IG_year}, Month: {self.IG_month}, Day: {self.IG_day}, Hour: {self.IG_hour}, Minute: {self.IG_minute}")
+            await self.calenderincrement.start()
+            break
         #embed=discord.Embed(title="Hypixel Calander", color=0x808080)
         #embed.set_thumbnail(url="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fyt3.ggpht.com%2F-G0UwZhD1hRI%2FAAAAAAAAAAI%2FAAAAAAAAAAA%2FQ5bg4hzv6C0%2Fs900-c-k-no-mo-rj-c0xffffff%2Fphoto.jpg&f=1&nofb=1&ipt=f801051e8936792627a8168f1b1608ee768a1502e30ebdd4407b443eab91cc49")
         #embed.add_field(name="Current Hypixel time", value="(date+time+ToD)", inline=True)
