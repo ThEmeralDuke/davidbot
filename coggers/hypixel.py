@@ -61,7 +61,7 @@ class hypixel(commands.Cog):
         if self.IG_month > 12:
             self.IG_month = 1
             self.IG_year += 1
-        self.IG_minutetenth = f"{self.IG_minute-5:02}"
+        self.IG_minutetenth = f"{self.IG_minute:02}"
         if self.IG_month== 1:
             self.season= "Early Spring"
         elif self.IG_month== 2:
