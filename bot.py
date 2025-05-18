@@ -90,29 +90,7 @@ def Warningsystem():
         time.sleep(20)
 
 
-Coglist= []
-@bot.command()
-async def reload(ctx,arg=None):
-    global Coglist
-    
-    # Reloads the file, thus updating the Cog class.
-    if arg is None:
-        await ctx.send("Please provide an argument, If you are confused use !reload help")
-    arg= arg.lower()
-    if arg== "help":
-        await ctx.send("Reload Help.\n\n!reload list - provides a list of cogs available to be reloaded\n\n!reload all - Reloads all cogs\n\n!reload (cog) - Replace (cog) with a cog listed using the list argument")
-    elif arg=="list":
-        await ctx.send("Cogs able to be reloaded:\n"+"\n".join(Coglist))
-    elif arg== "all":
-        for filename in os.listdir("./coggers"):
-            if filename.endswith(".py"):
-                await bot.reload_extension(f"coggers.{filename[:-3]}")
-                print(f"{filename[:-3]} reloaded")
-    elif arg in Coglist:
-        await bot.reload_extension(f"coggers.{arg}")
-        print(f"{arg} reloaded")
-    else: 
-        await ctx.send("Cog not found. Use !reload list")
+
 
 
 #Commands of what the bot can do
@@ -125,13 +103,44 @@ async def Commands(ctx):
     await ctx.send("List of commands: (Case sensitive)\n. !Usage\n2. !reboot (admin protected)\n3. !MCrestart\n4. !MCbackup (admin protected)"
     "\n5. !startRR\n6. !RRleaderboard\n7. !QuitRR\n8. !reload help\n\n<@"+personID+">")
 
-
+Coglist= []
 async def loadcogs():
+    global Coglist
+    Coglist= []
     for filename in os.listdir("./coggers"):
         if filename.endswith(".py"):
             await bot.load_extension(f"coggers.{filename[:-3]}")
             print(f"{filename[:-3]} loaded")
             Coglist.append(filename[:-3])
+
+@bot.command()
+async def reload(ctx,arg=None):
+    # Reloads the file, thus updating the Cog class.
+    if arg is None:
+        await ctx.send("Please provide an argument, If you are confused use !reload help")
+    arg= arg.lower()
+    if arg== "help":
+        await ctx.send("Reload Help.\n\n!reload list - provides a list of cogs available to be reloaded\n\n!reload all - Reloads all cogs (including new cogs)")
+    elif arg=="list":
+        await ctx.send("Cogs able to be reloaded:\n"+"\n".join(Coglist))
+    elif arg== "all":
+        for filename in os.listdir("./coggers"):
+            if filename.endswith(".py") and filename[:-3] in Coglist:
+                await bot.reload_extension(f"coggers.{filename[:-3]}")
+                print(f"{filename[:-3]} reloaded")
+            else:
+                await bot.load_extension(f"coggers.{filename[:-3]}")
+                print(f"{filename[:-3]} loaded")
+    elif arg in Coglist:
+        await bot.reload_extension(f"coggers.{arg}")
+        print(f"{arg} reloaded")
+    elif arg== "new":
+        loadcogs()
+    else: 
+        await ctx.send("Cog not found. Use !reload list")
+
+
+
 async def main():
     async with bot:
         Warningsystemthread= threading.Thread(target=Warningsystem)
