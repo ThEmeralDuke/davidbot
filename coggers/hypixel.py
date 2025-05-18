@@ -68,7 +68,7 @@ class hypixel(commands.Cog):
         else:
             # Then edit it each loop
             print("wewo2")
-            await self.calendar_message.edit(f"Year: {self.IG_year}, Month: {self.IG_month}, Day: {self.IG_day}, Hour: {self.IG_hour}, Minute: {self.IG_minute}") # type: ignore
+            await self.calendar_message.edit(content=f"Year: {self.IG_year}, Month: {self.IG_month}, Day: {self.IG_day}, Hour: {self.IG_hour}, Minute: {self.IG_minute}")
             print("wewo3")
     async def calenderinit(self):
         while True:
