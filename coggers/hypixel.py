@@ -55,7 +55,7 @@ class hypixel(commands.Cog):
         IG_day= IG_month//31
         IG_hour= IG_day//24
         IG_minute= IG_hour//60
-        print(IG_year,IG_month,IG_day,IG_hour,IG_minute)
+        print(f"Year:{IG_year},Month:{IG_month},Day:{IG_day},Hour:{IG_hour},minute:{IG_minute}")
         #embed=discord.Embed(title="Hypixel Calander", color=0x808080)
         #embed.set_thumbnail(url="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fyt3.ggpht.com%2F-G0UwZhD1hRI%2FAAAAAAAAAAI%2FAAAAAAAAAAA%2FQ5bg4hzv6C0%2Fs900-c-k-no-mo-rj-c0xffffff%2Fphoto.jpg&f=1&nofb=1&ipt=f801051e8936792627a8168f1b1608ee768a1502e30ebdd4407b443eab91cc49")
         #embed.add_field(name="Current Hypixel time", value="(date+time+ToD)", inline=True)
