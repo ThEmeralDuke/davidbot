@@ -65,7 +65,7 @@ class hypixel(commands.Cog):
         IG_minute, _ = divmod(remainder, MINUTES_PER_IG_MINUTE)
 
         # Convert to integers for display
-        IG_year = int(IG_year)
+        IG_year = int(IG_year)+1
         IG_month = int(IG_month) + 1   # +1 for human-readable months
         IG_day = int(IG_day) + 1       # +1 for human-readable days
         IG_hour = int(IG_hour)
