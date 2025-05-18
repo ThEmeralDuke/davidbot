@@ -44,6 +44,7 @@ class hypixel(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self.first=True
+        self.channel = self.bot.get_channel(1372924740993548360)
     @tasks.loop(seconds=4.165)
     async def calenderincrement(self):
         self.IG_minute += 5
@@ -60,9 +61,9 @@ class hypixel(commands.Cog):
             self.IG_month = 1
             self.IG_year += 1
         self.IG_minutetenth = f"{self.IG_minute:02}"
-        print(f"Year: {self.IG_year}, Month: {self.IG_month}, Day: {self.IG_day}, Hour: {self.IG_hour}, Minute: {self.IG_minutetenth}")
-
-        channel = self.bot.get_channel(1372924740993548360)
+        if self.IG_month==1:
+            self.season="Early"
+            
         if self.first== True:
             calanderembed=discord.Embed(title="Hypixel Calander", color=0x808080)
             calanderembed.set_thumbnail(url="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fyt3.ggpht.com%2F-G0UwZhD1hRI%2FAAAAAAAAAAI%2FAAAAAAAAAAA%2FQ5bg4hzv6C0%2Fs900-c-k-no-mo-rj-c0xffffff%2Fphoto.jpg&f=1&nofb=1&ipt=f801051e8936792627a8168f1b1608ee768a1502e30ebdd4407b443eab91cc49")
@@ -71,7 +72,7 @@ class hypixel(commands.Cog):
             calanderembed.add_field(name="", value="", inline=False)
             calanderembed.add_field(name="Current Major Events", value="CurrentEvents", inline=True)
             calanderembed.add_field(name="Major Events soon", value="EventsSoon", inline=True)
-            self.calendar_message = await channel.send(embed=calanderembed)
+            self.calendar_message = await self.channel.send(embed=calanderembed)
             self.first=False
         else:
             calanderembed=discord.Embed(title="Hypixel Calander", color=0x808080)
@@ -84,6 +85,7 @@ class hypixel(commands.Cog):
             await self.calendar_message.edit(embed=calanderembed)
     async def calenderinit(self):
         while True:
+            await self.channel.purge()
             utc_now = datetime.now(timezone.utc)
             skyblockstart = datetime.strptime("2019-06-11 17:55:00", "%Y-%m-%d %H:%M:%S").replace(tzinfo=timezone.utc)
             #IRL time
@@ -112,7 +114,6 @@ class hypixel(commands.Cog):
             self.IG_minute = int(IG_minute)
             self.IG_minutetenth = f"{self.IG_minute:02}"
             if int(round(self.IG_minute)) % 5 == 0:
-                print(f"Year: {self.IG_year}, Month: {self.IG_month}, Day: {self.IG_day}, Hour: {self.IG_hour}, Minute: {self.IG_minutetenth}")
                 await self.calenderincrement.start()
                 break
 
