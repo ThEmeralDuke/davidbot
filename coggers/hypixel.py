@@ -99,7 +99,7 @@ class hypixel(commands.Cog):
         #await calenderchannel.send(embed=embed)
 
     @commands.Cog.listener()
-    async def on_ready(self,bot):
+    async def on_ready(self):
         print("hypixel.py is ready")
         await self.calenderinit()
     
