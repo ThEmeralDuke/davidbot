@@ -37,18 +37,17 @@ skyblockstart = datetime.strptime("2019-06-11 17:55:00", "%Y-%m-%d %H:%M:%S").re
 class hypixel(commands.Cog):
     def __init__(self, bot):
         self.bot= bot
-
-    @commands.Cog.listener()
-    async def on_ready(self,):
-        print("hypixel.py is ready")
-        self.bot = bot
         self.IG_year = 0
         self.IG_month = 0
         self.IG_day = 0
         self.IG_hour = 0
         self.IG_minute = 0
-        await self.initialise_ig_time()
-        await self.calenderincrement.start()
+        self.initialise_ig_time.start()
+        self.calenderincrement.start()
+    @commands.Cog.listener()
+    async def on_ready(self,bot):
+        print("hypixel.py is ready")
+
     async def initialise_ig_time(self):
         global utc_now
         calenderchannel= self.bot.get_channel(1372924740993548360)
