@@ -16,6 +16,7 @@ import subprocess
 import keyboard
 import json
 import asyncio
+import time
 
 #stuff
 botrole= []
@@ -85,6 +86,7 @@ class hypixel(commands.Cog):
             await self.calendar_message.edit(embed=calanderembed)
 
     async def calenderinit(self):
+        time.sleep(1)
         while True:
             utc_now = datetime.now(timezone.utc)
             skyblockstart = datetime.strptime("2019-06-11 17:55:00", "%Y-%m-%d %H:%M:%S").replace(tzinfo=timezone.utc)
