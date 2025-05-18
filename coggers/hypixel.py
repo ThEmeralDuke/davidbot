@@ -121,7 +121,7 @@ class hypixel(commands.Cog):
     async def on_ready(self):
         print("hypixel.py is ready")
         self.channel = self.bot.get_channel(1372924740993548360)
-        self.channel.purge()
+        await self.channel.purge()
         await self.calenderinit()
         
     
