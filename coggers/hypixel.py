@@ -108,8 +108,8 @@ class hypixel(commands.Cog):
             self.IG_year = IG_year+1
             self.IG_month = IG_month + 1   # +1 for human-readable months
             self.IG_day = IG_day + 1       # +1 for human-readable days
-            self.IG_hour = IG_hour
-            self.IG_minute = IG_minute
+            self.IG_hour = int(IG_hour)
+            self.IG_minute = int(IG_minute)
             self.IG_minutetenth = f"{self.IG_minute:02}"
             print(f"Year: {self.IG_year}, Month: {self.IG_month}, Day: {self.IG_day}, Hour: {self.IG_hour}, Minute: {self.IG_minutetenth}")
             await self.calenderincrement.start()
