@@ -43,7 +43,7 @@ class hypixel(commands.Cog):
     IG_minute = 0
     def __init__(self, bot):
         self.bot = bot
-        self.calendar_message: discord.Message | None = None
+        self.first=True
     @tasks.loop(seconds=4.165)
     async def calenderincrement(self):
         self.IG_minute += 5
@@ -61,7 +61,7 @@ class hypixel(commands.Cog):
             self.IG_year += 1
         print(f"Year: {self.IG_year}, Month: {self.IG_month}, Day: {self.IG_day}, Hour: {self.IG_hour}, Minute: {self.IG_minute}")
         channel = self.bot.get_channel(1372924740993548360)
-        if self.calendar_message is None:
+        if self.first== True:
             calanderembed=discord.Embed(title="Hypixel Calander", color=0x808080)
             calanderembed.set_thumbnail(url="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fyt3.ggpht.com%2F-G0UwZhD1hRI%2FAAAAAAAAAAI%2FAAAAAAAAAAA%2FQ5bg4hzv6C0%2Fs900-c-k-no-mo-rj-c0xffffff%2Fphoto.jpg&f=1&nofb=1&ipt=f801051e8936792627a8168f1b1608ee768a1502e30ebdd4407b443eab91cc49")
             calanderembed.add_field(name="Current Hypixel time", value=(f"{self.IG_year}/{self.IG_month}/{self.IG_day}, {int(self.IG_hour)}:{int(self.IG_minute)}"), inline=True)
@@ -70,6 +70,7 @@ class hypixel(commands.Cog):
             calanderembed.add_field(name="Current Major Events", value="CurrentEvents", inline=True)
             calanderembed.add_field(name="Major Events soon", value="EventsSoon", inline=True)
             await channel.send(embed=calanderembed)
+            self.first=False
         else:
             calanderembed=discord.Embed(title="Hypixel Calander", color=0x808080)
             calanderembed.set_thumbnail(url="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fyt3.ggpht.com%2F-G0UwZhD1hRI%2FAAAAAAAAAAI%2FAAAAAAAAAAA%2FQ5bg4hzv6C0%2Fs900-c-k-no-mo-rj-c0xffffff%2Fphoto.jpg&f=1&nofb=1&ipt=f801051e8936792627a8168f1b1608ee768a1502e30ebdd4407b443eab91cc49")
