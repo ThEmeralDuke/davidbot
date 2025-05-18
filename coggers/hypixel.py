@@ -50,11 +50,11 @@ class hypixel(commands.Cog):
         minutessincestart = int(secondssincestart// 60)
         hourssincestart= int(minutessincestart//60)
         # calculate in game time
-        IG_year= hourssincestart//124
-        IG_month= IG_year//12
-        IG_day= IG_month//31
-        IG_hour= IG_day//24
-        IG_minute= IG_hour//60
+        IG_year= int(hourssincestart//124)
+        IG_month= int(IG_year//12)
+        IG_day= int(IG_month//31)
+        IG_hour= int(IG_day//24)
+        IG_minute= int(IG_hour//60)
         print(f"Year:{IG_year},Month:{IG_month},Day:{IG_day},Hour:{IG_hour},minute:{IG_minute}")
         #embed=discord.Embed(title="Hypixel Calander", color=0x808080)
         #embed.set_thumbnail(url="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fyt3.ggpht.com%2F-G0UwZhD1hRI%2FAAAAAAAAAAI%2FAAAAAAAAAAA%2FQ5bg4hzv6C0%2Fs900-c-k-no-mo-rj-c0xffffff%2Fphoto.jpg&f=1&nofb=1&ipt=f801051e8936792627a8168f1b1608ee768a1502e30ebdd4407b443eab91cc49")
