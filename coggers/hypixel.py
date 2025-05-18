@@ -5,7 +5,7 @@ import os.path
 from dotenv import *
 import discord
 from discord import *
-from discord.ext import commands
+from discord.ext import commands, tasks
 from discord.utils import *
 from datetime import datetime, timezone
 import csv
@@ -30,6 +30,8 @@ with open (filepath+"/ImportantTxtFiles/important.csv", "r") as info:
         botrole= row[0]
         Adminrole=row[1]
 info.close()
+utc_now = datetime.now(timezone.utc)
+skyblockstart = datetime.strptime("2019-06-11 17:55:00", "%Y-%m-%d %H:%M:%S").replace(tzinfo=timezone.utc)
 
 
 class hypixel(commands.Cog):
@@ -38,12 +40,9 @@ class hypixel(commands.Cog):
 
     @commands.Cog.listener()
     async def on_ready(self,):
-         print("hypixel.py is ready")
-
-    @commands.command()
-    async def calender(self,ctx):
+        print("hypixel.py is ready")
+        global utc_now
         calenderchannel= self.bot.get_channel(1372924740993548360)
-        utc_now = datetime.now(timezone.utc)
         skyblockstart = datetime.strptime("2019-06-11 17:55:00", "%Y-%m-%d %H:%M:%S").replace(tzinfo=timezone.utc)
         #IRL time
         secondssincestart = (utc_now - skyblockstart).total_seconds()
@@ -65,13 +64,29 @@ class hypixel(commands.Cog):
         IG_minute, _ = divmod(remainder, MINUTES_PER_IG_MINUTE)
 
         # Convert to integers for display
-        IG_year = int(IG_year)+1
-        IG_month = int(IG_month) + 1   # +1 for human-readable months
-        IG_day = int(IG_day) + 1       # +1 for human-readable days
-        IG_hour = int(IG_hour)
-        IG_minute = int(IG_minute)
+        self.IG_year = int(IG_year)+1
+        self.IG_month = int(IG_month) + 1   # +1 for human-readable months
+        self.IG_day = int(IG_day) + 1       # +1 for human-readable days
+        self.IG_hour = int(IG_hour)
+        self.IG_minute = int(IG_minute)
 
-        print(f"Year: {IG_year}, Month: {IG_month}, Day: {IG_day}, Hour: {IG_hour}, Minute: {IG_minute}")
+        print(f"Year: {self.IG_year}, Month: {self.IG_year}, Day: {self.IG_year}, Hour: {self.IG_year}, Minute: {self.IG_year}")
+    @tasks.loop(seconds=4.165)
+    async def calenderinitial(self,ctx):
+        self.IG_minute += 5
+        if self.IG_minute >= 60:
+            self.IG_minute -= 60
+            self.IG_hour += 1
+        if self.IG_hour >= 24:
+            self.IG_hour = 0
+            self.IG_day += 1
+        if self.IG_day > 31:
+            self.IG_day = 1
+            self.IG_month += 1
+        if self.IG_month > 12:
+            self.IG_month = 1
+            self.IG_year += 1
+        print(f"Year: {self.IG_year}, Month: {self.IG_year}, Day: {self.IG_year}, Hour: {self.IG_year}, Minute: {self.IG_year}")
         #embed=discord.Embed(title="Hypixel Calander", color=0x808080)
         #embed.set_thumbnail(url="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fyt3.ggpht.com%2F-G0UwZhD1hRI%2FAAAAAAAAAAI%2FAAAAAAAAAAA%2FQ5bg4hzv6C0%2Fs900-c-k-no-mo-rj-c0xffffff%2Fphoto.jpg&f=1&nofb=1&ipt=f801051e8936792627a8168f1b1608ee768a1502e30ebdd4407b443eab91cc49")
         #embed.add_field(name="Current Hypixel time", value="(date+time+ToD)", inline=True)
