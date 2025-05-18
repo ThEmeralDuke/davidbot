@@ -49,5 +49,9 @@ class hypixel(commands.Cog):
     async def on_ready(self):
          print("hypixel.py is ready")
 
+    @commands.command()
+    async def hi(self):
+        print("hi")
+
 async def setup(bot):
       await bot.add_cog(hypixel(bot))
