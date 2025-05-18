@@ -50,8 +50,8 @@ class hypixel(commands.Cog):
          print("hypixel.py is ready")
 
     @commands.command()
-    async def hi(self,ctx):
-        print("hi")
+    async def Calander(self,ctx):
+        print(time.localtime())
 
 async def setup(bot):
       await bot.add_cog(hypixel(bot))
