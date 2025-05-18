@@ -60,16 +60,25 @@ class hypixel(commands.Cog):
             self.IG_month = 1
             self.IG_year += 1
         print(f"Year: {self.IG_year}, Month: {self.IG_month}, Day: {self.IG_day}, Hour: {self.IG_hour}, Minute: {self.IG_minute}")
-        print("WEWO1")
         channel = self.bot.get_channel(1372924740993548360)
         if self.calendar_message is None:
-            # Send it once
-            self.calendar_message = await channel.send(f"Year: {self.IG_year}, Month: {self.IG_month}, Day: {self.IG_day}, Hour: {self.IG_hour}, Minute: {self.IG_minute}")
+            calanderembed=discord.Embed(title="Hypixel Calander", color=0x808080)
+            calanderembed.set_thumbnail(url="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fyt3.ggpht.com%2F-G0UwZhD1hRI%2FAAAAAAAAAAI%2FAAAAAAAAAAA%2FQ5bg4hzv6C0%2Fs900-c-k-no-mo-rj-c0xffffff%2Fphoto.jpg&f=1&nofb=1&ipt=f801051e8936792627a8168f1b1608ee768a1502e30ebdd4407b443eab91cc49")
+            calanderembed.add_field(name="Current Hypixel time", value=(f"{self.IG_year}/{self.IG_month}/{self.IG_day}, {int(self.IG_hour)}:{int(self.IG_minute)}"), inline=True)
+            calanderembed.add_field(name="Cuurent Season", value="season", inline=True)
+            calanderembed.add_field(name="", value="", inline=False)
+            calanderembed.add_field(name="Current Major Events", value="CurrentEvents", inline=True)
+            calanderembed.add_field(name="Major Events soon", value="EventsSoon", inline=True)
+            await channel.send(embed=calanderembed)
         else:
-            # Then edit it each loop
-            print("wewo2")
-            await self.calendar_message.edit(content=f"Year: {self.IG_year}, Month: {self.IG_month}, Day: {self.IG_day}, Hour: {self.IG_hour}, Minute: {self.IG_minute}")
-            print("wewo3")
+            calanderembed=discord.Embed(title="Hypixel Calander", color=0x808080)
+            calanderembed.set_thumbnail(url="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fyt3.ggpht.com%2F-G0UwZhD1hRI%2FAAAAAAAAAAI%2FAAAAAAAAAAA%2FQ5bg4hzv6C0%2Fs900-c-k-no-mo-rj-c0xffffff%2Fphoto.jpg&f=1&nofb=1&ipt=f801051e8936792627a8168f1b1608ee768a1502e30ebdd4407b443eab91cc49")
+            calanderembed.add_field(name="Current Hypixel time", value=(f"{self.IG_year}/{self.IG_month}/{self.IG_day}, {int(self.IG_hour)}:{int(self.IG_minute)}"), inline=True)
+            calanderembed.add_field(name="Cuurent Season", value="season", inline=True)
+            calanderembed.add_field(name="", value="", inline=False)
+            calanderembed.add_field(name="Current Major Events", value="CurrentEvents", inline=True)
+            calanderembed.add_field(name="Major Events soon", value="EventsSoon", inline=True)
+            await channel.edit(embed=calanderembed)
     async def calenderinit(self):
         while True:
             utc_now = datetime.now(timezone.utc)
