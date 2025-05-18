@@ -49,5 +49,10 @@ class template(commands.Cog):
     async def on_ready(self):
          print("template.py is ready")
 
+    @commands.command()
+    async def hi(self):
+        print("hi")
+
+
 async def setup(bot):
       await bot.add_cog(template(bot))
