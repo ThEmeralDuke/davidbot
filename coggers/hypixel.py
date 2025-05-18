@@ -45,11 +45,11 @@ class hypixel(commands.Cog):
         calenderchannel= self.bot.get_channel(1372924740993548360)
         utc_now = datetime.now(timezone.utc)
         skyblockstart="2019-06-11 17:55:00"
-        try:
-            days= (utc_now - datetime.strptime(skyblockstart, "%Y-%m-%d %H:%M:%S")).days
-            print(days)
-        except Exception:
-            print(Exception)
+        #try:
+        days= (utc_now - datetime.strptime(skyblockstart, "%Y-%m-%d %H:%M:%S")).days
+        print(days)
+        #except Exception:
+        #    print(Exception)
         print(f"The current UTC time is: {utc_now}")
         #embed=discord.Embed(title="Hypixel Calander", color=0x808080)
         #embed.set_thumbnail(url="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fyt3.ggpht.com%2F-G0UwZhD1hRI%2FAAAAAAAAAAI%2FAAAAAAAAAAA%2FQ5bg4hzv6C0%2Fs900-c-k-no-mo-rj-c0xffffff%2Fphoto.jpg&f=1&nofb=1&ipt=f801051e8936792627a8168f1b1608ee768a1502e30ebdd4407b443eab91cc49")
