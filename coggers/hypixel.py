@@ -49,7 +49,7 @@ class hypixel(commands.Cog):
     @tasks.loop(seconds=4.165)
     async def calenderincrement(self):
         self.IG_minute += 5
-        if self.IG_minute >= 55:
+        if self.IG_minute >= 65:
             self.IG_minute -= 60
             self.IG_hour += 1
         if self.IG_hour >= 24:
