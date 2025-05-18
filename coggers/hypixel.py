@@ -43,6 +43,7 @@ class hypixel(commands.Cog):
     IG_minute = 0
     def __init__(self, bot):
         self.bot = bot
+        self.calendar_message: discord.Message | None = None
     @tasks.loop(seconds=4.165)
     async def calenderincrement(self):
         self.IG_minute += 5
@@ -59,6 +60,7 @@ class hypixel(commands.Cog):
             self.IG_month = 1
             self.IG_year += 1
         print(f"Year: {self.IG_year}, Month: {self.IG_month}, Day: {self.IG_day}, Hour: {self.IG_hour}, Minute: {self.IG_minute}")
+        print("WEWO1")
         channel = self.bot.get_channel(1372924740993548360)
         if self.calendar_message is None:
             # Send it once
