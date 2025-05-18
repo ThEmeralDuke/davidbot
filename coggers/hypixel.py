@@ -48,14 +48,30 @@ class hypixel(commands.Cog):
         #IRL time
         secondssincestart = (utc_now - skyblockstart).total_seconds()
         minutessincestart = int(secondssincestart// 60)
-        hourssincestart= int(minutessincestart//60)
-        # calculate in game time
-        IG_year= int(hourssincestart//124)
-        IG_month= int(IG_year//12)
-        IG_day= int(IG_month//31)
-        IG_hour= int(IG_day//24)
-        IG_minute= int(IG_hour//60)
-        print(f"Year:{IG_year},Month:{IG_month},Day:{IG_day},Hour:{IG_hour},minute:{IG_minute}")
+
+        #IG time
+        # Skyblock time constants (in real minutes)
+        MINUTES_PER_IG_MINUTE = 0.01388      # 0.833 seconds
+        MINUTES_PER_IG_HOUR = 0.8333         # 50 seconds
+        MINUTES_PER_IG_DAY = 20
+        MINUTES_PER_IG_MONTH = 620
+        MINUTES_PER_IG_YEAR = 7440
+
+        # Compute in-game time
+        IG_year = int(minutessincestart // MINUTES_PER_IG_YEAR)
+        minutes_left = minutessincestart % MINUTES_PER_IG_YEAR
+
+        IG_month = int(minutes_left // MINUTES_PER_IG_MONTH)
+        minutes_left %= MINUTES_PER_IG_MONTH
+
+        IG_day = int(minutes_left // MINUTES_PER_IG_DAY)
+        minutes_left %= MINUTES_PER_IG_DAY
+
+        IG_hour = int(minutes_left // MINUTES_PER_IG_HOUR)
+        minutes_left %= MINUTES_PER_IG_HOUR
+
+        IG_minute = int(minutes_left // MINUTES_PER_IG_MINUTE)
+        print(f"Year: {IG_year}, Month: {IG_month + 1}, Day: {IG_day + 1}, Hour: {IG_hour}, Minute: {IG_minute}")
         #embed=discord.Embed(title="Hypixel Calander", color=0x808080)
         #embed.set_thumbnail(url="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fyt3.ggpht.com%2F-G0UwZhD1hRI%2FAAAAAAAAAAI%2FAAAAAAAAAAA%2FQ5bg4hzv6C0%2Fs900-c-k-no-mo-rj-c0xffffff%2Fphoto.jpg&f=1&nofb=1&ipt=f801051e8936792627a8168f1b1608ee768a1502e30ebdd4407b443eab91cc49")
         #embed.add_field(name="Current Hypixel time", value="(date+time+ToD)", inline=True)
