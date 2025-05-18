@@ -45,6 +45,7 @@ class hypixel(commands.Cog):
         self.bot = bot
         self.first=True
         self.channel = self.bot.get_channel(1372924740993548360)
+        self.channel.purge()
     @tasks.loop(seconds=4.165)
     async def calenderincrement(self):
         self.IG_minute += 5
@@ -83,9 +84,9 @@ class hypixel(commands.Cog):
             calanderembed.add_field(name="Current Major Events", value="CurrentEvents", inline=True)
             calanderembed.add_field(name="Major Events soon", value="EventsSoon", inline=True)
             await self.calendar_message.edit(embed=calanderembed)
+
     async def calenderinit(self):
         while True:
-            await self.channel.purge()
             utc_now = datetime.now(timezone.utc)
             skyblockstart = datetime.strptime("2019-06-11 17:55:00", "%Y-%m-%d %H:%M:%S").replace(tzinfo=timezone.utc)
             #IRL time
