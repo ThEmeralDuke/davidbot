@@ -45,7 +45,6 @@ class hypixel(commands.Cog):
         self.bot = bot
         self.first=True
         self.channel = self.bot.get_channel(1372924740993548360)
-        self.channel.purge()
     @tasks.loop(seconds=4.165)
     async def calenderincrement(self):
         self.IG_minute += 5
@@ -122,6 +121,7 @@ class hypixel(commands.Cog):
     async def on_ready(self):
         print("hypixel.py is ready")
         await self.calenderinit()
+        await self.channel.purge()
     
 
 async def setup(bot):
