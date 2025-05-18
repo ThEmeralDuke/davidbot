@@ -66,7 +66,7 @@ class hypixel(commands.Cog):
         else:
             self.IG_minutetenth=self.IG_minute
         allowedtime= ["00","05",10,15,20,25,30,35,40,45,50,55]
-        if self.IG_minute in allowedtime:
+        if self.IG_minutetenth in allowedtime:
             print(f"Year: {self.IG_year}, Month: {self.IG_month}, Day: {self.IG_day}, Hour: {self.IG_hour}, Minute: {self.IG_minutetenth}")
         channel = self.bot.get_channel(1372924740993548360)
         if self.first== True:
@@ -123,7 +123,7 @@ class hypixel(commands.Cog):
             else:
                 self.IG_minutetenth=self.IG_minute
             allowedtime= ["00","05",10,15,20,25,30,35,40,45,50,55]
-            if self.IG_minute in allowedtime:
+            if self.IG_minutetenth in allowedtime:
                 print(f"Year: {self.IG_year}, Month: {self.IG_month}, Day: {self.IG_day}, Hour: {self.IG_hour}, Minute: {self.IG_minutetenth}")
                 await self.calenderincrement.start()
                 break
