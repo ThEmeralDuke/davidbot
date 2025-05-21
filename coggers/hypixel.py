@@ -108,7 +108,9 @@ class hypixel(commands.Cog):
             await self.calendar_message.edit(embed=calanderembed)
 
     def calenderinit(self):
-        while True:
+        print("Loop started")
+        i=True
+        while i==True:
             utc_now = datetime.now(timezone.utc)
             skyblockstart = datetime.strptime("2019-06-11 17:55:00", "%Y-%m-%d %H:%M:%S").replace(tzinfo=timezone.utc)
             #IRL time
@@ -136,9 +138,8 @@ class hypixel(commands.Cog):
             self.IG_hour = int(IG_hour)
             self.IG_minute = int(IG_minute)
             if int(round(self.IG_minute)) % 5 == 0:
+                i=False
                 self.calenderincrement.start()
-                break
-        (threading.Thread(target=self.calenderinit)).join()
     @commands.Cog.listener()
     async def on_ready(self):
         print("hypixel.py is ready")
