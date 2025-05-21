@@ -141,7 +141,6 @@ class hypixel(commands.Cog):
             if int(round(self.IG_minute)) % 5 == 0:
                 i=False
                 print("loop done")
-                self.calenderincrement.start()
     @commands.Cog.listener()
     async def on_ready(self):
         print("hypixel.py is ready")
