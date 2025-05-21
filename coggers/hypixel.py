@@ -106,8 +106,9 @@ class hypixel(commands.Cog):
             calanderembed.add_field(name="Current Major Events", value="CurrentEvents", inline=True)
             calanderembed.add_field(name="Major Events soon", value="EventsSoon", inline=True)
             await self.calendar_message.edit(embed=calanderembed)
-
+    i=True
     def calenderinit(self):
+        global i
         print("Loop started")
         i=True
         while i==True:
@@ -139,6 +140,7 @@ class hypixel(commands.Cog):
             self.IG_minute = int(IG_minute)
             if int(round(self.IG_minute)) % 5 == 0:
                 i=False
+                print("loop done")
                 self.calenderincrement.start()
     @commands.Cog.listener()
     async def on_ready(self):
@@ -146,7 +148,9 @@ class hypixel(commands.Cog):
         self.channel = self.bot.get_channel(1372924740993548360)
         await self.channel.purge()
         (threading.Thread(target=self.calenderinit)).start()
-        
+        if i== False:
+            self.calenderincrement.start()
+            (threading.Thread(target=self.calenderinit)).join()
         
     
 
