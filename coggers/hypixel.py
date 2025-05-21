@@ -149,7 +149,7 @@ class hypixel(commands.Cog):
         await self.channel.purge()
         (threading.Thread(target=self.calenderinit)).start()
         if i== False:
-            self.calenderincrement.start()
+            await self.calenderincrement.start()
             (threading.Thread(target=self.calenderinit)).join()
         
     
