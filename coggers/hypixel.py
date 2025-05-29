@@ -76,7 +76,8 @@ class hypixel(commands.Cog):
             _, remainder = divmod(remainder, MINUTES_PER_IG_DAY)
             _, remainder = divmod(remainder, MINUTES_PER_IG_HOUR)
             IG_minute, _ = divmod(remainder, MINUTES_PER_IG_MINUTE)
-            IG_minute = int(IG_minute)
+            IG_minute = int(round(IG_minute))
+
 
             if IG_minute % 5 == 0:
                 print(f"Aligned to IGT minute {IG_minute}. Starting loop.")
