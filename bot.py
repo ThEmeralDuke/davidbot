@@ -134,9 +134,6 @@ async def reload(ctx,arg=None):
     elif arg in Coglist:
         await bot.reload_extension(f"coggers.{arg}")
         print(f"{arg} reloaded")
-        Coglist.append(filename[:-3])
-    elif arg== "new":
-        loadcogs()
     else: 
         await ctx.send("Cog not found. Use !reload list")
 
