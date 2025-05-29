@@ -108,10 +108,10 @@ class hypixel(commands.Cog):
         self.IG_hour = int(IG_hour)
         self.IG_minute = int(IG_minute)
         self.IG_minute = int(round(self.IG_minute))
-        if IG_minute % 5 == 0:
+        if self.IG_minute % 5 == 0:
             pass
         else:
-            self.IG_minute= 5 * round(IG_minute / 5)
+            self.IG_minute= 5 * round(self.IG_minute / 5)
         self.IG_monthtenth = f"{self.IG_month:02}"
         self.IG_hourtenth = f"{self.IG_hour:02}"
         self.IG_minutetenth = f"{self.IG_minute:02}"
