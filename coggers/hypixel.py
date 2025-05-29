@@ -56,7 +56,6 @@ class hypixel(commands.Cog):
         self.channel = self.bot.get_channel(1372924740993548360)  # Replace with actual ID
         await self.channel.purge()
         await self.update_calendar()
-        self.update_calendar_loop.start()
     # Wait until in-game minute is a multiple of 5
         while True:
             utc_now = datetime.now(timezone.utc)
@@ -81,7 +80,7 @@ class hypixel(commands.Cog):
 
             if IG_minute % 5 == 0:
                 print(f"Aligned to IGT minute {IG_minute}. Starting loop.")
-                self.calenderincrement.start()
+                self.update_calendar_loop.start()
                 break
             else:
                 await asyncio.sleep(1)  # Wait a second and try again
