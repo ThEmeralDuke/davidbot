@@ -42,7 +42,7 @@ class hypixel(commands.Cog):
         self.bot = bot
         self.first=True
         self.channel = self.bot.get_channel(1372924740993548360)
-        self.calenderincrement = tasks.loop(seconds=5)(self.update_calendar)
+        self.calenderincrement = tasks.loop(seconds=4.165)(self.update_calendar)
         self.IG_year = 0
         self.IG_month = 0
         self.IG_day = 0
