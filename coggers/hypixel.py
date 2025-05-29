@@ -52,12 +52,38 @@ class hypixel(commands.Cog):
 
     @commands.Cog.listener()
     async def on_ready(self):
-        print("HypixelCalendar cog is ready")
+        print("hypixel.py is ready")
         self.channel = self.bot.get_channel(1372924740993548360)  # Replace with actual ID
         await self.channel.purge()
         await self.update_calendar()
         self.update_calendar_loop.start()
+    # Wait until in-game minute is a multiple of 5
+        while True:
+            utc_now = datetime.now(timezone.utc)
+            skyblock_start = datetime.strptime("2019-06-11 17:55:00", "%Y-%m-%d %H:%M:%S").replace(tzinfo=timezone.utc)
+            seconds_since_start = (utc_now - skyblock_start).total_seconds()
+            minutes_since_start = int(seconds_since_start // 60)
 
+            # Skyblock time constants
+            MINUTES_PER_IG_MINUTE = 0.01388
+            MINUTES_PER_IG_HOUR = 0.8333
+            MINUTES_PER_IG_DAY = 20
+            MINUTES_PER_IG_MONTH = 620
+            MINUTES_PER_IG_YEAR = 7440
+
+            _, remainder = divmod(minutes_since_start, MINUTES_PER_IG_YEAR)
+            _, remainder = divmod(remainder, MINUTES_PER_IG_MONTH)
+            _, remainder = divmod(remainder, MINUTES_PER_IG_DAY)
+            _, remainder = divmod(remainder, MINUTES_PER_IG_HOUR)
+            IG_minute, _ = divmod(remainder, MINUTES_PER_IG_MINUTE)
+            IG_minute = int(IG_minute)
+
+            if IG_minute % 5 == 0:
+                print(f"Aligned to IGT minute {IG_minute}. Starting loop.")
+                self.calenderincrement.start()
+                break
+            else:
+                await asyncio.sleep(1)  # Wait a second and try again
     def get_ig_time(self):
         utc_now = datetime.now(timezone.utc)
         skyblock_start = datetime.strptime("2019-06-11 17:55:00", "%Y-%m-%d %H:%M:%S").replace(tzinfo=timezone.utc)
