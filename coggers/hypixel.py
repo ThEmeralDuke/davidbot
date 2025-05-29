@@ -107,15 +107,21 @@ class hypixel(commands.Cog):
         self.IG_day = int(IG_day) + 1
         self.IG_hour = int(IG_hour)
         self.IG_minute = int(IG_minute)
+        self.IG_minute = int(round(self.IG_minute))
+        if IG_minute % 5 == 0:
+            pass
+        else:
+            self.IG_minute= 5 * round(IG_minute / 5)
         self.IG_monthtenth = f"{self.IG_month:02}"
         self.IG_hourtenth = f"{self.IG_hour:02}"
         self.IG_minutetenth = f"{self.IG_minute:02}"
         seasons=["Early Spring","Spring","Late Spring","Early Summer","Summer","Late Summer","Early Autumn","Autumn","Late Autumn","Early Winter","Winter","Late Winter"]
         self.season= seasons[int(IG_month)]
+
     async def update_calendar(self):
         self.get_ig_time()
         calanderembed = discord.Embed(title="Hypixel Calander", color=0x808080)
-        calanderembed.set_thumbnail(url="attachment://ImportantTxtFiles/HypixelLogo.png")
+        calanderembed.set_thumbnail(url="attachment://ImportantTxtFiles/Hypixel/HypixelLogo.png")
         calanderembed.add_field(name="Current Hypixel time", value=(f"{self.IG_year}/{self.IG_monthtenth}/{self.IG_day}, {self.IG_hourtenth}:{self.IG_minutetenth}"), inline=True)
         calanderembed.add_field(name="Cuurent Season", value=self.season, inline=True)
         calanderembed.add_field(name="", value="", inline=False)
