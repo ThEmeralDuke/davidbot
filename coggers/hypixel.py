@@ -81,7 +81,7 @@ class hypixel(commands.Cog):
                 if not self.calenderincrement.is_running():
                     self.calenderincrement.start()
                 break
-            await asyncio.sleep(1)  # Check every second until IG minute % 5 == 0
+
 
     async def update_calendar(self):
         # Recalculate current IG time
