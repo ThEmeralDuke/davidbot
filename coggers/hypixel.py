@@ -109,7 +109,7 @@ class hypixel(commands.Cog):
         self.IG_minute = int(IG_minute)
         self.IG_minutetenth = f"{self.IG_minute:02}"
         seasons=["Early Spring","Spring","Late Spring","Early Summer","Summer","Late Summer","Early Autumn","Autumn","Late Autumn","Early Winter","Winter","Late Winter"]
-        self.season= seasons[int(IG_month)-1]
+        self.season= seasons[int(IG_month)]
     async def update_calendar(self):
         self.get_ig_time()
         calanderembed = discord.Embed(title="Hypixel Calander", color=0x808080)
