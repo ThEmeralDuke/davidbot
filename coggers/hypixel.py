@@ -116,7 +116,7 @@ class hypixel(commands.Cog):
         self.get_ig_time()
         calanderembed = discord.Embed(title="Hypixel Calander", color=0x808080)
         calanderembed.set_thumbnail(url="attachment://ImportantTxtFiles/HypixelLogo.png")
-        calanderembed.add_field(name="Current Hypixel time", value=(f"{self.IG_year}/{self.IG_monthtenth}/{self.IG_day}, {int(self.IG_hourtenth)}:{self.IG_minutetenth}"), inline=True)
+        calanderembed.add_field(name="Current Hypixel time", value=(f"{self.IG_year}/{self.IG_monthtenth}/{self.IG_day}, {self.IG_hourtenth}:{self.IG_minutetenth}"), inline=True)
         calanderembed.add_field(name="Cuurent Season", value=self.season, inline=True)
         calanderembed.add_field(name="", value="", inline=False)
         calanderembed.add_field(name="Current Major Events", value="CurrentEvents", inline=True)
