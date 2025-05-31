@@ -40,6 +40,7 @@ class hypixel(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self.channel = None
+        self.loop_started= False
         self.calendar_message = None
         self.first = True
         self.season = "Spring"  # Placeholder; you can add logic to set this based on date
@@ -51,7 +52,7 @@ class hypixel(commands.Cog):
         self.IG_minutetenth = "00"
         self.Jacob_event= False
         self.Dark_Auction= False
-        self.current_events=["test1","test2"]
+        self.current_events=[]
         
     @commands.Cog.listener()
     async def on_ready(self):
@@ -60,7 +61,8 @@ class hypixel(commands.Cog):
         await self.channel.purge()
         await self.update_calendar()
     # Wait until in-game minute is a multiple of 5
-        while True:
+        i=True
+        while i==True:
             utc_now = datetime.now(timezone.utc)
             skyblock_start = datetime.strptime("2019-06-11 17:55:00", "%Y-%m-%d %H:%M:%S").replace(tzinfo=timezone.utc)
             seconds_since_start = (utc_now - skyblock_start).total_seconds()
@@ -83,8 +85,9 @@ class hypixel(commands.Cog):
 
             if IG_minute % 5 == 0:
                 print(f"Aligned to IGT minute {IG_minute}. Starting loop.")
+                i=False
+                self.loop_started= True
                 self.update_calendar_loop.start()
-                break
             else:
                 await asyncio.sleep(1)  # Wait a second and try again
     def get_ig_time(self):
@@ -134,23 +137,27 @@ class hypixel(commands.Cog):
         elif self.Jacob_event == True and self.Current_IRL_Minute >= 35:
             self.Dark_Auction = False
             self.current_events.remove("Jacobs Farming")
-        self.current_event_list= "\n".join(self.current_events)
-    async def update_calendar(self):
-        self.get_ig_time()
-        self.get_events()
-        calanderembed = discord.Embed(title="Hypixel Calander", color=0x808080)
-        calanderembed.set_thumbnail(url="attachment://ImportantTxtFiles/Hypixel/HypixelLogo.png")
-        calanderembed.add_field(name="Current Hypixel time", value=(f"{self.IG_day}/{self.IG_monthtenth}/{self.IG_year}, {self.IG_hourtenth}:{self.IG_minutetenth}"), inline=True)
-        calanderembed.add_field(name="Cuurent Season", value=self.season, inline=True)
-        calanderembed.add_field(name="", value="", inline=False)
-        calanderembed.add_field(name="Current Major Events", value=self.current_event_list, inline=True)
-        calanderembed.add_field(name="Major Events soon", value="EventsSoonList", inline=True)
 
-        if self.first:
-            self.calendar_message = await self.channel.send(embed=calanderembed)
-            self.first = False
-        else:
-            await self.calendar_message.edit(embed=calanderembed)
+        
+        self.current_event_list= "\n".join(self.current_events)
+
+    async def update_calendar(self):
+        if self.loop_started== True:
+            self.get_ig_time()
+            self.get_events()
+            calanderembed = discord.Embed(title="Hypixel Calander", color=0x808080)
+            calanderembed.set_thumbnail(url="attachment://ImportantTxtFiles/Hypixel/HypixelLogo.png")
+            calanderembed.add_field(name="Current Hypixel time", value=(f"{self.IG_day}/{self.IG_monthtenth}/{self.IG_year}, {self.IG_hourtenth}:{self.IG_minutetenth}"), inline=True)
+            calanderembed.add_field(name="Cuurent Season", value=self.season, inline=True)
+            calanderembed.add_field(name="", value="", inline=False)
+            calanderembed.add_field(name="Current Major Events", value=self.current_event_list, inline=True)
+            calanderembed.add_field(name="Major Events soon", value="EventsSoonList", inline=True)
+
+            if self.first:
+                self.calendar_message = await self.channel.send(embed=calanderembed)
+                self.first = False
+            else:
+                await self.calendar_message.edit(embed=calanderembed)
 
     @tasks.loop()
     async def update_calendar_loop(self):
