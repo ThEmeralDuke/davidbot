@@ -84,7 +84,7 @@ class hypixel(commands.Cog):
                 break
             else:
                 await asyncio.sleep(1)  # Wait a second and try again
-    def get_ig_time(self):
+    async def get_ig_time(self):
         utc_now = datetime.now(timezone.utc)
         skyblock_start = datetime.strptime("2019-06-11 17:55:00", "%Y-%m-%d %H:%M:%S").replace(tzinfo=timezone.utc)
         seconds_since_start = (utc_now - skyblock_start).total_seconds()
@@ -117,9 +117,11 @@ class hypixel(commands.Cog):
         self.IG_minutetenth = f"{self.IG_minute:02}"
         seasons=["Early Spring","Spring","Late Spring","Early Summer","Summer","Late Summer","Early Autumn","Autumn","Late Autumn","Early Winter","Winter","Late Winter"]
         self.season= seasons[int(IG_month)]
-
+    async def get_events(self):
+        print(datetime.date)
     async def update_calendar(self):
-        self.get_ig_time()
+        await self.get_ig_time()
+        await self.get_events()
         calanderembed = discord.Embed(title="Hypixel Calander", color=0x808080)
         calanderembed.set_thumbnail(url="attachment://ImportantTxtFiles/Hypixel/HypixelLogo.png")
         calanderembed.add_field(name="Current Hypixel time", value=(f"{self.IG_year}/{self.IG_monthtenth}/{self.IG_day}, {self.IG_hourtenth}:{self.IG_minutetenth}"), inline=True)
@@ -134,7 +136,7 @@ class hypixel(commands.Cog):
         else:
             await self.calendar_message.edit(embed=calanderembed)
 
-    @tasks.loop(seconds=4.165)
+    @tasks.loop()
     async def update_calendar_loop(self):
         await self.update_calendar()
 
