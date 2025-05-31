@@ -121,6 +121,9 @@ class hypixel(commands.Cog):
             pass
         else:
             self.IG_minute= 5 * round(self.IG_minute / 5)
+            if self.IG_minute == 60:
+                self.IG_minute = 0
+                self.IG_hour = self.IG_hour + 1
         self.IG_monthtenth = f"{self.IG_month:02}"
         self.IG_hourtenth = f"{self.IG_hour:02}"
         self.IG_minutetenth = f"{self.IG_minute:02}"
