@@ -52,6 +52,7 @@ class hypixel(commands.Cog):
         self.IG_minutetenth = "00"
         self.Jacob_event= False
         self.Dark_Auction= False
+        self.Hop_Hunt= False
         self.current_events=[]
         
     @commands.Cog.listener()
@@ -121,8 +122,8 @@ class hypixel(commands.Cog):
         self.IG_monthtenth = f"{self.IG_month:02}"
         self.IG_hourtenth = f"{self.IG_hour:02}"
         self.IG_minutetenth = f"{self.IG_minute:02}"
-        seasons=["Early Spring","Spring","Late Spring","Early Summer","Summer","Late Summer","Early Autumn","Autumn","Late Autumn","Early Winter","Winter","Late Winter"]
-        self.season= seasons[int(IG_month)]
+        self.seasons=["Early Spring","Spring","Late Spring","Early Summer","Summer","Late Summer","Early Autumn","Autumn","Late Autumn","Early Winter","Winter","Late Winter"]
+        self.season= self.seasons[int(IG_month)]
     def get_events(self):
         self.Current_IRL_Minute= int((datetime.now()).strftime("%M"))
         if self.Current_IRL_Minute== 55 and self.Dark_Auction== False:
@@ -133,11 +134,16 @@ class hypixel(commands.Cog):
             self.current_events.remove("Dark Auction")
         if 15<= self.Current_IRL_Minute <=34 and self.Jacob_event==False:
             self.Jacob_event = True
-            self.current_events.append("Jacobs Farming")
+            self.current_events.append("Jacob's Farming")
         elif self.Jacob_event == True and self.Current_IRL_Minute >= 35:
             self.Jacob_event = False
-            self.current_events.remove("Jacobs Farming")
-
+            self.current_events.remove("Jacob's Farming")
+        if "Spring" in self.seasons[int(self.IG_month-1)]  and self.Hop_Hunt==False:
+            self.Hop_Hunt = True
+            self.current_events.append("Hoppity's Hunt")
+        elif self.Hop_Hunt == True and "Spring" not in self.seasons[int(self.IG_month-1)]:
+            self.Jacob_event = False
+            self.current_events.remove("Hoppity's Hunt")
         
         self.current_event_list= "\n".join(self.current_events)
 
