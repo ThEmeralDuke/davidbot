@@ -118,13 +118,13 @@ class hypixel(commands.Cog):
         seasons=["Early Spring","Spring","Late Spring","Early Summer","Summer","Late Summer","Early Autumn","Autumn","Late Autumn","Early Winter","Winter","Late Winter"]
         self.season= seasons[int(IG_month)]
     def get_events(self):
-        print(datetime.time)
+        print((datetime.now()).strftime("%M"))
     async def update_calendar(self):
         self.get_ig_time()
         self.get_events()
         calanderembed = discord.Embed(title="Hypixel Calander", color=0x808080)
         calanderembed.set_thumbnail(url="attachment://ImportantTxtFiles/Hypixel/HypixelLogo.png")
-        calanderembed.add_field(name="Current Hypixel time", value=(f"{self.IG_year}/{self.IG_monthtenth}/{self.IG_day}, {self.IG_hourtenth}:{self.IG_minutetenth}"), inline=True)
+        calanderembed.add_field(name="Current Hypixel time", value=(f"{self.IG_day}/{self.IG_monthtenth}/{self.IG_year}, {self.IG_hourtenth}:{self.IG_minutetenth}"), inline=True)
         calanderembed.add_field(name="Cuurent Season", value=self.season, inline=True)
         calanderembed.add_field(name="", value="", inline=False)
         calanderembed.add_field(name="Current Major Events", value="CurrentEvents", inline=True)
