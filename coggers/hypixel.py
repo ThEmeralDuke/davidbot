@@ -125,13 +125,13 @@ class hypixel(commands.Cog):
         self.season= seasons[int(IG_month)]
     def get_events(self):
         self.Current_IRL_Minute= int((datetime.now()).strftime("%M"))
-        if self.Current_IRL_Minute== 55:
+        if self.Current_IRL_Minute== 55 and self.Dark_Auction== False:
             self.Dark_Auction = True
             self.current_events.append("Dark Auction")
         elif self.Dark_Auction == True and self.Current_IRL_Minute != 55:
             self.Dark_Auction = False
             self.current_events.remove("Dark Auction")
-        if self.Current_IRL_Minute== 15:
+        if self.Current_IRL_Minute== 15 and self.Jacob_event==False:
             self.Jacob_event = True
             self.current_events.append("Jacobs Farming")
         elif self.Jacob_event == True and self.Current_IRL_Minute >= 35:
