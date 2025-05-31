@@ -131,11 +131,11 @@ class hypixel(commands.Cog):
         elif self.Dark_Auction == True and self.Current_IRL_Minute != 55:
             self.Dark_Auction = False
             self.current_events.remove("Dark Auction")
-        if self.Current_IRL_Minute== 15 and self.Jacob_event==False:
+        if 15<= self.Current_IRL_Minute >=35 and self.Jacob_event==False:
             self.Jacob_event = True
             self.current_events.append("Jacobs Farming")
         elif self.Jacob_event == True and self.Current_IRL_Minute >= 35:
-            self.Dark_Auction = False
+            self.Jacob_event = False
             self.current_events.remove("Jacobs Farming")
 
         
