@@ -1,22 +1,12 @@
 filepath= "."
 #loading libraries
-import os
-import os.path
-from dotenv import *
 import discord
 from discord import *
 from discord.ext import commands, tasks
 from discord.utils import *
 from datetime import datetime, timezone
 import csv
-import psutil
-import random
-import threading
-import subprocess
-import keyboard
-import json
 import asyncio
-import time
 
 #stuff
 botrole= []
@@ -38,12 +28,15 @@ skyblockstart = datetime.strptime("2019-06-11 17:55:00", "%Y-%m-%d %H:%M:%S").re
 
 class hypixel(commands.Cog):
     def __init__(self, bot):
+        # variables
         self.bot = bot
+        self.current_events=[]
+        # Placeholders
         self.channel = None
         self.loop_started= False
         self.calendar_message = None
         self.first = True
-        self.season = "Spring"  # Placeholder; you can add logic to set this based on date
+        self.season = 0  
         self.IG_year = 0
         self.IG_month = 0
         self.IG_day = 0
@@ -54,8 +47,6 @@ class hypixel(commands.Cog):
         self.Dark_Auction= False
         self.Hop_Hunt= False
         self.Zoo = False
-        self.current_events=[]
-
 
     @commands.Cog.listener()
     async def on_ready(self):
