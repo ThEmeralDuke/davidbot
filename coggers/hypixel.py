@@ -49,7 +49,10 @@ class hypixel(commands.Cog):
         self.IG_hour = 0
         self.IG_minute = 0
         self.IG_minutetenth = "00"
-
+        self.Jacob_event= False
+        self.Dark_Auction= False
+        self.current_events=["test1","test2"]
+        
     @commands.Cog.listener()
     async def on_ready(self):
         print("hypixel.py is ready")
@@ -118,7 +121,20 @@ class hypixel(commands.Cog):
         seasons=["Early Spring","Spring","Late Spring","Early Summer","Summer","Late Summer","Early Autumn","Autumn","Late Autumn","Early Winter","Winter","Late Winter"]
         self.season= seasons[int(IG_month)]
     def get_events(self):
-        print((datetime.now()).strftime("%M"))
+        self.Current_IRL_Minute= int((datetime.now()).strftime("%M"))
+        if self.Current_IRL_Minute== 55:
+            self.Dark_Auction = True
+            self.current_events.append("Dark Auction")
+        elif self.Dark_Auction == True and self.Current_IRL_Minute != 55:
+            self.Dark_Auction = False
+            self.current_events.remove("Dark Auction")
+        if self.Current_IRL_Minute== 15:
+            self.Jacob_event = True
+            self.current_events.append("Jacobs Farming")
+        elif self.Jacob_event == True and self.Current_IRL_Minute >= 35:
+            self.Dark_Auction = False
+            self.current_events.remove("Jacobs Farming")
+        self.current_event_list= "\n".join(self.current_events)
     async def update_calendar(self):
         self.get_ig_time()
         self.get_events()
@@ -127,8 +143,8 @@ class hypixel(commands.Cog):
         calanderembed.add_field(name="Current Hypixel time", value=(f"{self.IG_day}/{self.IG_monthtenth}/{self.IG_year}, {self.IG_hourtenth}:{self.IG_minutetenth}"), inline=True)
         calanderembed.add_field(name="Cuurent Season", value=self.season, inline=True)
         calanderembed.add_field(name="", value="", inline=False)
-        calanderembed.add_field(name="Current Major Events", value="CurrentEvents", inline=True)
-        calanderembed.add_field(name="Major Events soon", value="EventsSoon", inline=True)
+        calanderembed.add_field(name="Current Major Events", value=self.current_event_list, inline=True)
+        calanderembed.add_field(name="Major Events soon", value="EventsSoonList", inline=True)
 
         if self.first:
             self.calendar_message = await self.channel.send(embed=calanderembed)
