@@ -148,6 +148,7 @@ class hypixel(commands.Cog):
             self.current_events.remove("Hoppity's Hunt")
         if "Early Summer" in self.seasons[int(self.IG_month-1)] and "Early Winter" in self.seasons[int(self.IG_month-1)] and 1 <= self.IG_day <= 3 and self.Zoo==False:
             self.Zoo = True
+            print("Zoo TRUE")
             self.current_events.append("Traveling Zoo")
         elif self.Zoo == True and self.IG_day >= 3:
             self.Zoo = False
