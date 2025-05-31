@@ -53,8 +53,10 @@ class hypixel(commands.Cog):
         self.Jacob_event= False
         self.Dark_Auction= False
         self.Hop_Hunt= False
+        self.Zoo = False
         self.current_events=[]
-        
+
+
     @commands.Cog.listener()
     async def on_ready(self):
         print("hypixel.py is ready")
@@ -144,6 +146,12 @@ class hypixel(commands.Cog):
         elif self.Hop_Hunt == True and "Spring" not in self.seasons[int(self.IG_month-1)]:
             self.Jacob_event = False
             self.current_events.remove("Hoppity's Hunt")
+        if "Early Summer" in self.seasons[int(self.IG_month-1)] and "Early Winter" in self.seasons[int(self.IG_month-1)] and 1 <= self.IG_day <= 3 and self.Zoo==False:
+            self.Zoo = True
+            self.current_events.append("Traveling Zoo")
+        elif self.Zoo == True and self.IG_day >= 3:
+            self.Zoo = False
+            self.current_events.remove("Traveling Zoo")
         
         self.current_event_list= "\n".join(self.current_events)
 
