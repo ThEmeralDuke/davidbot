@@ -16,7 +16,7 @@ from discord.ext import commands
 from discord.utils import *
 import time
 import csv
-
+import random
 #stuff
 botrole= []
 Adminrole= []
@@ -36,7 +36,7 @@ class gambling(commands.Cog):
     def __init__(self, bot):
         self.bot= bot
         self.money =0
-        self.symbolarray= [":cherries:",":lemon:",":tangerine:",":pear:",":melon:",":grapes:",":tickets:",":bell:",":moneybag:"]
+        self.symbolarray= [":cherries:",":lemon:",":tangerine:",":pear:",":melon:",":grapes:",[":tickets:",":bell:",":moneybag:"]]
         self.symbols = " ".join(self.symbolarray)
         self.ringone= []
         self.ringtwo= []
@@ -51,9 +51,13 @@ class gambling(commands.Cog):
         try:
             money = float(money)
             self.money = money
-            
             await ctx.send(self.symbols)
-            
+            for i in range(20):
+                symbol= random.randint(0,1)
+                print(symbol)
+                if symbol == 6:
+                    symbol2= random.randint(0,2)
+                    pass
         except:
             await ctx.send("Please input a valid number to bet with")
 
