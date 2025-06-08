@@ -164,7 +164,7 @@ class hypixel(commands.Cog):
             calanderembed.add_field(name="Cuurent Season", value=self.season, inline=True)
             calanderembed.add_field(name="", value="", inline=False)
             calanderembed.add_field(name="Current Major Events", value=self.current_event_list, inline=True)
-            calanderembed.add_field(name="Major Events soon", value="EventsSoonList", inline=True)
+
 
             if self.first:
                 self.calendar_message = await self.channel.send(embed=calanderembed)
