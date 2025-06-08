@@ -41,7 +41,7 @@ class gambling(commands.Cog):
         [":tickets:", ":bell:"],  # Uncommon
         [":moneybag:"]  # Rare (Jackpot)
         ]
-        self.slotweight= [0.7,0.25,0.5]
+        self.slotweight= [0.8,0.15,0.5]
         self.SlotRings= [[],[],[]]
 
     @commands.Cog.listener()
