@@ -36,7 +36,7 @@ class gambling(commands.Cog):
     def __init__(self, bot):
         self.bot= bot
         self.money =0
-        self.symbolarray= [":cherries:",":lemon:"]
+        self.symbolarray= [":cherries:",":lemon:",":orange:",":pear:",":melon:",":grapes:"]
         self.symbols = " ".join(self.symbolarray)
         self.ringone= []
         self.ringtwo= []
