@@ -56,10 +56,12 @@ class gambling(commands.Cog):
             money = float(money)
             self.money = money
             for ring in range(3):
+                print(ring)
                 list= random.choices(
                 self.symbolarray, self.slotweight, k=1)
                 for iteration in list:
                     print(iteration)
+                    
         except:
             await ctx.send("Please input a valid number to bet with")
 
