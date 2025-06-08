@@ -9,8 +9,6 @@ def LogError(Level,Reason):
 
 
 #loading libraries
-import os
-import os.path
 from dotenv import *
 import discord
 from discord import *
@@ -18,13 +16,6 @@ from discord.ext import commands
 from discord.utils import *
 import time
 import csv
-import psutil
-import random
-import threading
-import subprocess
-import keyboard
-import json
-import asyncio
 
 #stuff
 botrole= []
@@ -45,21 +36,24 @@ class gambling(commands.Cog):
     def __init__(self, bot):
         self.bot= bot
         self.money =0
+        self.symbols= [":cherries:",":lemon:"]
         self.ringone= []
         self.ringtwo= []
         self.ringthree= []
+
     @commands.Cog.listener()
     async def on_ready(self):
          print("gambling.py is ready")
 
     @commands.command()
-    async def Slot(self, ctx, money=0):
+    async def Slot(self, ctx, money=None):
         try:
             money = float(money)
+            self.money = money
+            await ctx.send(self.symbols)
         except:
             await ctx.send("Please input a valid number to bet with")
-        self.money = money
-        print(self.money)
+
 
 async def setup(bot):
       await bot.add_cog(gambling(bot))
