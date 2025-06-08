@@ -44,7 +44,9 @@ info.close()
 class gambling(commands.Cog):
     def __init__(self, bot):
         self.bot= bot
-
+        self.ringone= []
+        self.ringtwo= []
+        self.ringthree= []
     @commands.Cog.listener()
     async def on_ready(self):
          print("gambling.py is ready")
@@ -53,6 +55,14 @@ class gambling(commands.Cog):
     async def hi(self, ctx):
         print("hi")
 
+    @commands.command()
+    async def Slot(self, ctx, money=None):
+        try:
+            money = float(money)
+        except:
+            await ctx.send("Please input a valid number to bet with")
+        self.money = money
+        print(self.money)
 
 async def setup(bot):
       await bot.add_cog(gambling(bot))
