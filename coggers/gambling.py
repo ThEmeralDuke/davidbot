@@ -56,7 +56,7 @@ class gambling(commands.Cog):
             for ring in range(3):
                 print(ring)
                 list= random.choices(
-                self.symbolarray, self.slotweight, k=1)
+                self.symbolarray, self.slotweight, k=3)
                 for iteration in list:
                     lengthOfIteration = random.randint(0,(len(iteration)-1))
                     self.SlotRings[ring].append(iteration[lengthOfIteration])
