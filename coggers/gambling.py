@@ -44,6 +44,7 @@ info.close()
 class gambling(commands.Cog):
     def __init__(self, bot):
         self.bot= bot
+        self.money =0
         self.ringone= []
         self.ringtwo= []
         self.ringthree= []
@@ -56,7 +57,7 @@ class gambling(commands.Cog):
         print("hi")
 
     @commands.command()
-    async def Slot(self, ctx, money=None):
+    async def Slot(self, ctx, money=0):
         try:
             money = float(money)
         except:
