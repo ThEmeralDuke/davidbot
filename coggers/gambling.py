@@ -57,7 +57,7 @@ class gambling(commands.Cog):
             self.money = money
             for ring in range(3):
                 list= random.choices(
-                self.symbolarray, self.slotweight, k=5)
+                self.symbolarray, self.slotweight, k=1)
                 for iteration in list:
                     print(iteration)
         except:
