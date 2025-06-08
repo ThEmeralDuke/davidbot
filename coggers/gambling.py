@@ -50,7 +50,7 @@ class gambling(commands.Cog):
          print("gambling.py is ready")
 
     @commands.command()
-    async def hi(self):
+    async def hi(self, ctx):
         print("hi")
 
 
