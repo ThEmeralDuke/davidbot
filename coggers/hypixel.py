@@ -4,8 +4,7 @@ import discord
 from discord import *
 from discord.ext import commands, tasks
 from discord.utils import *
-import datetime as date
-from datetime import timezone
+from datetime import datetime, timezone
 import csv
 import asyncio
 
@@ -22,8 +21,8 @@ with open (filepath+"/ImportantTxtFiles/important.csv", "r") as info:
         botrole= row[0]
         Adminrole=row[1]
 info.close()
-utc_now = date.now(timezone.utc)
-skyblockstart = date.strptime("2019-06-11 17:55:00", "%Y-%m-%d %H:%M:%S").replace(tzinfo=timezone.utc)
+utc_now = datetime.now(timezone.utc)
+skyblockstart = datetime.strptime("2019-06-11 17:55:00", "%Y-%m-%d %H:%M:%S").replace(tzinfo=timezone.utc)
 
 
 
@@ -59,8 +58,8 @@ class hypixel(commands.Cog):
     # Wait until in-game minute is a multiple of 5
         i=True
         while i==True:
-            utc_now = date.now(timezone.utc)
-            skyblock_start = date.strptime("2019-06-11 17:55:00", "%Y-%m-%d %H:%M:%S").replace(tzinfo=timezone.utc)
+            utc_now = datetime.now(timezone.utc)
+            skyblock_start = datetime.strptime("2019-06-11 17:55:00", "%Y-%m-%d %H:%M:%S").replace(tzinfo=timezone.utc)
             seconds_since_start = (utc_now - skyblock_start).total_seconds()
             minutes_since_start = int(seconds_since_start // 60)
 
@@ -87,8 +86,8 @@ class hypixel(commands.Cog):
             else:
                 await asyncio.sleep(1)  # Wait a second and try again
     def get_ig_time(self):
-        utc_now = date.now(timezone.utc)
-        skyblock_start = date.strptime("2019-06-11 17:55:00", "%Y-%m-%d %H:%M:%S").replace(tzinfo=timezone.utc)
+        utc_now = datetime.now(timezone.utc)
+        skyblock_start = datetime.strptime("2019-06-11 17:55:00", "%Y-%m-%d %H:%M:%S").replace(tzinfo=timezone.utc)
         seconds_since_start = (utc_now - skyblock_start).total_seconds()
         total_real_minutes = seconds_since_start / 60
 
@@ -123,7 +122,7 @@ class hypixel(commands.Cog):
         self.seasons=["Early Spring","Spring","Late Spring","Early Summer","Summer","Late Summer","Early Autumn","Autumn","Late Autumn","Early Winter","Winter","Late Winter"]
         self.season= self.seasons[int(IG_month)]
     def get_events(self):
-        self.Current_IRL_Minute= int((date.now()).strftime("%M"))
+        self.Current_IRL_Minute= int((datetime.now()).strftime("%M"))
         if self.Current_IRL_Minute== 55 and self.Dark_Auction== False:
             self.Dark_Auction = True
             self.current_events.append("Dark Auction")
