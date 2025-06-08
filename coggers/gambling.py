@@ -61,7 +61,8 @@ class gambling(commands.Cog):
                 self.symbolarray, self.slotweight, k=1)
                 for iteration in list:
                     print(iteration)
-                    
+                    lengthOfIteration = random.randint(0,len(iteration))
+                    print(lengthOfIteration)
         except:
             await ctx.send("Please input a valid number to bet with")
 
