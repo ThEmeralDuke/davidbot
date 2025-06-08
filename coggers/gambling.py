@@ -36,8 +36,12 @@ class gambling(commands.Cog):
     def __init__(self, bot):
         self.bot= bot
         self.money =0
-        self.symbolarray= [":cherries:",":lemon:",":tangerine:",":pear:",":melon:",":grapes:",[":tickets:",":bell:",":moneybag:"]]
-        self.symbols = " ".join(self.symbolarray)
+        self.symbolarray = [
+        [":cherries:", ":lemon:", ":tangerine:", ":pear:", ":melon:", ":grapes:"],  # Common
+        [":tickets:", ":bell:"],  # Uncommon
+        [":moneybag:"]  # Rare (Jackpot)
+        ]
+        self.slotweight= [0.7,0.25,0.5]
         self.ringone= []
         self.ringtwo= []
         self.ringthree= []
@@ -51,13 +55,9 @@ class gambling(commands.Cog):
         try:
             money = float(money)
             self.money = money
-            await ctx.send(self.symbols)
-            for i in range(20):
-                symbol= random.randint(0,1)
-                print(symbol)
-                if symbol == 6:
-                    symbol2= random.randint(0,2)
-                    pass
+            list= random.choices(
+            self.symbolarray, self.slotweight, k=5)
+            print(list)
         except:
             await ctx.send("Please input a valid number to bet with")
 
