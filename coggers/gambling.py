@@ -61,6 +61,7 @@ class gambling(commands.Cog):
                 self.symbolarray, self.slotweight, k=1)
                 for iteration in list:
                     print(iteration)
+                    print(len(iteration))
                     lengthOfIteration = random.randint(0,len(iteration))
                     print("lenght",lengthOfIteration)
         except:
