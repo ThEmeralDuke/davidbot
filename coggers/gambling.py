@@ -42,9 +42,7 @@ class gambling(commands.Cog):
         [":moneybag:"]  # Rare (Jackpot)
         ]
         self.slotweight= [0.7,0.25,0.5]
-        self.ringone= []
-        self.ringtwo= []
-        self.ringthree= []
+        self.SlotRings= []
 
     @commands.Cog.listener()
     async def on_ready(self):
@@ -60,11 +58,10 @@ class gambling(commands.Cog):
                 list= random.choices(
                 self.symbolarray, self.slotweight, k=1)
                 for iteration in list:
-                    print(iteration)
-                    print(len(iteration))
                     lengthOfIteration = random.randint(0,(len(iteration)-1))
-                    print("lenght",lengthOfIteration)
+                    self.SlotRings[ring].append(iteration[lengthOfIteration])
                     
+            print(self.SlotRings)
         except:
             await ctx.send("Please input a valid number to bet with")
 
