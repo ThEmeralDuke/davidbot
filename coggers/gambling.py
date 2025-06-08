@@ -36,7 +36,8 @@ class gambling(commands.Cog):
     def __init__(self, bot):
         self.bot= bot
         self.money =0
-        self.symbols= [":cherries:",":lemon:"]
+        self.symbolarray= [":cherries:",":lemon:"]
+        self.symbols = " ".join(self.symbolarray)
         self.ringone= []
         self.ringtwo= []
         self.ringthree= []
@@ -46,11 +47,13 @@ class gambling(commands.Cog):
          print("gambling.py is ready")
 
     @commands.command()
-    async def Slot(self, ctx, money=None):
+    async def Slots(self, ctx, money=None):
         try:
             money = float(money)
             self.money = money
+            
             await ctx.send(self.symbols)
+            
         except:
             await ctx.send("Please input a valid number to bet with")
 
