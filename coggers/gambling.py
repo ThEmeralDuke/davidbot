@@ -53,9 +53,9 @@ class gambling(commands.Cog):
          print("gambling.py is ready")
 
     @commands.command()
-    async def Slot(self, ctx, arg=0):
+    async def Slot(self, ctx, money=0):
         try:
-            money = float(arg)
+            money = float(money)
         except:
             await ctx.send("Please input a valid number to bet with")
         self.money = money
