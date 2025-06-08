@@ -42,7 +42,7 @@ class gambling(commands.Cog):
         [":moneybag:"]  # Rare (Jackpot)
         ]
         self.slotweight= [0.7,0.25,0.5]
-        self.SlotRings= []
+        self.SlotRings= [[],[],[]]
 
     @commands.Cog.listener()
     async def on_ready(self):
