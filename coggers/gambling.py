@@ -61,7 +61,7 @@ class gambling(commands.Cog):
                     lengthOfIteration = random.randint(0,(len(iteration)-1))
                     self.SlotRings[ring].append(iteration[lengthOfIteration])
                     
-        print(self.SlotRings)
+            print(self.SlotRings)
         except:
             await ctx.send("Please input a valid number to bet with")
 
