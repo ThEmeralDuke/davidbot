@@ -64,7 +64,7 @@ class gambling(commands.Cog):
             await ctx.send(self.SlotRings[0][0],self.SlotRings[1][0],self.SlotRings[2][0])
             await ctx.send(self.SlotRings[0][1],self.SlotRings[1][1],self.SlotRings[2][1])
             await ctx.send(self.SlotRings[0][2],self.SlotRings[1][2],self.SlotRings[2][2])
-
+            self.SlotRings= [[],[],[]]
         except:
             await ctx.send("Please input a valid number to bet with")
 
