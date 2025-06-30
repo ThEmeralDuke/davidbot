@@ -113,6 +113,7 @@ async def loadcogs():
             print(f"{filename[:-3]} loaded")
             Coglist.append(filename[:-3])
 
+
 @bot.command()
 async def reload(ctx,arg=None):
     # Reloads the file, thus updating the Cog class.
