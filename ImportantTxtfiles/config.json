@@ -1,0 +1,16 @@
+{
+    "1170300324381216798":
+        {
+
+            "CogsActive":["admin","gambling","minecraft","rr"],
+            "BotRoles":["Bot"],
+            "AdminRoles":["BotKing"],
+            "Settings":{
+                "RRLeaderboardTimer":10,
+                "MCGameType":null,
+                "MCVersion":null
+            }
+        }
+    ,
+}
+
