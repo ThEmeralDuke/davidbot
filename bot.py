@@ -147,6 +147,6 @@ async def main():
         print("Start")
         await bot.start(str(os.getenv("BOT_KEY"))) #rename this to what your bot token variable is called in your .env file
         print("Middle")
-        await loadcogs()
+        #await loadcogs()
         print("end")
 asyncio.run(main())
