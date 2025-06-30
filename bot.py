@@ -144,8 +144,9 @@ async def main():
     async with bot:
         Warningsystemthread= threading.Thread(target=Warningsystem)
         Warningsystemthread.start()
-        
+        print("Start")
         await bot.start(str(os.getenv("BOT_KEY"))) #rename this to what your bot token variable is called in your .env file
+        print("Middle")
         await loadcogs()
-
+        print("end")
 asyncio.run(main())
