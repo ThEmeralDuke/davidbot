@@ -33,7 +33,7 @@ with open (filepath+"/ImportantTxtFiles/important.csv", "r") as info:
 info.close()
 
 # Load settings from the JSON file
-with open("config.json", "r") as f:
+with open("./config.json", "r") as f:
     SETTINGS = json.load(f)
 
 def cog_is_active():
