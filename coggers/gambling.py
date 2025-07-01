@@ -25,7 +25,7 @@ person= ""
 Generallog= filepath+"/ImportantTxtFiles/Logs/General.log"
 LocalFilepath= "/home/server/" #Change this to your local devices filepath
 #load roles (potentially merge this with the settings file)
-with open (filepath+"/ImportantTxtFiles/important.csv", "r") as info:
+with open ("ImportantTxtFiles/important.csv", "r") as info:
     reader= csv.reader(info)
     for row in reader:
         botrole= row[0]
