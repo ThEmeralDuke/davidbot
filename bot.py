@@ -139,6 +139,18 @@ async def reload(ctx,arg=None):
     else: 
         await ctx.send("Cog not found. Use !reload list")
 
+@bot.command()
+@commands.has_role(Adminrole)
+async def disable(ctx,arg=None):
+    if arg is None:
+        await ctx.send("Please provide an argument, To see all possible options use !disable list")
+    arg= arg.lower()
+    if arg=="list":
+        await ctx.send("Cogs able to be reloaded:\n"+"\n".join(Coglist))
+    if arg in Coglist:
+        #await bot.reload_extension(f"coggers.{arg}") replace with the deload script
+        print(f"{arg} Disabled for serverID:")#after for say the server ID    
+
 
 
 async def main():
