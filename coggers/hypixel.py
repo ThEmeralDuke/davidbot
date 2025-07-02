@@ -7,6 +7,7 @@ from discord.utils import *
 from datetime import datetime, timezone
 import csv
 import asyncio
+import time
 
 #stuff
 botrole= []
@@ -82,7 +83,7 @@ class hypixel(commands.Cog):
                 print(f"Aligned to IGT minute {IG_minute}. Starting loop.")
                 i=False
                 self.loop_started= True
-                self.update_calendar_loop.start()
+                await self.update_calendar()
     def get_ig_time(self):
         utc_now = datetime.now(timezone.utc)
         skyblock_start = datetime.strptime("2019-06-11 17:55:00", "%Y-%m-%d %H:%M:%S").replace(tzinfo=timezone.utc)
@@ -157,7 +158,7 @@ class hypixel(commands.Cog):
         self.current_event_list= "\n".join(self.current_events)
 
     async def update_calendar(self):
-        if self.loop_started== True:
+        while self.loop_started== True:
             self.get_ig_time()
             self.get_events()
             calanderembed = discord.Embed(title="Hypixel Calander", color=0x808080)
@@ -173,10 +174,9 @@ class hypixel(commands.Cog):
                 self.first = False
             else:
                 await self.calendar_message.edit(embed=calanderembed)
+            time.sleep(0.5)
 
-    @tasks.loop(seconds=0.75)
-    async def update_calendar_loop(self):
-        await self.update_calendar()
+
 
 
         
