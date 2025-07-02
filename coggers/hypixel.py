@@ -149,7 +149,7 @@ class hypixel(commands.Cog):
             self.Zoo = False
             self.current_events.remove("Traveling Zoo")
         if self.Cult == False:
-            self.conjoinedtime= int(str(self.IG_hour)+str(self.IG_minute))
+            self.conjoinedtime= int(str(self.IG_hour)+str(self.IG_minutetenth))
             print(self.conjoinedtime)
             #if self.IG_day in (7,14,21,28) and self.conjoinedtime<=:
              #   
