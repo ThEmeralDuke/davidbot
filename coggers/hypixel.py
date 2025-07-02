@@ -48,7 +48,7 @@ class hypixel(commands.Cog):
         self.Dark_Auction= False
         self.Hop_Hunt= False
         self.Zoo = False
-        self.Cult = True
+        self.Cult = False
         
     @commands.Cog.listener()
     async def on_ready(self):
