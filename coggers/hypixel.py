@@ -170,7 +170,7 @@ class hypixel(commands.Cog):
             calanderembed.add_field(name="", value="", inline=False)
             calanderembed.add_field(name="Current Major Events", value=self.current_event_list, inline=True)
             print("test")
-            self.file = discord.File("ImportantTxtFiles/Hypixel/hypixellogo.png", filename="HypixelLogo.png")
+            self.file = discord.File("ImportantTxtFiles/Hypixel/HypixelLogo.png", filename="HypixelLogo.png")
             print("test1")
             if self.first:
                 self.calendar_message = await self.channel.send(embed=calanderembed,file=self.file)
