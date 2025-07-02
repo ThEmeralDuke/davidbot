@@ -174,7 +174,7 @@ class hypixel(commands.Cog):
                 self.calendar_message = await self.channel.send(embed=calanderembed,file=self.file)
                 self.first = False
             else:
-                await self.calendar_message.edit(embed=calanderembed,file=self.file)
+                await self.calendar_message.edit(embed=calanderembed)
             
     @tasks.loop(seconds=0.2)
     async def update_calendar_loop(self):
