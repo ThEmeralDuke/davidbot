@@ -153,7 +153,7 @@ class hypixel(commands.Cog):
             if self.IG_day in (7,14,21,28) and self.conjoinedtime<=600:
                 self.Cult= True
                 self.current_events.append("Star Cult Meeting")
-        elif self.IG_day not in (7,14,21,28) or self.conjoinedtime>600:
+        elif self.Cult == True and self.IG_day not in (7,14,21,28) or self.conjoinedtime>600:
             self.Cult= False
             self.current_events.remove("Star Cult Meeting")
 
