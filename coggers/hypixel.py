@@ -78,13 +78,11 @@ class hypixel(commands.Cog):
             IG_minute = int(round(IG_minute))
 
 
-            if IG_minute % 10 == 0:
+            if IG_minute % 1 == 0:
                 print(f"Aligned to IGT minute {IG_minute}. Starting loop.")
                 i=False
                 self.loop_started= True
                 self.update_calendar_loop.start()
-            else:
-                await asyncio.sleep(1)  # Wait a second and try again
     def get_ig_time(self):
         utc_now = datetime.now(timezone.utc)
         skyblock_start = datetime.strptime("2019-06-11 17:55:00", "%Y-%m-%d %H:%M:%S").replace(tzinfo=timezone.utc)
