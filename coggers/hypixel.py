@@ -177,7 +177,7 @@ class hypixel(commands.Cog):
             else:
                 await self.calendar_message.edit(embed=calanderembed)
             
-    @tasks.loop(seconds=0.75)
+    @tasks.loop(seconds=0.2)
     async def update_calendar_loop(self):
         await self.update_calendar()
 
