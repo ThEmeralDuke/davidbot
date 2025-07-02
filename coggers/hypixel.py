@@ -120,6 +120,7 @@ class hypixel(commands.Cog):
         self.seasons=["Early Spring","Spring","Late Spring","Early Summer","Summer","Late Summer","Early Autumn","Autumn","Late Autumn","Early Winter","Winter","Late Winter"]
         self.season= self.seasons[int(IG_month)]
     def get_events(self):
+        self.conjoinedtime= int(str(self.IG_hour)+str(self.IG_minutetenth))
         self.Current_IRL_Minute= int((datetime.now()).strftime("%M"))
         if self.Current_IRL_Minute== 55 and self.Dark_Auction== False:
             self.Dark_Auction = True
@@ -147,12 +148,13 @@ class hypixel(commands.Cog):
             self.Zoo = False
             self.current_events.remove("Traveling Zoo")
         if self.Cult == False:
-            self.conjoinedtime= int(str(self.IG_hour)+str(self.IG_minutetenth))
-            print(self.conjoinedtime)
-            #if self.IG_day in (7,14,21,28) and self.conjoinedtime<=:
-             #   
-              #  self.Cult= True
-               # self.current_events.append("Star Cult Meeting")
+            
+            if self.IG_day in (7,14,21,28) and self.conjoinedtime<=600:
+                self.Cult= True
+                self.current_events.append("Star Cult Meeting")
+        elif self.Cult==True and self.IG_day not in (7,14,21,28) and self.conjoinedtime>600:
+            self.Cult= False
+            self.current_events.remove("Star Cult Meeting")
 
         self.current_event_list= "\n".join(self.current_events)
 
