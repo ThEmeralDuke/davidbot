@@ -55,7 +55,7 @@ class hypixel(commands.Cog):
         self.channel = self.bot.get_channel(1372924740993548360)  # Replace with actual ID
         await self.channel.purge()
         await self.update_calendar()
-    # Wait until in-game minute is a multiple of 5
+    # Wait until in-game minute is a multiple of 10
         i=True
         while i==True:
             utc_now = datetime.now(timezone.utc)
@@ -78,7 +78,7 @@ class hypixel(commands.Cog):
             IG_minute = int(round(IG_minute))
 
 
-            if IG_minute % 5 == 0:
+            if IG_minute % 10 == 0:
                 print(f"Aligned to IGT minute {IG_minute}. Starting loop.")
                 i=False
                 self.loop_started= True
@@ -109,10 +109,10 @@ class hypixel(commands.Cog):
         self.IG_hour = int(IG_hour)
         self.IG_minute = int(IG_minute)
         self.IG_minute = int(round(self.IG_minute))
-        if self.IG_minute % 5 == 0:
+        if self.IG_minute % 10 == 0:
             pass
         else:
-            self.IG_minute= 5 * round(self.IG_minute / 5)
+            self.IG_minute= 10 * round(self.IG_minute / 10)
             if self.IG_minute == 60:
                 self.IG_minute = 0
                 self.IG_hour = self.IG_hour + 1
