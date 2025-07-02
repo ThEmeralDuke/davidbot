@@ -112,7 +112,7 @@ class hypixel(commands.Cog):
         if self.IG_minute % 10 == 0:
             pass
         else:
-            self.IG_minute= (IG_minute // 10) * 10
+            self.IG_minute= int(IG_minute // 10) * 10
             if self.IG_minute == 60:
                 self.IG_minute = 0
                 self.IG_hour = self.IG_hour + 1
