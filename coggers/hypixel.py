@@ -151,10 +151,10 @@ class hypixel(commands.Cog):
         if self.Cult == False:
             self.conjoinedtime= int(str(self.IG_hour)+str(self.IG_minute))
             print(self.conjoinedtime)
-            if self.IG_day in (7,14,21,28) and self.conjoinedtime<=:
-                
-                self.Cult= True
-                self.current_events.append("Star Cult Meeting")
+            #if self.IG_day in (7,14,21,28) and self.conjoinedtime<=:
+             #   
+              #  self.Cult= True
+               # self.current_events.append("Star Cult Meeting")
 
         self.current_event_list= "\n".join(self.current_events)
 
