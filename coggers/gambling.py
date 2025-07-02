@@ -45,6 +45,7 @@ def cog_is_active():
         if not server_data:
             return False
         active_cogs = server_data.get("CogsActive", [])
+        print(active_cogs)
         return cog_name in active_cogs
     return commands.check(predicate)
 
