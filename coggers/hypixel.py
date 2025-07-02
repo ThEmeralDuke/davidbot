@@ -164,18 +164,20 @@ class hypixel(commands.Cog):
             self.get_ig_time()
             self.get_events()
             calanderembed = discord.Embed(title="Hypixel Calander", color=0x808080)
-            calanderembed.set_thumbnail(url="attachment://HypixelLogo.png")
+            calanderembed.set_thumbnail(url="attachmen://HypixelLogo.png")
             calanderembed.add_field(name="Current Hypixel time", value=(f"{self.IG_day}/{self.IG_monthtenth}/{self.IG_year}, {self.IG_hourtenth}:{self.IG_minutetenth}"), inline=True)
             calanderembed.add_field(name="Cuurent Season", value=self.season, inline=True)
             calanderembed.add_field(name="", value="", inline=False)
             calanderembed.add_field(name="Current Major Events", value=self.current_event_list, inline=True)
-            file = discord.File("ImportantTxtFiles/Hypixel/hypixellogo.png", filename="HypixelLogo.png")
-
+            print("test")
+            self.file = discord.File("ImportantTxtFiles/Hypixel/hypixellogo.png", filename="HypixelLogo.png")
+            print("test1")
             if self.first:
-                self.calendar_message = await self.channel.send(embed=calanderembed,file=file)
+                self.calendar_message = await self.channel.send(embed=calanderembed,file=self.file)
+                print("test2")
                 self.first = False
             else:
-                await self.calendar_message.edit(embed=calanderembed,file=file)
+                await self.calendar_message.edit(embed=calanderembed,file=self.file)
             
     @tasks.loop(seconds=0.2)
     async def update_calendar_loop(self):
