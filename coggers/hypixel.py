@@ -167,7 +167,7 @@ class hypixel(commands.Cog):
             calanderembed.set_thumbnail(url="attachment://HypixelLogo.png")
             calanderembed.add_field(name="Current Hypixel time", value=(f"{self.IG_day}/{self.IG_monthtenth}/{self.IG_year}, {self.IG_hourtenth}:{self.IG_minutetenth}"), inline=True)
             calanderembed.add_field(name="Cuurent Season", value=self.season, inline=True)
-            calanderembed.add_field(name="/n", value="/n", inline=False)
+            calanderembed.add_field(name="", value="​", inline=False)
             calanderembed.add_field(name="Current Major Events", value=self.current_event_list, inline=True)
             print("test")
             self.file = discord.File("ImportantTxtFiles/Hypixel/HypixelLogo.png", filename="HypixelLogo.png")
