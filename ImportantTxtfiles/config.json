@@ -1,7 +1,7 @@
 {
     "1170300324381216798":
         {
-            "CogsActive":["admin","minecraft","rr"],
+            "CogsActive":["admin","minecraft","rr","gambling"],
             "BotRoles":["Bot"],
             "AdminRoles":["BotKing"],
             "Settings":{
