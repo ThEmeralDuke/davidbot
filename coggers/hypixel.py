@@ -169,13 +169,13 @@ class hypixel(commands.Cog):
             calanderembed.add_field(name="Cuurent Season", value=self.season, inline=True)
             calanderembed.add_field(name="", value="", inline=False)
             calanderembed.add_field(name="Current Major Events", value=self.current_event_list, inline=True)
-            self.file = discord.File("ImportantTxtFiles/Hypixel/hypixellogo.png", filename="HypixelLogo.png")
+            file = discord.File("ImportantTxtFiles/Hypixel/hypixellogo.png", filename="HypixelLogo.png")
 
             if self.first:
-                self.calendar_message = await self.channel.send(embed=calanderembed,file=self.file)
+                self.calendar_message = await self.channel.send(embed=calanderembed,file=file)
                 self.first = False
             else:
-                await self.calendar_message.edit(embed=calanderembed,file=self.file)
+                await self.calendar_message.edit(embed=calanderembed,file=file)
             
     @tasks.loop(seconds=0.2)
     async def update_calendar_loop(self):
