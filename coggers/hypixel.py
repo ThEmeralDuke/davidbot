@@ -148,8 +148,9 @@ class hypixel(commands.Cog):
         elif self.Zoo == True and self.IG_day >= 3:
             self.Zoo = False
             self.current_events.remove("Traveling Zoo")
-        #if self.Cult == False:
-        #    self.Cult= True
+        if self.Cult == False:
+            print(self.IG_day)
+            self.Cult= True
         #    self.current_events.append("Star Cult Meeting")
 
         self.current_event_list= "\n".join(self.current_events)
