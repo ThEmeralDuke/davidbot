@@ -145,6 +145,7 @@ class minecraft(commands.Cog):
             #print("Datechecked/made")
             #More time lord stuff
             hour= str(time.strftime("%H", time.localtime()))
+            print(hour)
             #print("Hours calculated")
             backupfilepath= os.path.join(Minecraftbackupfilepath,hour)
             print("checking filepath")
