@@ -138,7 +138,7 @@ class minecraft(commands.Cog):
             #    print("New day making")
                 #Creates a new folder for the backup if its a new day
                 print("attempting to create a filepath")
-                os.mkdir(Minecraftbackupfilepath)
+                subprocess.run(["sudo","mkdir",Minecraftbackupfilepath])
                 print("filepath created")
 
             #    print("New day made")
@@ -156,10 +156,10 @@ class minecraft(commands.Cog):
                 #print("Hour joined")
                 #makes the backup under the hour and minute
                 print("attempting to create a filepath")
-                os.mkdir(Minecraftbackupfilepath)
+                subprocess.run(["sudo","mkdir",backupfilepath])
                 print("filepath created")
                 #print("File made")
-                subprocess.run(["sudo","cp",Minecraftserverfilepath+"/world",Minecraftbackupfilepath+"/world/","-rf"])
+                subprocess.run(["sudo","cp",Minecraftserverfilepath+"/world",backupfilepath+"/world/","-rf"])
                 #print("copied over the files")
                 #turns on automatic saving on the minecraft server as the backup is done
                 subprocess.run(["sudo","-u","server","tmux", "send-keys", "-t", "Minecraft", "/save-on", "ENTER"])
