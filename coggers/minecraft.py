@@ -130,25 +130,34 @@ class minecraft(commands.Cog):
             day = str(time.strftime("%Y%M%D", time.localtime()))
             #print("Dating done")
             Minecraftbackupfilepath=("/opt/backups/minecraft/"+gametype+"/"+version) #Change this to the filepath of your minecraft server backups
+            print("checking filepath")
             backupfile_exists = os.path.isdir(Minecraftbackupfilepath+"/"+day)
+            print(backupfile_exists)
             Minecraftbackupfilepath= os.path.join(Minecraftbackupfilepath,day)
             if backupfile_exists== False:
             #    print("New day making")
                 #Creates a new folder for the backup if its a new day
+                print("attempting to create a filepath")
                 os.mkdir(Minecraftbackupfilepath)
+                print("filepath created")
+
             #    print("New day made")
             #print("Datechecked/made")
             #More time lord stuff
             hour= str(time.strftime("%H", time.localtime()))
             #print("Hours calculated")
             backupfilepath= os.path.join(Minecraftbackupfilepath,hour)
+            print("checking filepath")
             backupfile_exists = os.path.isdir(backupfilepath)
+            print(backupfile_exists)
             #print("Hours checked")
             if backupfile_exists== False:
                 Minecraftbackupfilepath= os.path.join(Minecraftbackupfilepath,hour)
                 #print("Hour joined")
                 #makes the backup under the hour and minute
+                print("attempting to create a filepath")
                 os.mkdir(Minecraftbackupfilepath)
+                print("filepath created")
                 #print("File made")
                 subprocess.run(["sudo","cp",Minecraftserverfilepath+"/world",Minecraftbackupfilepath+"/world/","-rf"])
                 #print("copied over the files")
