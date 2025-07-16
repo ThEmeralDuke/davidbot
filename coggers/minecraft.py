@@ -80,7 +80,7 @@ class minecraft(commands.Cog):
                 #sends the command to the tmux session
                 subprocess.run(["sudo","-u","server","tmux", "send-keys", "-t", "Minecraft", "ENTER"])
                 subprocess.run(["sudo","-u","server","tmux", "send-keys", "-t", "Minecraft", "stop", "ENTER"])
-                subprocess.run(["sudo","-u","server","tmux", "send-keys", "-t", "Minecraft", "stop", "ENTER"])
+                subprocess.run(["sudo","-u","server","tmux", "send-keys", "-t", "Minecraft", "/stop", "ENTER"])
                 await ctx.send("Minecraft shut down correctly and rebooting")
                 sleepyboi= 30
             except:
