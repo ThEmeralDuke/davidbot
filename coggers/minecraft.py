@@ -81,11 +81,13 @@ class minecraft(commands.Cog):
                 subprocess.run(["sudo","-u","server","tmux", "send-keys", "-t", "Minecraft", "ENTER"])
                 subprocess.run(["sudo","-u","server","tmux", "send-keys", "-t", "Minecraft", "stop", "ENTER"])
                 subprocess.run(["sudo","-u","server","tmux", "send-keys", "-t", "Minecraft", "stop", "ENTER"])
-                sleepyboi= 7
+                await ctx.send("Minecraft shut down correctly and rebooting")
+                sleepyboi= 20
             except:
                 sleepyboi= 0
             time.sleep(sleepyboi) #Just give it more time to close
             subprocess.run(["sudo", "-u", "server", "/bin/bash", "/home/server/sh/mcstart.sh"])
+            
         except:
             #If there is an error, log it and tell the user
             Level= "Severe"
