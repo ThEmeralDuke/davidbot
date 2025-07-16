@@ -79,7 +79,8 @@ class minecraft(commands.Cog):
             try:
                 #sends the command to the tmux session
                 subprocess.run(["sudo","-u","server","tmux", "send-keys", "-t", "Minecraft", "ENTER"])
-                subprocess.run(["sudo","-u","server","tmux", "send-keys", "-t", "Minecraft", "/stop", "ENTER"])
+                subprocess.run(["sudo","-u","server","tmux", "send-keys", "-t", "Minecraft", "stop", "ENTER"])
+                subprocess.run(["sudo","-u","server","tmux", "send-keys", "-t", "Minecraft", "stop", "ENTER"])
                 sleepyboi= 7
             except:
                 sleepyboi= 0
@@ -127,7 +128,7 @@ class minecraft(commands.Cog):
             subprocess.run(["sudo","-u","server","tmux", "send-keys", "-t", "Minecraft", "/save-off", "ENTER"])
             #Spilitting time and becoming a time lord
 
-            day = str(time.strftime("%Y-%M-%D", time.localtime()))
+            day = str(time.strftime("%Y-%m-%D", time.localtime()))
             #print("Dating done")
             Minecraftbackupfilepath=("/opt/backups/minecraft/"+gametype+"/"+version) #Change this to the filepath of your minecraft server backups
             print("checking filepath")
