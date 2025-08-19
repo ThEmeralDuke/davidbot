@@ -1,12 +1,12 @@
 #Loading Log files
 filepath= "."
-Errorlog= filepath+"/ImportantTxtFiles/Logs/Error.log"
+Errorlog= filepath+"/ImportantTxtfiles/Logs/Error.log"
 def LogError(Level,Reason):
     with open (Errorlog, "a") as log:
             currenttime= str(time.strftime("%Y-%m-%D %H:%M:%S", time.localtime()))
             log.write(f"{currenttime}    ({Level}) {Reason}\n")
     log.close()
-Resourcelog= filepath+"/ImportantTxtFiles/Logs/Resource.log"
+Resourcelog= filepath+"/ImportantTxtfiles/Logs/Resource.log"
 def LogResource(Level,Reason,Percent):
     if Level=="Critical":
         descriptor= "very high"
@@ -44,11 +44,11 @@ import asyncio
 botrole= []
 Adminrole= []
 person= ""
-Generallog= filepath+"/ImportantTxtFiles/Logs/General.log"
+Generallog= filepath+"/ImportantTxtfiles/Logs/General.log"
 LocalFilepath= "/home/server/" #Change this to your local devices filepath
-load_dotenv(filepath+"/ImportantTxtFiles/.env")
+load_dotenv(filepath+"/ImportantTxtfiles/.env")
 #load roles (potentially merge this with the settings file)
-with open (filepath+"/ImportantTxtFiles/important.csv", "r") as info:
+with open (filepath+"/ImportantTxtfiles/important.csv", "r") as info:
     reader= csv.reader(info)
     for row in reader:
         botrole= row[0]
@@ -58,7 +58,7 @@ info.close()
 
 
 #load settings
-with open (filepath+"/ImportantTxtFiles/settings.csv", "r") as settings:
+with open (filepath+"/ImportantTxtfiles/settings.csv", "r") as settings:
     reader= csv.reader(settings)
     for row in reader:
         LeaderboardDelay= row[0]

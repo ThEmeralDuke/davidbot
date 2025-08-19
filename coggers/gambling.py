@@ -1,6 +1,6 @@
 #Loading Log files
 filepath= "."
-Errorlog= filepath+"/ImportantTxtFiles/Logs/Error.log"
+Errorlog= filepath+"/ImportantTxtfiles/Logs/Error.log"
 def LogError(Level,Reason):
     with open (Errorlog, "a") as log:
             currenttime= str(time.strftime("%Y-%m-%D %H:%M:%S", time.localtime()))
@@ -22,10 +22,10 @@ import random
 botrole= []
 Adminrole= []
 person= ""
-Generallog= filepath+"/ImportantTxtFiles/Logs/General.log"
+Generallog= filepath+"/ImportantTxtfiles/Logs/General.log"
 LocalFilepath= "/home/server/" #Change this to your local devices filepath
 #load roles (potentially merge this with the settings file)
-with open ("ImportantTxtFiles/important.csv", "r") as info:
+with open ("ImportantTxtfiles/important.csv", "r") as info:
     reader= csv.reader(info)
     for row in reader:
         botrole= row[0]
@@ -33,7 +33,7 @@ with open ("ImportantTxtFiles/important.csv", "r") as info:
 info.close()
 
 # Load settings from the JSON file
-with open("ImportantTxtFiles/config.json", "r") as f:
+with open("ImportantTxtfiles/config.json", "r") as f:
     SETTINGS = json.load(f)
 
 def cog_is_active():

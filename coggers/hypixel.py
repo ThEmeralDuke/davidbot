@@ -13,10 +13,10 @@ import time
 botrole= []
 Adminrole= []
 person= ""
-Generallog= filepath+"/ImportantTxtFiles/Logs/General.log"
+Generallog= filepath+"/ImportantTxtfiles/Logs/General.log"
 LocalFilepath= "/home/server/" #Change this to your local devices filepath
 #load roles (potentially merge this with the settings file)
-with open (filepath+"/ImportantTxtFiles/important.csv", "r") as info:
+with open (filepath+"/ImportantTxtfiles/important.csv", "r") as info:
     reader= csv.reader(info)
     for row in reader:
         botrole= row[0]
@@ -168,7 +168,7 @@ class hypixel(commands.Cog):
             calanderembed.add_field(name="Cuurent Season", value=self.season, inline=True)
             calanderembed.add_field(name="", value="​", inline=False)
             calanderembed.add_field(name="Current Major Events", value=self.current_event_list, inline=True)
-            self.file = discord.File("ImportantTxtFiles/Hypixel/HypixelLogo.png", filename="HypixelLogo.png")
+            self.file = discord.File("ImportantTxtfiles/Hypixel/HypixelLogo.png", filename="HypixelLogo.png")
             if self.first:
                 self.calendar_message = await self.channel.send(embed=calanderembed,file=self.file)
                 self.first = False
