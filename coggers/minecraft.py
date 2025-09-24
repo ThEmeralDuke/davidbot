@@ -82,12 +82,12 @@ class minecraft(commands.Cog):
                 subprocess.run(["sudo","-u","server","tmux", "send-keys", "-t", "Minecraft", "stop", "ENTER"])
                 #subprocess.run(["sudo","-u","server","tmux", "send-keys", "-t", "Minecraft", "/stop", "ENTER"])
                 await ctx.send("Minecraft shut down correctly and rebooting")
-                sleepyboi= 30
+                sleepyboi= 25
             except:
                 sleepyboi= 0
             time.sleep(sleepyboi) #Just give it more time to close
             subprocess.run(["sudo", "-u", "server", "/bin/bash", "/home/server/sh/mcstart.sh"])
-            time.sleep(60) #Give it time to start
+            time.sleep(35) #Give it time to start
             subprocess.run(['sudo -u server ssh -i ~/.ssh/ssh* ubuntu@132.145.78.199 "sudo reboot"'])
             await ctx.send("Minecraft rebooted. please wait for the proxy to turn on")
         except:
