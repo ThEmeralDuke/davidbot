@@ -93,12 +93,9 @@ class minecraft(commands.Cog):
             "sudo", "-u", "server",
             "ssh", "-i", "/home/server/.ssh/ssh-key-2025-09-15.key",
             "ubuntu@132.145.78.199",
-            "mkdir", "test"
-            ], capture_output=True, text=True, check=False)
+            "sudo", "reboot"
+            ])
 
-            print("STDOUT:", result.stdout)
-            print("STDERR:", result.stderr)
-            print("Return code:", result.returncode)
 
             await ctx.send("Minecraft rebooted. please wait for the proxy to turn on")
         except:
