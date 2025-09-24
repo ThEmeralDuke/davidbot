@@ -82,7 +82,7 @@ class minecraft(commands.Cog):
                 subprocess.run(["sudo","-u","server","tmux", "send-keys", "-t", "Minecraft", "stop", "ENTER"])
                 #subprocess.run(["sudo","-u","server","tmux", "send-keys", "-t", "Minecraft", "/stop", "ENTER"])
                 await ctx.send("Minecraft shut down correctly and rebooting")
-                sleepyboi= 25
+                sleepyboi= 5
             except:
                 sleepyboi= 0
             time.sleep(sleepyboi) #Just give it more time to close
