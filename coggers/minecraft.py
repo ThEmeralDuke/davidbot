@@ -88,7 +88,18 @@ class minecraft(commands.Cog):
             time.sleep(sleepyboi) #Just give it more time to close
             subprocess.run(["sudo", "-u", "server", "/bin/bash", "/home/server/sh/mcstart.sh"])
             time.sleep(35) #Give it time to start
-            subprocess.run(['sudo', '-u', 'server', 'ssh', '-i', '/home/server/.ssh/ssh-key-2025-09-15.key', 'ubuntu@132.145.78.199', 'mkdir', 'test'])
+            #subprocess.run(['sudo', '-u', 'server', 'ssh', '-i', '/home/server/.ssh/ssh-key-2025-09-15.key', 'ubuntu@132.145.78.199', 'mkdir', 'test'])
+            result = subprocess.run([
+            "sudo", "-u", "server",
+            "ssh", "-i", "/home/server/.ssh/ssh-key-2025-09-15.key",
+            "ubuntu@132.145.78.199",
+            "mkdir", "test"
+            ], capture_output=True, text=True, check=False)
+
+            print("STDOUT:", result.stdout)
+            print("STDERR:", result.stderr)
+            print("Return code:", result.returncode)
+
             await ctx.send("Minecraft rebooted. please wait for the proxy to turn on")
         except:
             #If there is an error, log it and tell the user
