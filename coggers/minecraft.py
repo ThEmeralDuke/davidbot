@@ -94,9 +94,8 @@ class minecraft(commands.Cog):
                     #sends the command to the tmux session
                     subprocess.run(["sudo","-u","server","tmux", "send-keys", "-t", "Minecraft", "ENTER"])
                     subprocess.run(["sudo","-u","server","tmux", "send-keys", "-t", "Minecraft", "/say ", "Server ", "reboot ", "in ",resettime, "minutes. ", "ENTER"])
-                    if (self.resettimeint-60)=<0:
+                    if (self.resettimeint-60)<=0:
                         print(self.resettimeint)
-                        pass
                     else:
                         await asyncio.sleep(self.resettimeint-60) #Wait the till the last minute minutes
                         subprocess.run(["sudo","-u","server","tmux", "send-keys", "-t", "Minecraft", "ENTER"])
