@@ -76,7 +76,7 @@ class minecraft(commands.Cog):
                 resettime= "5"
             else:
                 try:
-                    resettime= arg
+                    resettime= int(arg)
                 except:
                     await ctx.send("Please enter the time in digits. Defaulting to 5 minutes")
                     resettime= "5"
@@ -93,7 +93,7 @@ class minecraft(commands.Cog):
                 try:
                     #sends the command to the tmux session
                     subprocess.run(["sudo","-u","server","tmux", "send-keys", "-t", "Minecraft", "ENTER"])
-                    subprocess.run(["sudo","-u","server","tmux", "send-keys", "-t", "Minecraft", "/say ", "Server ", "reboot ", "in ",resettime, "minutes. ", "ENTER"])
+                    subprocess.run(["sudo","-u","server","tmux", "send-keys", "-t", "Minecraft", "/say ", "Server ", "reboot ", "in ",resettime, " minutes. ", "ENTER"])
                     if (self.resettimeint-60)<=0:
                         print(self.resettimeint)
                     else:
