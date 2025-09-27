@@ -91,7 +91,7 @@ class minecraft(commands.Cog):
                 try:
                     #sends the command to the tmux session
                     subprocess.run(["sudo","-u","server","tmux", "send-keys", "-t", "Minecraft", "ENTER"])
-                    subprocess.run(["sudo","-u","server","tmux", "send-keys", "-t", "Minecraft", "/say ", "Server ", "reboot ", "in ",resettimeint, "minutes. ", "ENTER"])
+                    subprocess.run(["sudo","-u","server","tmux", "send-keys", "-t", "Minecraft", "/say ", "Server ", "reboot ", "in ",resettime, "minutes. ", "ENTER"])
                     if (resettimeint-60)>0:
                         pass
                     else:
