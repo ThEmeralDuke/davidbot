@@ -73,7 +73,8 @@ class minecraft(commands.Cog):
             person= str(person)
             if arg is None:
                 await ctx.send("No time given, Restarting in five minutes.")
-            arg= str(arg)
+                arg= 5
+            time= str(arg)
             print("Minecraft reboot triggered by "+ person)
             await ctx.send("Restarting Minecraft in",time,"minute(s).")
             with open (Generallog, "a") as log:
