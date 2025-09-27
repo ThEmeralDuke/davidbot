@@ -74,7 +74,12 @@ class minecraft(commands.Cog):
             if arg is None:
                 resettime= "5"
             else:
-                resettime= arg
+                try:
+                    resettime= arg
+                except:
+                    await ctx.send("Please enter the time in digits. Defaulting to 5 minutes")
+                    resettime= "5"
+            resettimeint= int(resettime)
             resettime= str(time)
             print("Minecraft reboot triggered by "+ person)
             await ctx.send("Restarting Minecraft in "+resettime+" minute(s).")
@@ -86,11 +91,14 @@ class minecraft(commands.Cog):
                 try:
                     #sends the command to the tmux session
                     subprocess.run(["sudo","-u","server","tmux", "send-keys", "-t", "Minecraft", "ENTER"])
-                    subprocess.run(["sudo","-u","server","tmux", "send-keys", "-t", "Minecraft", "/say ", "Server ", "reboot ", "in ", "5 ", "minutes. ", "ENTER"])
-                    await asyncio.sleep(240) #Wait 4 minutes
-                    subprocess.run(["sudo","-u","server","tmux", "send-keys", "-t", "Minecraft", "ENTER"])
-                    subprocess.run(["sudo","-u","server","tmux", "send-keys", "-t", "Minecraft", "/say ", "Server ", "reboot ", "in ", "1 ", "minute. ", "Get ", "to ", "a ", "safe ", "place ", "and ", "finish ", "up ", "what ", "you ", "are ", "doing ", "ENTER"])
-                    await asyncio.sleep(60) #Wait 1 minutes
+                    subprocess.run(["sudo","-u","server","tmux", "send-keys", "-t", "Minecraft", "/say ", "Server ", "reboot ", "in ",resettimeint, "minutes. ", "ENTER"])
+                    if (resettimeint-60)>0:
+                        pass
+                    else:
+                        await asyncio.sleep(resettimeint-60) #Wait the till the last minute minutes
+                        subprocess.run(["sudo","-u","server","tmux", "send-keys", "-t", "Minecraft", "ENTER"])
+                        subprocess.run(["sudo","-u","server","tmux", "send-keys", "-t", "Minecraft", "/say ", "Server ", "reboot ", "in ", "1 ", "minute. ", "Get ", "to ", "a ", "safe ", "place ", "and ", "finish ", "up ", "what ", "you ", "are ", "doing ", "ENTER"])
+                        await asyncio.sleep(60) #Wait 1 minutes
                     subprocess.run(["sudo","-u","server","tmux", "send-keys", "-t", "Minecraft", "stop", "ENTER"])
                     #subprocess.run(["sudo","-u","server","tmux", "send-keys", "-t", "Minecraft", "/stop", "ENTER"])
                     await ctx.send("Minecraft shut down correctly and rebooting")
