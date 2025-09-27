@@ -52,7 +52,6 @@ with open (filepath+"/ImportantTxtfiles/settings.csv", "r") as settings:
 settings.close()
 
 ##Minecraft settings##
-runningit= False
 Minecraftserverfilepath="/home/server/Minecraft" #Change this to the filepath of your minecraft server
 #Minecraftbackupfilepath="/opt/backups/minecraft/"+gametype+"/"+version+"/" #Change this to the filepath of your minecraft server backups
 class minecraft(commands.Cog):
@@ -61,13 +60,14 @@ class minecraft(commands.Cog):
 
     @commands.Cog.listener()
     async def on_ready(self):
-         print("minecraft.py is ready")
+        print("minecraft.py is ready")
+        self.runningit= False
     #This remotely restarts the minecraft server
     @commands.command(pass_context=True)
     @commands.has_role(Adminrole)
     async def MCrestart(self ,ctx):
-        if runningit== False:
-            runningit= True
+        if self.runningit== False:
+            self.runningit= True
             global person
             person= ctx.author
             person= str(person)
@@ -112,7 +112,7 @@ class minecraft(commands.Cog):
                 await ctx.send("Minecraft Failed to restart")
                 LogError(Level,Reason)
             pass
-        runningit= False
+        self.runningit= False
     @MCrestart.error
     async def MCrestartError(self ,ctx ,error):
         global person
