@@ -71,6 +71,7 @@ class minecraft(commands.Cog):
             global person
             person= ctx.author
             person= str(person)
+            print(arg)
             if arg is None:
                 resettime= "5"
             else:
