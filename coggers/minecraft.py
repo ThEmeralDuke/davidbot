@@ -80,7 +80,7 @@ class minecraft(commands.Cog):
                 except:
                     await ctx.send("Please enter the time in digits. Defaulting to 5 minutes")
                     resettime= "5"
-            resettimeint= int(resettime)
+            self.resettimeint= int(resettime)
 
             resettime= str(resettime)
             print("Minecraft reboot triggered by "+ person)
@@ -94,11 +94,11 @@ class minecraft(commands.Cog):
                     #sends the command to the tmux session
                     subprocess.run(["sudo","-u","server","tmux", "send-keys", "-t", "Minecraft", "ENTER"])
                     subprocess.run(["sudo","-u","server","tmux", "send-keys", "-t", "Minecraft", "/say ", "Server ", "reboot ", "in ",resettime, "minutes. ", "ENTER"])
-                    if (resettimeint-60)=<0:
-                        print(resettimeint)
+                    if (self.resettimeint-60)=<0:
+                        print(self.resettimeint)
                         pass
                     else:
-                        await asyncio.sleep(resettimeint-60) #Wait the till the last minute minutes
+                        await asyncio.sleep(self.resettimeint-60) #Wait the till the last minute minutes
                         subprocess.run(["sudo","-u","server","tmux", "send-keys", "-t", "Minecraft", "ENTER"])
                         subprocess.run(["sudo","-u","server","tmux", "send-keys", "-t", "Minecraft", "/say ", "Server ", "reboot ", "in ", "1 ", "minute. ", "Get ", "to ", "a ", "safe ", "place ", "and ", "finish ", "up ", "what ", "you ", "are ", "doing ", "ENTER"])
                         await asyncio.sleep(60) #Wait 1 minutes
