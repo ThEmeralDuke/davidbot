@@ -81,7 +81,7 @@ class minecraft(commands.Cog):
                     await ctx.send("Please enter the time in digits. Defaulting to 5 minutes")
                     resettime= "5"
             self.resettimeint= int(resettime)
-
+            self.resettimeint= self.resettimeint*60
             resettime= str(resettime)
             print("Minecraft reboot triggered by "+ person)
             await ctx.send("Restarting Minecraft in "+resettime+" minute(s).")
