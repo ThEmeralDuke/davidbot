@@ -77,7 +77,7 @@ class minecraft(commands.Cog):
                 time= arg
             time= str(time)
             print("Minecraft reboot triggered by "+ person)
-            await ctx.send("Restarting Minecraft in",time,"minute(s).")
+            await ctx.send("Restarting Minecraft in "+time+" minute(s).")
             with open (Generallog, "a") as log:
                 currenttime= str(time.strftime("%Y-%m-%D %H:%M:%S", time.localtime()))
                 log.write(currenttime+ "   Minecraft restarted by "+ person+"\n")
