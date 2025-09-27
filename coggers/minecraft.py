@@ -96,7 +96,7 @@ class minecraft(commands.Cog):
                 subprocess.run(["sudo", "-u", "server", "/bin/bash", "/home/server/sh/mcstart.sh"])
                 await asyncio.sleep(35) #Give it time to start
                 #subprocess.run(['sudo', '-u', 'server', 'ssh', '-i', '/home/server/.ssh/ssh-key-2025-09-15.key', 'ubuntu@132.145.78.199', 'mkdir', 'test'])
-                result = subprocess.run([
+                subprocess.run([
                 "sudo", "-u", "server",
                 "ssh", "-i", "/home/server/.ssh/ssh-key-2025-09-15.key",
                 "ubuntu@132.145.78.199",
