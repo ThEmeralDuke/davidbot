@@ -81,10 +81,10 @@ class minecraft(commands.Cog):
                 try:
                     #sends the command to the tmux session
                     subprocess.run(["sudo","-u","server","tmux", "send-keys", "-t", "Minecraft", "ENTER"])
-                    subprocess.run(["sudo","-u","server","tmux", "send-keys", "-t", "Minecraft", "/say", "Server", "reboot", "in", "5", "minutes.", "ENTER"])
+                    subprocess.run(["sudo","-u","server","tmux", "send-keys", "-t", "Minecraft", "/say ", "Server ", "reboot ", "in ", "5 ", "minutes. ", "ENTER"])
                     await asyncio.sleep(240) #Wait 4 minutes
                     subprocess.run(["sudo","-u","server","tmux", "send-keys", "-t", "Minecraft", "ENTER"])
-                    subprocess.run(["sudo","-u","server","tmux", "send-keys", "-t", "Minecraft", "/say", "Server", "reboot", "in", "1", "minute.", "Get", "to", "a", "safe", "place", "and", "finish", "up", "what", "you", "are", "doing", "ENTER"])
+                    subprocess.run(["sudo","-u","server","tmux", "send-keys", "-t", "Minecraft", "/say ", "Server ", "reboot ", "in ", "1 ", "minute. ", "Get ", "to ", "a ", "safe ", "place ", "and ", "finish ", "up ", "what ", "you ", "are ", "doing ", "ENTER"])
                     await asyncio.sleep(60) #Wait 1 minutes
                     subprocess.run(["sudo","-u","server","tmux", "send-keys", "-t", "Minecraft", "stop", "ENTER"])
                     #subprocess.run(["sudo","-u","server","tmux", "send-keys", "-t", "Minecraft", "/stop", "ENTER"])
