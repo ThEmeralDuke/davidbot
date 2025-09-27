@@ -65,14 +65,17 @@ class minecraft(commands.Cog):
     #This remotely restarts the minecraft server
     @commands.command(pass_context=True)
     @commands.has_role(Adminrole)
-    async def MCrestart(self ,ctx):
+    async def MCrestart(self ,ctx, arg=None):
         if self.runningit== False:
             self.runningit= True
             global person
             person= ctx.author
             person= str(person)
-            print("Minecraft rebooted by "+ person)
-            await ctx.send("Restarting Minecraft...")
+            if arg is None:
+                await ctx.send("No time given, Restarting in five minutes.")
+            arg= str(arg)
+            print("Minecraft reboot triggered by "+ person)
+            await ctx.send("Restarting Minecraft in",time,"minute(s).")
             with open (Generallog, "a") as log:
                 currenttime= str(time.strftime("%Y-%m-%D %H:%M:%S", time.localtime()))
                 log.write(currenttime+ "   Minecraft restarted by "+ person+"\n")
