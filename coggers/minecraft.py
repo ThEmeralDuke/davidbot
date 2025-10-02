@@ -62,10 +62,14 @@ class minecraft(commands.Cog):
     async def on_ready(self):
         print("minecraft.py is ready")
         self.runningit= False
+        self.rebootcancel = False
     #This remotely restarts the minecraft server
     @commands.command(pass_context=True)
     @commands.has_role(Adminrole)
     async def MCrestart(self ,ctx, arg=None):
+        if str(arg).lower() == cancel:
+            self.runningit= False
+            self.rebootcancel= True
         if self.runningit== False:
             self.runningit= True
             global person
@@ -100,21 +104,25 @@ class minecraft(commands.Cog):
                     if (self.resettimeint-60)<=0:
                         print(self.resettimeint)
                     else:
-                        await asyncio.sleep(self.resettimeint-60) #Wait the till the last minute minutes
-                        subprocess.run(["sudo","-u","server","tmux", "send-keys", "-t", "Minecraft", "ENTER"])
-                        subprocess.run(["sudo","-u","server","tmux", "send-keys", "-t", "Minecraft", "/say ", "Server ", "reboot ", "in ", "1 ", "minute. ", "Get ", "to ", "a ", "safe ", "place ", "and ", "finish ", "up ", "what ", "you ", "are ", "doing ", "ENTER"])
+                        if self.rebootcancel == False:
+                            await asyncio.sleep(self.resettimeint-60) #Wait the till the last minute minutes
+                            subprocess.run(["sudo","-u","server","tmux", "send-keys", "-t", "Minecraft", "ENTER"])
+                            subprocess.run(["sudo","-u","server","tmux", "send-keys", "-t", "Minecraft", "/say ", "Server ", "reboot ", "in ", "1 ", "minute. ", "Get ", "to ", "a ", "safe ", "place ", "and ", "finish ", "up ", "what ", "you ", "are ", "doing ", "ENTER"])
                     await asyncio.sleep(60) #Wait 1 minutes
-                    subprocess.run(["sudo","-u","server","tmux", "send-keys", "-t", "Minecraft", "stop", "ENTER"])
-                    #subprocess.run(["sudo","-u","server","tmux", "send-keys", "-t", "Minecraft", "/stop", "ENTER"])
-                    await ctx.send("Minecraft shut down correctly and rebooting")
-                    sleepyboi= 10
+                    if self.rebootcancel == False:
+                        subprocess.run(["sudo","-u","server","tmux", "send-keys", "-t", "Minecraft", "stop", "ENTER"])
+                        #subprocess.run(["sudo","-u","server","tmux", "send-keys", "-t", "Minecraft", "/stop", "ENTER"])
+                        await ctx.send("Minecraft shut down correctly and rebooting")
+                        sleepyboi= 10
                 except:
                     sleepyboi= 0
-                await asyncio.sleep(sleepyboi) #Just give it more time to close
-                subprocess.run(["sudo", "-u", "server", "/bin/bash", "/home/server/sh/mcstart.sh"])
-                await asyncio.sleep(50) #Give it time to start
-                subprocess.run(["sudo", "-u", "server", "ssh", "-i", "/home/server/.ssh/ssh-key-2025-09-15.key", "ubuntu@132.145.78.199", "sudo", "reboot"])
-
+                if self.rebootcancel == False:
+                    await asyncio.sleep(sleepyboi) #Just give it more time to close
+                    subprocess.run(["sudo", "-u", "server", "/bin/bash", "/home/server/sh/mcstart.sh"])
+                    await asyncio.sleep(50) #Give it time to start
+                    subprocess.run(["sudo", "-u", "server", "ssh", "-i", "/home/server/.ssh/ssh-key-2025-09-15.key", "ubuntu@132.145.78.199", "sudo", "reboot"])
+                else:
+                    self.rebootcancel = False
 
                 await ctx.send("Minecraft rebooted. please wait for the proxy to turn on")
             except:
