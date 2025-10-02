@@ -100,7 +100,7 @@ class minecraft(commands.Cog):
                         await asyncio.sleep(self.resettimeint-60) #Wait the till the last minute minutes
                         subprocess.run(["sudo","-u","server","tmux", "send-keys", "-t", "Minecraft", "ENTER"])
                         subprocess.run(["sudo","-u","server","tmux", "send-keys", "-t", "Minecraft", "/say ", "Server ", "reboot ", "in ", "1 ", "minute. ", "Get ", "to ", "a ", "safe ", "place ", "and ", "finish ", "up ", "what ", "you ", "are ", "doing ", "ENTER"])
-                        await asyncio.sleep(60) #Wait 1 minutes
+                    await asyncio.sleep(60) #Wait 1 minutes
                     subprocess.run(["sudo","-u","server","tmux", "send-keys", "-t", "Minecraft", "stop", "ENTER"])
                     #subprocess.run(["sudo","-u","server","tmux", "send-keys", "-t", "Minecraft", "/stop", "ENTER"])
                     await ctx.send("Minecraft shut down correctly and rebooting")
