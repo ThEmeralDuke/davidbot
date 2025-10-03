@@ -133,7 +133,7 @@ class minecraft(commands.Cog):
                         self.rebootcancel = False
 
                     await ctx.send("Minecraft rebooted. please wait for the proxy to turn on")
-                except:
+            except:
                     #If there is an error, log it and tell the user
                     Level= "Severe"
                     Reason= "Minecraft failed to restart"
