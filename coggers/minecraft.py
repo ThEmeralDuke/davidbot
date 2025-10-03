@@ -67,71 +67,79 @@ class minecraft(commands.Cog):
     @commands.command(pass_context=True)
     @commands.has_role(Adminrole)
     async def MCrestart(self ,ctx, arg=None):
-        if str(arg).lower() == cancel:
+        global person
+        person= ctx.author
+        person= str(person)
+        print(arg)
+        if str(arg).lower() == cancel and self.runningit == True:
             self.runningit= False
             self.rebootcancel= True
-        if self.runningit== False:
-            self.runningit= True
-            global person
-            person= ctx.author
-            person= str(person)
-            print(arg)
-            if arg is None:
-                resettime= "5"
-            else:
-                try:
-                    resettime= int(arg)
-                except:
-                    await ctx.send("Please enter the time in digits. Defaulting to 5 minutes")
-                    resettime= "5"
-            self.resettimeint= int(resettime)
-            self.resettimeint= self.resettimeint*60
-            resettime= str(resettime)
-            if (self.resettimeint-60)<=0:
-                resettime = "1"
-                self.resettimeint = 60
-            print("Minecraft reboot triggered by "+ person)
-            await ctx.send("Restarting Minecraft in "+resettime+" minute(s).")
+            print("Minecraft reboot cancelled by "+ person)
+            await ctx.send("Minecraft restart cancelled")
             with open (Generallog, "a") as log:
                 currenttime= str(time.strftime("%Y-%m-%D %H:%M:%S", time.localtime()))
-                log.write(currenttime+ "   Minecraft restarted by "+ person+"\n")
+                log.write(currenttime+ "   Minecraft restart cancelled by "+ person+"\n")
             log.close
-            try:
-                try:
-                    #sends the command to the tmux session
-                    subprocess.run(["sudo","-u","server","tmux", "send-keys", "-t", "Minecraft", "ENTER"])
-                    subprocess.run(["sudo","-u","server","tmux", "send-keys", "-t", "Minecraft", "/say ", "Server ", "reboot ", "in ",resettime, " minutes. ", "ENTER"])
-                    if (self.resettimeint-60)<=0:
-                        print(self.resettimeint)
-                    else:
-                        if self.rebootcancel == False:
-                            await asyncio.sleep(self.resettimeint-60) #Wait the till the last minute minutes
-                            subprocess.run(["sudo","-u","server","tmux", "send-keys", "-t", "Minecraft", "ENTER"])
-                            subprocess.run(["sudo","-u","server","tmux", "send-keys", "-t", "Minecraft", "/say ", "Server ", "reboot ", "in ", "1 ", "minute. ", "Get ", "to ", "a ", "safe ", "place ", "and ", "finish ", "up ", "what ", "you ", "are ", "doing ", "ENTER"])
-                    await asyncio.sleep(60) #Wait 1 minutes
-                    if self.rebootcancel == False:
-                        subprocess.run(["sudo","-u","server","tmux", "send-keys", "-t", "Minecraft", "stop", "ENTER"])
-                        #subprocess.run(["sudo","-u","server","tmux", "send-keys", "-t", "Minecraft", "/stop", "ENTER"])
-                        await ctx.send("Minecraft shut down correctly and rebooting")
-                        sleepyboi= 10
-                except:
-                    sleepyboi= 0
-                if self.rebootcancel == False:
-                    await asyncio.sleep(sleepyboi) #Just give it more time to close
-                    subprocess.run(["sudo", "-u", "server", "/bin/bash", "/home/server/sh/mcstart.sh"])
-                    await asyncio.sleep(50) #Give it time to start
-                    subprocess.run(["sudo", "-u", "server", "ssh", "-i", "/home/server/.ssh/ssh-key-2025-09-15.key", "ubuntu@132.145.78.199", "sudo", "reboot"])
+            subprocess.run(["sudo","-u","server","tmux", "send-keys", "-t", "Minecraft", "/say ", "Server ", "reboot ", "cancelled!", "ENTER"])
+        if self.runningit== False:
+            if self.rebootcancel == False:
+                self.runningit= True
+                if arg is None:
+                    resettime= "5"
                 else:
-                    self.rebootcancel = False
+                    try:
+                        resettime= int(arg)
+                    except:
+                        await ctx.send("Please enter the time in digits. Defaulting to 5 minutes")
+                        resettime= "5"
+                self.resettimeint= int(resettime)
+                self.resettimeint= self.resettimeint*60
+                resettime= str(resettime)
+                if (self.resettimeint-60)<=0:
+                    resettime = "1"
+                    self.resettimeint = 60
+                print("Minecraft reboot triggered by "+ person)
+                await ctx.send("Restarting Minecraft in "+resettime+" minute(s).")
+                with open (Generallog, "a") as log:
+                    currenttime= str(time.strftime("%Y-%m-%D %H:%M:%S", time.localtime()))
+                    log.write(currenttime+ "   Minecraft restarted by "+ person+"\n")
+                log.close
+            try:
+                    try:
+                        #sends the command to the tmux session
+                        subprocess.run(["sudo","-u","server","tmux", "send-keys", "-t", "Minecraft", "ENTER"])
+                        subprocess.run(["sudo","-u","server","tmux", "send-keys", "-t", "Minecraft", "/say ", "Server ", "reboot ", "in ",resettime, " minutes. ", "ENTER"])
+                        if (self.resettimeint-60)<=0:
+                            print(self.resettimeint)
+                        else:
+                            if self.rebootcancel == False:
+                                await asyncio.sleep(self.resettimeint-60) #Wait the till the last minute minutes
+                                subprocess.run(["sudo","-u","server","tmux", "send-keys", "-t", "Minecraft", "ENTER"])
+                                subprocess.run(["sudo","-u","server","tmux", "send-keys", "-t", "Minecraft", "/say ", "Server ", "reboot ", "in ", "1 ", "minute. ", "Get ", "to ", "a ", "safe ", "place ", "and ", "finish ", "up ", "what ", "you ", "are ", "doing ", "ENTER"])
+                        await asyncio.sleep(60) #Wait 1 minutes
+                        if self.rebootcancel == False:
+                            subprocess.run(["sudo","-u","server","tmux", "send-keys", "-t", "Minecraft", "stop", "ENTER"])
+                            #subprocess.run(["sudo","-u","server","tmux", "send-keys", "-t", "Minecraft", "/stop", "ENTER"])
+                            await ctx.send("Minecraft shut down correctly and rebooting")
+                            sleepyboi= 10
+                    except:
+                        sleepyboi= 0
+                    if self.rebootcancel == False:
+                        await asyncio.sleep(sleepyboi) #Just give it more time to close
+                        subprocess.run(["sudo", "-u", "server", "/bin/bash", "/home/server/sh/mcstart.sh"])
+                        await asyncio.sleep(50) #Give it time to start
+                        subprocess.run(["sudo", "-u", "server", "ssh", "-i", "/home/server/.ssh/ssh-key-2025-09-15.key", "ubuntu@132.145.78.199", "sudo", "reboot"])
+                    else:
+                        self.rebootcancel = False
 
-                await ctx.send("Minecraft rebooted. please wait for the proxy to turn on")
-            except:
-                #If there is an error, log it and tell the user
-                Level= "Severe"
-                Reason= "Minecraft failed to restart"
-                await ctx.send("Minecraft Failed to restart")
-                LogError(Level,Reason)
-            pass
+                    await ctx.send("Minecraft rebooted. please wait for the proxy to turn on")
+                except:
+                    #If there is an error, log it and tell the user
+                    Level= "Severe"
+                    Reason= "Minecraft failed to restart"
+                    await ctx.send("Minecraft Failed to restart")
+                    LogError(Level,Reason)
+                pass
         self.runningit= False
     @MCrestart.error
     async def MCrestartError(self ,ctx ,error):
