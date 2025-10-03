@@ -139,7 +139,6 @@ class minecraft(commands.Cog):
                     Reason= "Minecraft failed to restart"
                     await ctx.send("Minecraft Failed to restart")
                     LogError(Level,Reason)
-                pass
         self.runningit= False
     @MCrestart.error
     async def MCrestartError(self ,ctx ,error):
